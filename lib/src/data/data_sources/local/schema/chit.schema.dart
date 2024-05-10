@@ -1,8 +1,7 @@
 // ignore_for_file: recursive_getters
 
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:drift/drift.dart';
-
-enum FrequencyType { weekly, monthly }
 
 class Chits extends Table {
   IntColumn get id => integer().autoIncrement()();

@@ -9,6 +9,11 @@ class UserSettingsDao extends DatabaseAccessor<AppDatabase>
     with _$UserSettingsDaoMixin {
   UserSettingsDao(super.db);
 
+  Stream<UserSetting> watchUserSettings() {
+    return (select(userSettings)..where((tbl) => tbl.id.equals(0)))
+        .watchSingle();
+  }
+
   Future<UserSetting?> getUserSettings() async {
     final query = select(userSettings)..where((tbl) => tbl.id.equals(0));
     return query.getSingleOrNull();

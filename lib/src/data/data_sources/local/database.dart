@@ -6,6 +6,7 @@ import 'package:chit_app_clean/src/data/data_sources/local/dao/user_settings.dao
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/user_settings.schema.dart';
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
 import 'package:path_provider/path_provider.dart';
