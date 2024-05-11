@@ -1,6 +1,6 @@
 import 'package:chit_app_clean/src/domain/models/user_settings.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/user_settings.controller.dart';
-import 'package:chit_app_clean/src/presentation/pages/auth/pin_setup.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/widgets/auth/radio_list_tile_button.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/widgets/responsive.widget.dart';
