@@ -29,7 +29,11 @@ class UserSettingsRepositoryImplementation extends BaseDbRepository
   @override
   Stream<UserSettingsModel> watchUserSettings() {
     return _appDatabase.userSettingsDao.watchUserSettings().map(
-          (event) => UserSettingsModel.fromJson(jsonDecode(event.settings)),
+          (event) => event != null
+              ? UserSettingsModel.fromJson(
+                  jsonDecode(event.settings),
+                )
+              : UserSettingsModel.placeholder,
         );
   }
 }

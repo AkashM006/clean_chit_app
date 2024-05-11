@@ -107,8 +107,9 @@ class __$$UserSettingsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserSettingsModelImpl implements _UserSettingsModel {
-  const _$UserSettingsModelImpl({required this.loginType, this.userPin = ""});
+class _$UserSettingsModelImpl extends _UserSettingsModel {
+  const _$UserSettingsModelImpl({required this.loginType, this.userPin = ""})
+      : super._();
 
   factory _$UserSettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserSettingsModelImplFromJson(json);
@@ -153,10 +154,11 @@ class _$UserSettingsModelImpl implements _UserSettingsModel {
   }
 }
 
-abstract class _UserSettingsModel implements UserSettingsModel {
+abstract class _UserSettingsModel extends UserSettingsModel {
   const factory _UserSettingsModel(
       {required final LoginType loginType,
       final String userPin}) = _$UserSettingsModelImpl;
+  const _UserSettingsModel._() : super._();
 
   factory _UserSettingsModel.fromJson(Map<String, dynamic> json) =
       _$UserSettingsModelImpl.fromJson;

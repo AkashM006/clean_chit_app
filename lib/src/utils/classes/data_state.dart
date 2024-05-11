@@ -5,6 +5,10 @@ abstract class DataState<T> {
   final CustomError? error;
 
   const DataState({this.data, this.error});
+  C fold<C>(C Function() onSuccess, C Function(CustomError error) onFailure) {
+    if (this.error != null) return onFailure(this.error!);
+    return onSuccess();
+  }
 }
 
 class DataSuccess<T> extends DataState<T> {

@@ -1,11 +1,17 @@
+import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/config/theme.config.dart';
 import 'package:chit_app_clean/src/locator.dart';
 import 'package:chit_app_clean/src/utils/widgets/background_listener.wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   setup();
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +25,7 @@ class MyApp extends StatelessWidget {
       theme: appLightTheme,
       darkTheme: appDarkTheme,
       home: const BackgroundListenerWrapper(
-        child: Center(
-          child: Text("Hello Chit app"),
-        ),
+        child: App(),
       ),
     );
   }
