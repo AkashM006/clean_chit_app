@@ -6,9 +6,14 @@ import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  final GoRouterState routerState;
+  const App({
+    super.key,
+    required this.routerState,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

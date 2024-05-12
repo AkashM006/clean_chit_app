@@ -1,6 +1,7 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/user_settings.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/user_settings.controller.dart';
+import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
 import 'package:chit_app_clean/src/presentation/widgets/auth/radio_list_tile_button.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/widgets/responsive.widget.dart';
@@ -49,6 +50,7 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
             userPin: pin,
           ),
         );
+    ref.read(authStateProvider.notifier).login();
   }
 
   @override

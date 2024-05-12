@@ -8,7 +8,11 @@ const pageAnimationDuration = Duration(milliseconds: 400);
 const pageAnimattionCurve = Curves.easeInOut;
 
 class PinSetupPage extends ConsumerStatefulWidget {
-  const PinSetupPage({super.key});
+  final GoRouterState routerState;
+  const PinSetupPage({
+    super.key,
+    required this.routerState,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => PinSetupPageState();
