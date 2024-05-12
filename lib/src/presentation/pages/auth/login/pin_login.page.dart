@@ -1,21 +1,21 @@
 import 'package:chit_app_clean/src/config/settings.config.dart';
+import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PinLoginPage extends StatefulWidget {
+class PinLoginPage extends ConsumerStatefulWidget {
   final String pin;
-  final void Function() loginHandler;
   const PinLoginPage({
     super.key,
     required this.pin,
-    required this.loginHandler,
   });
 
   @override
-  State<PinLoginPage> createState() => _PinLoginPageState();
+  ConsumerState<PinLoginPage> createState() => _PinLoginPageState();
 }
 
-class _PinLoginPageState extends State<PinLoginPage> {
+class _PinLoginPageState extends ConsumerState<PinLoginPage> {
   final _formKey = GlobalKey<FormState>();
   String pin = '';
 
@@ -26,7 +26,7 @@ class _PinLoginPageState extends State<PinLoginPage> {
 
   void _loginHandler() {
     if (!_formKey.currentState!.validate()) return;
-    widget.loginHandler();
+    ref.read(authStateProvider.notifier).login();
   }
 
   @override

@@ -14,10 +14,6 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SizeConfig.init(context);
 
-    void loginHandler() {
-      // Navigator.pushReplacement(context, newRoute);
-    }
-
     final userSettings = ref.watch(userSettingsProvider);
 
     return userSettings.when(
@@ -29,7 +25,6 @@ class App extends ConsumerWidget {
         if (data.isCustomPinLock) {
           return PinLoginPage(
             pin: data.userPin,
-            loginHandler: loginHandler,
           );
         }
 

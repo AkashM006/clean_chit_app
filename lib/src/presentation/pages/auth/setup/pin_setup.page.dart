@@ -2,6 +2,7 @@ import 'package:chit_app_clean/src/presentation/widgets/auth/pin_setup/pin_setup
 import 'package:chit_app_clean/src/presentation/widgets/auth/pin_setup/pin_setup_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 const pageAnimationDuration = Duration(milliseconds: 400);
 const pageAnimattionCurve = Curves.easeInOut;
@@ -69,7 +70,8 @@ class PinSetupPageState extends ConsumerState<PinSetupPage> {
     setState(() {
       step = 1;
     });
-    Navigator.pop(context, pin);
+    context.pop(pin);
+    // Navigator.pop(context, pin);
   }
 
   @override

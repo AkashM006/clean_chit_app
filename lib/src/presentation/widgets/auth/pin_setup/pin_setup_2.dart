@@ -20,49 +20,51 @@ class PinSetup2 extends StatelessWidget {
     return PopScope(
       canPop: canPop,
       onPopInvoked: backHandler,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Confirm your PIN",
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            SizedBox(
-              height: SizeConfig.safeBlockVertical * 2,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                constraints: BoxConstraints(maxWidth: 250),
-                hintText: "Confirm PIN",
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Confirm your PIN",
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
-              obscureText: true,
-              textAlign: TextAlign.center,
-              enableSuggestions: false,
-              autocorrect: false,
-              maxLength: 24,
-              validator: validator,
-            ),
-            SizedBox(
-              height: SizeConfig.safeBlockVertical * 2,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () => backHandler(false),
-                  child: const Text("Back"),
+              SizedBox(
+                height: SizeConfig.safeBlockVertical * 2,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  constraints: BoxConstraints(maxWidth: 250),
+                  hintText: "Confirm PIN",
                 ),
-                SizedBox(
-                  width: SizeConfig.safeBlockHorizontal * 2,
-                ),
-                FilledButton(
-                  onPressed: nextHandler,
-                  child: const Text("Proceed"),
-                ),
-              ],
-            ),
-          ],
+                obscureText: true,
+                textAlign: TextAlign.center,
+                enableSuggestions: false,
+                autocorrect: false,
+                maxLength: 24,
+                validator: validator,
+              ),
+              SizedBox(
+                height: SizeConfig.safeBlockVertical * 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => backHandler(false),
+                    child: const Text("Back"),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 2,
+                  ),
+                  FilledButton(
+                    onPressed: nextHandler,
+                    child: const Text("Proceed"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
