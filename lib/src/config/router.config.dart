@@ -71,4 +71,6 @@ final List<RouteBase> routes = PAGES.values
     )
     .toList();
 
-final router = GoRouter(routes: routes);
+// final router = GoRouter(
+//   routes: routes,
+// );

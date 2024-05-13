@@ -1,33 +1,34 @@
-// import 'package:chit_app_clean/src/config/router.config.dart';
-// import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
-// import 'package:riverpod_annotation/riverpod_annotation.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
+import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:go_router/go_router.dart';
 
-// part 'router.state.g.dart';
+part 'router.state.g.dart';
 
-// @riverpod
-// GoRouter router(RouterRef ref) {
-//   final isLoggedIn = ref.watch(authStateProvider);
+final routerKey = GlobalKey<NavigatorState>();
+GoRouter? prevRouter;
 
-// final router = GoRouter(
-//   initialLocation: PAGES.auth.path,
-//   redirect: (context, state) {
-//     if (state.fullPath == null) return null;
+@riverpod
+GoRouter router(RouterRef ref) {
+  final isLoggedIn = ref.watch(authStateProvider);
 
-//     if (state.fullPath == PAGES.auth.path) {
-//       if (!isLoggedIn) return null;
-//       // if user is logged in and tries to reach the auth page then must be taken to home page
-//       return PAGES.home.path;
-//     }
+  return GoRouter(
+    navigatorKey: routerKey,
+    redirect: (context, state) {
+      if (state.fullPath == null) return null;
 
-//     return null;
-//   },
-//   routes: routes,
-// );
+      if (state.fullPath == PAGES.auth.path ||
+          state.fullPath == PAGES.pinsetup.path) {
+        if (isLoggedIn) return PAGES.home.path;
 
-  // ref.onDispose(() {
-  //   router.dispose();
-  // });
+        return null;
+      } else if (!isLoggedIn) {
+        return PAGES.auth.path;
+      }
 
-  // return router;
-// }
+      return null;
+    },
+    routes: routes,
+  );
+}

@@ -44,7 +44,7 @@ class _BackgroundListenerWrapperState
         break;
       case AppLifecycleState.resumed:
         print("Resumed");
-        // ref.read(authStateProvider.notifier).logout();
+        ref.read(authStateProvider.notifier).logout();
         break;
       default:
         break;
