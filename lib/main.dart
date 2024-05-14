@@ -1,6 +1,6 @@
 import 'package:chit_app_clean/src/config/theme.config.dart';
 import 'package:chit_app_clean/src/locator.dart';
-import 'package:chit_app_clean/src/presentation/state/router.state.dart';
+import 'package:chit_app_clean/src/config/router.config.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,8 +19,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
     return MaterialApp.router(
       title: 'Chit App',
       themeMode: ThemeMode.system,

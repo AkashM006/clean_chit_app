@@ -2,6 +2,7 @@ import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/home.page.dart';
+import 'package:chit_app_clean/src/utils/widgets/auth_checker.middleware.dart';
 import 'package:chit_app_clean/src/utils/widgets/background_listener.wrapper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -43,19 +44,37 @@ extension AppRoutesExtension on PAGES {
   Widget Function(BuildContext context, GoRouterState routerState) get builder {
     switch (this) {
       case PAGES.auth:
-        return (context, routerState) => App(routerState: routerState);
-      case PAGES.home:
-        return (context, routerState) => BackgroundListenerWrapper(
-              name: "Home",
-              child: HomePage(
+        return (context, routerState) => AuthCheckerMiddleware(
+              isActive: routerState.fullPath == PAGES.auth.path,
+              shouldBeLoggedIn: false,
+              child: App(
                 routerState: routerState,
               ),
             );
+      case PAGES.home:
+        return (context, routerState) => BackgroundListenerWrapper(
+              name: "Home",
+              child: AuthCheckerMiddleware(
+                isActive: routerState.fullPath == PAGES.home.path,
+                shouldBeLoggedIn: true,
+                child: HomePage(
+                  routerState: routerState,
+                ),
+              ),
+            );
       case PAGES.pinsetup:
-        return (context, routerState) => PinSetupPage(routerState: routerState);
+        return (context, routerState) => AuthCheckerMiddleware(
+              isActive: routerState.fullPath == PAGES.pinsetup.path,
+              shouldBeLoggedIn: false,
+              child: PinSetupPage(routerState: routerState),
+            );
       case PAGES.chits:
-        return (context, routerState) => ChitPage(
-              routerState: routerState,
+        return (context, routerState) => AuthCheckerMiddleware(
+              isActive: routerState.fullPath == PAGES.chits.path,
+              shouldBeLoggedIn: true,
+              child: ChitPage(
+                routerState: routerState,
+              ),
             );
     }
   }
@@ -71,6 +90,9 @@ final List<RouteBase> routes = PAGES.values
     )
     .toList();
 
-// final router = GoRouter(
-//   routes: routes,
-// );
+final navigatorKey = GlobalKey<NavigatorState>();
+
+final router = GoRouter(
+  navigatorKey: navigatorKey,
+  routes: routes,
+);
