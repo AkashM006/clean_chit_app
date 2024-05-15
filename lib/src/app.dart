@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/data/repositories/user_settings_repository_impl.dart';
+import 'package:chit_app_clean/src/presentation/pages/auth/login/device_login.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/login/pin_login.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/auth_setup.page.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
@@ -31,6 +32,10 @@ class App extends ConsumerWidget {
           return PinLoginPage(
             pin: data.userPin,
           );
+        }
+
+        if (data.isDeviceLock) {
+          return const DeviceLoginPage();
         }
 
         return const Center(

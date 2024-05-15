@@ -29,18 +29,12 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
     if (selectedLoginType == LoginType.deviceLock) {
       ref.read(userSettingsControllerProvider.notifier).updateUserSettings(
             const UserSettingsModel(
-              loginType: LoginType.notSet,
+              loginType: LoginType.deviceLock,
             ),
           );
       return;
     }
 
-    // final pin = await Navigator.push<String?>(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => const PinSetupPage(),
-    //   ),
-    // );
     final pin = await context.push<String?>(PAGES.pinsetup.path);
     if (pin == null) return;
 
