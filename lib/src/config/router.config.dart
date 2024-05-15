@@ -45,7 +45,8 @@ extension AppRoutesExtension on PAGES {
     switch (this) {
       case PAGES.auth:
         return (context, routerState) => AuthCheckerMiddleware(
-              isActive: routerState.fullPath == PAGES.auth.path,
+              path: path,
+              canPop: false,
               shouldBeLoggedIn: false,
               child: App(
                 routerState: routerState,
@@ -55,7 +56,7 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => BackgroundListenerWrapper(
               name: "Home",
               child: AuthCheckerMiddleware(
-                isActive: routerState.fullPath == PAGES.home.path,
+                path: path,
                 shouldBeLoggedIn: true,
                 child: HomePage(
                   routerState: routerState,
@@ -64,13 +65,13 @@ extension AppRoutesExtension on PAGES {
             );
       case PAGES.pinsetup:
         return (context, routerState) => AuthCheckerMiddleware(
-              isActive: routerState.fullPath == PAGES.pinsetup.path,
+              path: path,
               shouldBeLoggedIn: false,
               child: PinSetupPage(routerState: routerState),
             );
       case PAGES.chits:
         return (context, routerState) => AuthCheckerMiddleware(
-              isActive: routerState.fullPath == PAGES.chits.path,
+              path: path,
               shouldBeLoggedIn: true,
               child: ChitPage(
                 routerState: routerState,

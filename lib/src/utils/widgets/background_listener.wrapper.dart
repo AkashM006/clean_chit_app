@@ -1,3 +1,4 @@
+import 'package:chit_app_clean/src/config/settings.config.dart';
 import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,12 +40,13 @@ class _BackgroundListenerWrapperState
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.paused:
-        // lastSeen = DateTime.now();
-        print("Paused: ${widget.name}");
+        lastSeen = DateTime.now();
         break;
       case AppLifecycleState.resumed:
-        print("Resumed");
-        ref.read(authStateProvider.notifier).logout();
+        final now = DateTime.now();
+        if (now.difference(lastSeen) > appInactivityDuration) {
+          ref.read(authStateProvider.notifier).logout();
+        }
         break;
       default:
         break;
