@@ -77,8 +77,8 @@ class _ChitPageState extends ConsumerState<ChitPage> {
           currentPage: PAGES.chits,
         ),
         body: switch (chitsStream) {
-          AsyncData(value: final chits) => ChitList(
-              chits: chits,
+          AsyncData(value: final chitsWithDates) => ChitList(
+              chits: chitsWithDates,
               controller: scrollController,
             ),
           AsyncError(:final error) => CustomErrorWidget(error.toString()),

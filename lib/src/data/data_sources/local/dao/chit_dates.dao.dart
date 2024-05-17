@@ -9,11 +9,12 @@ class ChitDatesDao extends DatabaseAccessor<AppDatabase>
     with _$ChitDatesDaoMixin {
   ChitDatesDao(super.db);
 
-  Future<List<ChitDate>> getDates(int id) async {
-    return await (select(chitDates)
+  Future<List<DateTime>> getDates(int id) async {
+    final result = await (select(chitDates)
           ..where((tbl) => tbl.belongsTo.equals(id))
           ..orderBy([(tbl) => OrderingTerm.asc(tbl.id)]))
         .get();
+    return result.map((e) => e.date).toList();
   }
 
   Future<void> addDates(List<DateTime> dates, int id) async {

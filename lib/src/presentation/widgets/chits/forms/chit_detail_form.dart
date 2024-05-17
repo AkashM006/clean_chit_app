@@ -131,29 +131,23 @@ class _ChitDetailFormState extends State<ChitDetailForm> {
   }
 
   void _nextHandler() {
-    // todo: Need to implement
     final isFormValid = _formKey.currentState?.validate() ?? false;
 
     if (!isFormValid) return;
 
     _formKey.currentState!.save();
 
-    final isCreateMode = widget.chit == null;
-
-    if (isCreateMode) {
-      widget.onChitDetailSave(ChitModel(
-        name: _name,
-        amount: _amount,
-        people: _people,
-        commissionPercentage: _commissionPercentage,
-        frequencyType: _frequencyType,
-        frequencyNumber: _frequencyNumber,
-        fManAuctionNumber: _fManAuctionNumber,
-        startDate: _startDate,
-        endDate: DateTime.now(),
-      ));
-      return;
-    }
+    widget.onChitDetailSave(ChitModel(
+      name: _name,
+      amount: _amount,
+      people: _people,
+      commissionPercentage: _commissionPercentage,
+      frequencyType: _frequencyType,
+      frequencyNumber: _frequencyNumber,
+      fManAuctionNumber: _fManAuctionNumber,
+      startDate: _startDate,
+      endDate: DateTime.now(),
+    ));
   }
 
   @override

@@ -13,7 +13,7 @@ part 'chit.controller.freezed.dart';
 class ChitControllerState with _$ChitControllerState {
   const factory ChitControllerState({
     @Default(ControllerState()) ControllerState createChit,
-    @Default(ControllerState()) ControllerState setChitDates,
+    @Default(ControllerState()) ControllerState editChit,
   }) = $ChitControllerState;
 }
 
@@ -26,7 +26,7 @@ class ChitController extends _$ChitController {
     return const ChitControllerState();
   }
 
-  void createChit(ChitModel newChit, List<DateTime> dates) async {
+  void createChit(ChitModel newChit) async {
     state = state.copyWith(
       createChit: state.createChit.setLoading(),
     );
@@ -44,7 +44,7 @@ class ChitController extends _$ChitController {
 
     final chitId = result.data!.id;
 
-    final chitDatesResult = await _setChitDates(dates, chitId);
+    final chitDatesResult = await _setChitDates(newChit.dates, chitId);
 
     state = chitDatesResult.fold(
       (data) => state.copyWith(
@@ -64,4 +64,6 @@ class ChitController extends _$ChitController {
       List<DateTime> dates, int chitId) async {
     return await _chitRepository.setDates(dates, chitId);
   }
+
+  void editChit(ChitModel newChit) {}
 }

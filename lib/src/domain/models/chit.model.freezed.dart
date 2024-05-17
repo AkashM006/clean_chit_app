@@ -26,6 +26,7 @@ mixin _$ChitModel {
   int get fManAuctionNumber => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
+  List<DateTime> get dates => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChitModelCopyWith<ChitModel> get copyWith =>
@@ -47,7 +48,8 @@ abstract class $ChitModelCopyWith<$Res> {
       int frequencyNumber,
       int fManAuctionNumber,
       DateTime startDate,
-      DateTime endDate});
+      DateTime endDate,
+      List<DateTime> dates});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$ChitModelCopyWithImpl<$Res, $Val extends ChitModel>
     Object? fManAuctionNumber = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? dates = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -115,6 +118,10 @@ class _$ChitModelCopyWithImpl<$Res, $Val extends ChitModel>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      dates: null == dates
+          ? _value.dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
     ) as $Val);
   }
 }
@@ -137,7 +144,8 @@ abstract class _$$ChitModelImplCopyWith<$Res>
       int frequencyNumber,
       int fManAuctionNumber,
       DateTime startDate,
-      DateTime endDate});
+      DateTime endDate,
+      List<DateTime> dates});
 }
 
 /// @nodoc
@@ -161,6 +169,7 @@ class __$$ChitModelImplCopyWithImpl<$Res>
     Object? fManAuctionNumber = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? dates = null,
   }) {
     return _then(_$ChitModelImpl(
       id: null == id
@@ -203,6 +212,10 @@ class __$$ChitModelImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      dates: null == dates
+          ? _value._dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
     ));
   }
 }
@@ -220,7 +233,9 @@ class _$ChitModelImpl implements _ChitModel {
       required this.frequencyNumber,
       required this.fManAuctionNumber,
       required this.startDate,
-      required this.endDate});
+      required this.endDate,
+      final List<DateTime> dates = const []})
+      : _dates = dates;
 
   @override
   @JsonKey()
@@ -243,10 +258,18 @@ class _$ChitModelImpl implements _ChitModel {
   final DateTime startDate;
   @override
   final DateTime endDate;
+  final List<DateTime> _dates;
+  @override
+  @JsonKey()
+  List<DateTime> get dates {
+    if (_dates is EqualUnmodifiableListView) return _dates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dates);
+  }
 
   @override
   String toString() {
-    return 'ChitModel(id: $id, name: $name, amount: $amount, people: $people, commissionPercentage: $commissionPercentage, frequencyType: $frequencyType, frequencyNumber: $frequencyNumber, fManAuctionNumber: $fManAuctionNumber, startDate: $startDate, endDate: $endDate)';
+    return 'ChitModel(id: $id, name: $name, amount: $amount, people: $people, commissionPercentage: $commissionPercentage, frequencyType: $frequencyType, frequencyNumber: $frequencyNumber, fManAuctionNumber: $fManAuctionNumber, startDate: $startDate, endDate: $endDate, dates: $dates)';
   }
 
   @override
@@ -268,7 +291,8 @@ class _$ChitModelImpl implements _ChitModel {
                 other.fManAuctionNumber == fManAuctionNumber) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            const DeepCollectionEquality().equals(other._dates, _dates));
   }
 
   @override
@@ -283,7 +307,8 @@ class _$ChitModelImpl implements _ChitModel {
       frequencyNumber,
       fManAuctionNumber,
       startDate,
-      endDate);
+      endDate,
+      const DeepCollectionEquality().hash(_dates));
 
   @JsonKey(ignore: true)
   @override
@@ -303,7 +328,8 @@ abstract class _ChitModel implements ChitModel {
       required final int frequencyNumber,
       required final int fManAuctionNumber,
       required final DateTime startDate,
-      required final DateTime endDate}) = _$ChitModelImpl;
+      required final DateTime endDate,
+      final List<DateTime> dates}) = _$ChitModelImpl;
 
   @override
   int get id;
@@ -326,7 +352,166 @@ abstract class _ChitModel implements ChitModel {
   @override
   DateTime get endDate;
   @override
+  List<DateTime> get dates;
+  @override
   @JsonKey(ignore: true)
   _$$ChitModelImplCopyWith<_$ChitModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ChitWithDates {
+  ChitModel get chit => throw _privateConstructorUsedError;
+  List<DateTime> get dates => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ChitWithDatesCopyWith<ChitWithDates> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChitWithDatesCopyWith<$Res> {
+  factory $ChitWithDatesCopyWith(
+          ChitWithDates value, $Res Function(ChitWithDates) then) =
+      _$ChitWithDatesCopyWithImpl<$Res, ChitWithDates>;
+  @useResult
+  $Res call({ChitModel chit, List<DateTime> dates});
+
+  $ChitModelCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class _$ChitWithDatesCopyWithImpl<$Res, $Val extends ChitWithDates>
+    implements $ChitWithDatesCopyWith<$Res> {
+  _$ChitWithDatesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chit = null,
+    Object? dates = null,
+  }) {
+    return _then(_value.copyWith(
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitModel,
+      dates: null == dates
+          ? _value.dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChitModelCopyWith<$Res> get chit {
+    return $ChitModelCopyWith<$Res>(_value.chit, (value) {
+      return _then(_value.copyWith(chit: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$$ChitWithDatesImplCopyWith<$Res>
+    implements $ChitWithDatesCopyWith<$Res> {
+  factory _$$$ChitWithDatesImplCopyWith(_$$ChitWithDatesImpl value,
+          $Res Function(_$$ChitWithDatesImpl) then) =
+      __$$$ChitWithDatesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ChitModel chit, List<DateTime> dates});
+
+  @override
+  $ChitModelCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class __$$$ChitWithDatesImplCopyWithImpl<$Res>
+    extends _$ChitWithDatesCopyWithImpl<$Res, _$$ChitWithDatesImpl>
+    implements _$$$ChitWithDatesImplCopyWith<$Res> {
+  __$$$ChitWithDatesImplCopyWithImpl(
+      _$$ChitWithDatesImpl _value, $Res Function(_$$ChitWithDatesImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chit = null,
+    Object? dates = null,
+  }) {
+    return _then(_$$ChitWithDatesImpl(
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitModel,
+      dates: null == dates
+          ? _value._dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$$ChitWithDatesImpl implements $ChitWithDates {
+  const _$$ChitWithDatesImpl(
+      {required this.chit, required final List<DateTime> dates})
+      : _dates = dates;
+
+  @override
+  final ChitModel chit;
+  final List<DateTime> _dates;
+  @override
+  List<DateTime> get dates {
+    if (_dates is EqualUnmodifiableListView) return _dates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dates);
+  }
+
+  @override
+  String toString() {
+    return 'ChitWithDates(chit: $chit, dates: $dates)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$$ChitWithDatesImpl &&
+            (identical(other.chit, chit) || other.chit == chit) &&
+            const DeepCollectionEquality().equals(other._dates, _dates));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, chit, const DeepCollectionEquality().hash(_dates));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$$ChitWithDatesImplCopyWith<_$$ChitWithDatesImpl> get copyWith =>
+      __$$$ChitWithDatesImplCopyWithImpl<_$$ChitWithDatesImpl>(
+          this, _$identity);
+}
+
+abstract class $ChitWithDates implements ChitWithDates {
+  const factory $ChitWithDates(
+      {required final ChitModel chit,
+      required final List<DateTime> dates}) = _$$ChitWithDatesImpl;
+
+  @override
+  ChitModel get chit;
+  @override
+  List<DateTime> get dates;
+  @override
+  @JsonKey(ignore: true)
+  _$$$ChitWithDatesImplCopyWith<_$$ChitWithDatesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

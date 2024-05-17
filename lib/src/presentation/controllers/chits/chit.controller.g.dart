@@ -6,7 +6,7 @@ part of 'chit.controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chitControllerHash() => r'0664d7d2533add2b8567c629dfaf9a9077508b9b';
+String _$chitControllerHash() => r'9312ddecf88a4f7e238cc838640c44a9b2ca6e4b';
 
 /// See also [ChitController].
 @ProviderFor(ChitController)

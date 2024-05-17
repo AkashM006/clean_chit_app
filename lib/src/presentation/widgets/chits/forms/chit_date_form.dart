@@ -9,6 +9,7 @@ class ChitDateForm extends ConsumerWidget {
   final void Function() onBackhandler;
   final void Function() onSubmitHandler;
   final bool isLoading;
+  final bool isCreating;
 
   const ChitDateForm({
     super.key,
@@ -17,6 +18,7 @@ class ChitDateForm extends ConsumerWidget {
     required this.isLoading,
     required this.onBackhandler,
     required this.onSubmitHandler,
+    required this.isCreating,
   });
 
   @override
@@ -71,7 +73,7 @@ class ChitDateForm extends ConsumerWidget {
                   ),
                   FilledButton(
                     onPressed: isLoading ? null : onSubmitHandler,
-                    child: const Text("Create Chit"),
+                    child: Text(isCreating ? "Create Chit" : "Edit Chit"),
                   )
                 ],
               ),

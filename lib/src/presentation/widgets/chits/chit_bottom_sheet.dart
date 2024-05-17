@@ -8,22 +8,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const animationDuration = Duration(milliseconds: 250);
 
-void showChitBottomSheet(context, ChitModel? chit) {
+void showChitBottomSheet(context, ChitWithDates? chit) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     builder: (context) {
-      return const ChitBottomSheet();
+      return ChitBottomSheet(
+        chitWithDates: chit,
+      );
     },
   );
 }
 
 class ChitBottomSheet extends ConsumerStatefulWidget {
-  final ChitModel? chit;
+  final ChitWithDates? chitWithDates;
   const ChitBottomSheet({
     super.key,
-    this.chit,
+    this.chitWithDates,
   });
 
   @override
@@ -38,7 +40,8 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
 
   @override
   void initState() {
-    newChit = widget.chit ?? ChitModel.placeholder;
+    newChit = widget.chitWithDates?.chit ?? ChitModel.placeholder;
+    _dates = widget.chitWithDates?.dates ?? [];
     super.initState();
   }
 
@@ -71,7 +74,12 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
   }
 
   void handleFormSubmit() {
-    ref.read(chitControllerProvider.notifier).createChit(newChit, _dates);
+    newChit = newChit.copyWith(dates: _dates);
+    if (widget.chitWithDates == null) {
+      ref.read(chitControllerProvider.notifier).createChit(newChit);
+    } else {
+      ref.read(chitControllerProvider.notifier).editChit(newChit);
+    }
   }
 
   @override
@@ -108,7 +116,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              "Successfully create your chit!",
+              "Successfully created your chit!",
             ),
           ),
         );
@@ -128,7 +136,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
         duration: animationDuration,
         child: AnimatedCrossFade(
           firstChild: ChitDetailForm(
-            chit: widget.chit,
+            chit: widget.chitWithDates?.chit,
             onChitDetailSave: onChitDetailSave,
           ),
           secondChild: ChitDateForm(
@@ -139,6 +147,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
               currentChitStep = 1;
             }),
             onSubmitHandler: handleFormSubmit,
+            isCreating: widget.chitWithDates == null,
           ),
           crossFadeState: currentChitStep == 1
               ? CrossFadeState.showFirst

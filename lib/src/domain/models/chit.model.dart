@@ -17,6 +17,7 @@ class ChitModel with _$ChitModel {
     required int fManAuctionNumber,
     required DateTime startDate,
     required DateTime endDate,
+    @Default([]) List<DateTime> dates,
   }) = _ChitModel;
 
   static ChitModel get placeholder => ChitModel(
@@ -29,5 +30,14 @@ class ChitModel with _$ChitModel {
         startDate: DateTime.now(),
         endDate: DateTime.now(),
         frequencyType: FrequencyType.monthly,
+        dates: [],
       );
+}
+
+@freezed
+class ChitWithDates with _$ChitWithDates {
+  const factory ChitWithDates({
+    required ChitModel chit,
+    required List<DateTime> dates,
+  }) = $ChitWithDates;
 }

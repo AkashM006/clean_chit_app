@@ -4,7 +4,7 @@ import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ChitList extends StatelessWidget {
-  final List<ChitModel> chits;
+  final List<ChitWithDates> chits;
   final ScrollController? controller;
   const ChitList({
     super.key,
@@ -34,7 +34,7 @@ class ChitList extends StatelessWidget {
       controller: controller,
       itemCount: chits.length,
       itemBuilder: (context, index) => ChitItem(
-        chit: chits[index],
+        chitWithDates: chits[index],
       ),
     );
   }
