@@ -31,13 +31,13 @@ extension AppRoutesExtension on PAGES {
   String get name {
     switch (this) {
       case PAGES.auth:
-        return 'AUTH';
+        return 'Auth';
       case PAGES.home:
-        return 'HOME';
+        return 'Home';
       case PAGES.pinsetup:
-        return "PIN SETUP";
+        return "Setup Pin";
       case PAGES.chits:
-        return 'chits';
+        return 'Chits';
     }
   }
 
@@ -58,9 +58,7 @@ extension AppRoutesExtension on PAGES {
               child: AuthCheckerMiddleware(
                 path: path,
                 shouldBeLoggedIn: true,
-                child: HomePage(
-                  routerState: routerState,
-                ),
+                child: const HomePage(),
               ),
             );
       case PAGES.pinsetup:
@@ -73,9 +71,7 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => AuthCheckerMiddleware(
               path: path,
               shouldBeLoggedIn: true,
-              child: ChitPage(
-                routerState: routerState,
-              ),
+              child: const ChitPage(),
             );
     }
   }

@@ -1,26 +1,24 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
+import 'package:chit_app_clean/src/presentation/widgets/common/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
-  final GoRouterState routerState;
   const HomePage({
     super.key,
-    required this.routerState,
   });
 
   @override
   Widget build(BuildContext context) {
-    void handleNavigation() {
-      context.push(PAGES.chits.path);
-    }
-
-    return Scaffold(
+    return const Scaffold(
+      appBar: CustomAppBar(
+        title: "Home",
+      ),
+      drawer: AppDrawer(
+        currentPage: PAGES.home,
+      ),
       body: Center(
-        child: TextButton(
-          onPressed: handleNavigation,
-          child: const Text("Go to chits"),
-        ),
+        child: Text("Home"),
       ),
     );
   }
