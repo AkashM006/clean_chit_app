@@ -12,6 +12,7 @@ class ChitItem extends ConsumerWidget {
   });
 
   void handleEdit(BuildContext context, WidgetRef ref) {
+    // todo : Need to implement this update handler
     // ref.read(chitFormNotifierProvider.notifier).setEditFormData(chit);
     // showChitBottomSheet(context);
   }

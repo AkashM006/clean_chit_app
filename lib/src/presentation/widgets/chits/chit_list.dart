@@ -1,12 +1,15 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chits/chit_item.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ChitList extends StatelessWidget {
   final List<ChitModel> chits;
+  final ScrollController? controller;
   const ChitList({
     super.key,
     required this.chits,
+    this.controller,
   });
 
   @override
@@ -27,6 +30,12 @@ class ChitList extends StatelessWidget {
       );
     }
 
-    return Container();
+    return ListView.builder(
+      controller: controller,
+      itemCount: chits.length,
+      itemBuilder: (context, index) => ChitItem(
+        chit: chits[index],
+      ),
+    );
   }
 }
