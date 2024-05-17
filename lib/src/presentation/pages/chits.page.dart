@@ -1,5 +1,6 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/data/repositories/chits/chit_repository_impl.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chits/chit_bottom_sheet.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/chit_list.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/drawer.dart';
@@ -55,9 +56,7 @@ class _ChitPageState extends ConsumerState<ChitPage> {
   }
 
   void createHandler() {
-    // todo: need to implement this
-    // ref.read(chitFormNotifierProvider.notifier).setFormMode(FormMode.create);
-    // showChitBottomSheet(context);
+    showChitBottomSheet(context, null);
   }
 
   final scrollController = ScrollController();

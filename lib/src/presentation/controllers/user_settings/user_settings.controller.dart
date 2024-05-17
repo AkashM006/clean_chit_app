@@ -29,13 +29,11 @@ class UserSettingsController extends _$UserSettingsController {
       updateUserSettings: state.updateUserSettings.setLoading(),
     );
 
-    await Future.delayed(const Duration(seconds: 3));
-
     final result =
         await userSettingsRepository.updateUserSettings(newUserSettings);
 
     state = result.fold(
-      () => state.copyWith(
+      (data) => state.copyWith(
         updateUserSettings: state.updateUserSettings.setSuccess(null),
       ),
       (error) => state.copyWith(

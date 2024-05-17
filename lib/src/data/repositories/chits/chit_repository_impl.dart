@@ -3,6 +3,7 @@ import 'package:chit_app_clean/src/data/repositories/base/base_db_repository.dar
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/repositories/chit_repository.dart';
 import 'package:chit_app_clean/src/locator.dart';
+import 'package:chit_app_clean/src/utils/classes/data_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'chit_repository_impl.g.dart';
@@ -33,6 +34,16 @@ class ChitRepositoryImplementation extends BaseDbRepository
               )
               .toList(),
         );
+  }
+
+  @override
+  Future<DataState<ChitModel>> createChit(ChitModel newChit) {
+    return safeExecute(() => _appDatabase.chitDao.insertChit(newChit));
+  }
+
+  @override
+  Future<DataState<void>> setDates(List<DateTime> dates, int chitId) {
+    return safeExecute(() => _appDatabase.chitDatesDao.addDates(dates, chitId));
   }
 }
 

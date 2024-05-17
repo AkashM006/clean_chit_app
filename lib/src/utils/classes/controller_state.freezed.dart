@@ -15,27 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ControllerState {
+mixin _$ControllerState<T> {
   String get message => throw _privateConstructorUsedError;
   ControllerStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ControllerStateCopyWith<ControllerState> get copyWith =>
+  $ControllerStateCopyWith<T, ControllerState<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ControllerStateCopyWith<$Res> {
+abstract class $ControllerStateCopyWith<T, $Res> {
   factory $ControllerStateCopyWith(
-          ControllerState value, $Res Function(ControllerState) then) =
-      _$ControllerStateCopyWithImpl<$Res, ControllerState>;
+          ControllerState<T> value, $Res Function(ControllerState<T>) then) =
+      _$ControllerStateCopyWithImpl<T, $Res, ControllerState<T>>;
   @useResult
   $Res call({String message, ControllerStatus status});
 }
 
 /// @nodoc
-class _$ControllerStateCopyWithImpl<$Res, $Val extends ControllerState>
-    implements $ControllerStateCopyWith<$Res> {
+class _$ControllerStateCopyWithImpl<T, $Res, $Val extends ControllerState<T>>
+    implements $ControllerStateCopyWith<T, $Res> {
   _$ControllerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -63,22 +63,22 @@ class _$ControllerStateCopyWithImpl<$Res, $Val extends ControllerState>
 }
 
 /// @nodoc
-abstract class _$$ControllerStateImplCopyWith<$Res>
-    implements $ControllerStateCopyWith<$Res> {
-  factory _$$ControllerStateImplCopyWith(_$ControllerStateImpl value,
-          $Res Function(_$ControllerStateImpl) then) =
-      __$$ControllerStateImplCopyWithImpl<$Res>;
+abstract class _$$ControllerStateImplCopyWith<T, $Res>
+    implements $ControllerStateCopyWith<T, $Res> {
+  factory _$$ControllerStateImplCopyWith(_$ControllerStateImpl<T> value,
+          $Res Function(_$ControllerStateImpl<T>) then) =
+      __$$ControllerStateImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call({String message, ControllerStatus status});
 }
 
 /// @nodoc
-class __$$ControllerStateImplCopyWithImpl<$Res>
-    extends _$ControllerStateCopyWithImpl<$Res, _$ControllerStateImpl>
-    implements _$$ControllerStateImplCopyWith<$Res> {
-  __$$ControllerStateImplCopyWithImpl(
-      _$ControllerStateImpl _value, $Res Function(_$ControllerStateImpl) _then)
+class __$$ControllerStateImplCopyWithImpl<T, $Res>
+    extends _$ControllerStateCopyWithImpl<T, $Res, _$ControllerStateImpl<T>>
+    implements _$$ControllerStateImplCopyWith<T, $Res> {
+  __$$ControllerStateImplCopyWithImpl(_$ControllerStateImpl<T> _value,
+      $Res Function(_$ControllerStateImpl<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$ControllerStateImplCopyWithImpl<$Res>
     Object? message = null,
     Object? status = null,
   }) {
-    return _then(_$ControllerStateImpl(
+    return _then(_$ControllerStateImpl<T>(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -102,7 +102,7 @@ class __$$ControllerStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ControllerStateImpl extends _ControllerState {
+class _$ControllerStateImpl<T> extends _ControllerState<T> {
   const _$ControllerStateImpl(
       {this.message = '', this.status = ControllerStatus.init})
       : super._();
@@ -116,14 +116,14 @@ class _$ControllerStateImpl extends _ControllerState {
 
   @override
   String toString() {
-    return 'ControllerState(message: $message, status: $status)';
+    return 'ControllerState<$T>(message: $message, status: $status)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ControllerStateImpl &&
+            other is _$ControllerStateImpl<T> &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.status, status) || other.status == status));
   }
@@ -134,15 +134,15 @@ class _$ControllerStateImpl extends _ControllerState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ControllerStateImplCopyWith<_$ControllerStateImpl> get copyWith =>
-      __$$ControllerStateImplCopyWithImpl<_$ControllerStateImpl>(
+  _$$ControllerStateImplCopyWith<T, _$ControllerStateImpl<T>> get copyWith =>
+      __$$ControllerStateImplCopyWithImpl<T, _$ControllerStateImpl<T>>(
           this, _$identity);
 }
 
-abstract class _ControllerState extends ControllerState {
+abstract class _ControllerState<T> extends ControllerState<T> {
   const factory _ControllerState(
       {final String message,
-      final ControllerStatus status}) = _$ControllerStateImpl;
+      final ControllerStatus status}) = _$ControllerStateImpl<T>;
   const _ControllerState._() : super._();
 
   @override
@@ -151,6 +151,6 @@ abstract class _ControllerState extends ControllerState {
   ControllerStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$ControllerStateImplCopyWith<_$ControllerStateImpl> get copyWith =>
+  _$$ControllerStateImplCopyWith<T, _$ControllerStateImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

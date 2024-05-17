@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserSettingsControllerState {
-  ControllerState get updateUserSettings => throw _privateConstructorUsedError;
+  ControllerState<dynamic> get updateUserSettings =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserSettingsControllerStateCopyWith<UserSettingsControllerState>
@@ -31,9 +32,9 @@ abstract class $UserSettingsControllerStateCopyWith<$Res> {
       _$UserSettingsControllerStateCopyWithImpl<$Res,
           UserSettingsControllerState>;
   @useResult
-  $Res call({ControllerState updateUserSettings});
+  $Res call({ControllerState<dynamic> updateUserSettings});
 
-  $ControllerStateCopyWith<$Res> get updateUserSettings;
+  $ControllerStateCopyWith<dynamic, $Res> get updateUserSettings;
 }
 
 /// @nodoc
@@ -56,14 +57,15 @@ class _$UserSettingsControllerStateCopyWithImpl<$Res,
       updateUserSettings: null == updateUserSettings
           ? _value.updateUserSettings
           : updateUserSettings // ignore: cast_nullable_to_non_nullable
-              as ControllerState,
+              as ControllerState<dynamic>,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ControllerStateCopyWith<$Res> get updateUserSettings {
-    return $ControllerStateCopyWith<$Res>(_value.updateUserSettings, (value) {
+  $ControllerStateCopyWith<dynamic, $Res> get updateUserSettings {
+    return $ControllerStateCopyWith<dynamic, $Res>(_value.updateUserSettings,
+        (value) {
       return _then(_value.copyWith(updateUserSettings: value) as $Val);
     });
   }
@@ -78,10 +80,10 @@ abstract class _$$$UserSettingsControllerStateImplCopyWith<$Res>
       __$$$UserSettingsControllerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ControllerState updateUserSettings});
+  $Res call({ControllerState<dynamic> updateUserSettings});
 
   @override
-  $ControllerStateCopyWith<$Res> get updateUserSettings;
+  $ControllerStateCopyWith<dynamic, $Res> get updateUserSettings;
 }
 
 /// @nodoc
@@ -103,7 +105,7 @@ class __$$$UserSettingsControllerStateImplCopyWithImpl<$Res>
       updateUserSettings: null == updateUserSettings
           ? _value.updateUserSettings
           : updateUserSettings // ignore: cast_nullable_to_non_nullable
-              as ControllerState,
+              as ControllerState<dynamic>,
     ));
   }
 }
@@ -117,7 +119,7 @@ class _$$UserSettingsControllerStateImpl
 
   @override
   @JsonKey()
-  final ControllerState updateUserSettings;
+  final ControllerState<dynamic> updateUserSettings;
 
   @override
   String toString() {
@@ -148,11 +150,11 @@ class _$$UserSettingsControllerStateImpl
 abstract class $UserSettingsControllerState
     implements UserSettingsControllerState {
   const factory $UserSettingsControllerState(
-          {final ControllerState updateUserSettings}) =
+          {final ControllerState<dynamic> updateUserSettings}) =
       _$$UserSettingsControllerStateImpl;
 
   @override
-  ControllerState get updateUserSettings;
+  ControllerState<dynamic> get updateUserSettings;
   @override
   @JsonKey(ignore: true)
   _$$$UserSettingsControllerStateImplCopyWith<

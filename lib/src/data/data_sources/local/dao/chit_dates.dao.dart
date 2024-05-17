@@ -16,7 +16,15 @@ class ChitDatesDao extends DatabaseAccessor<AppDatabase>
         .get();
   }
 
-  Future<void> addDates(List<ChitDatesCompanion> dates) async {
-    await batch((batch) => batch.insertAll(chitDates, dates));
+  Future<void> addDates(List<DateTime> dates, int id) async {
+    final dateCompanions = dates
+        .map(
+          (e) => ChitDatesCompanion(
+            date: Value(e),
+            belongsTo: Value(id),
+          ),
+        )
+        .toList();
+    await batch((batch) => batch.insertAll(chitDates, dateCompanions));
   }
 }

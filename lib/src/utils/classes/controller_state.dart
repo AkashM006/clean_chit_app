@@ -3,13 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'controller_state.freezed.dart';
 
 @freezed
-class ControllerState with _$ControllerState {
+class ControllerState<T> with _$ControllerState {
   const ControllerState._();
 
   const factory ControllerState({
     @Default('') String message,
     @Default(ControllerStatus.init) ControllerStatus status,
-  }) = _ControllerState;
+  }) = _ControllerState<T>;
 
   bool get isLoading => status == ControllerStatus.loading;
   bool get isSuccess => status == ControllerStatus.success;
