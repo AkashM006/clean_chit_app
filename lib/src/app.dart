@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/data/repositories/user_settings_repository_impl.dart';
+import 'package:chit_app_clean/src/data/repositories/user_settings/user_settings_repository_impl.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/login/device_login.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/login/pin_login.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/auth_setup.page.dart';
