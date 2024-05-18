@@ -34,8 +34,10 @@ class IntegerFormatter extends TextInputFormatter {
     );
 
     final newValueText = newValue.text.replaceAll(',', '');
-    if (newValue.text.isEmpty ||
-        (newValue.text.isNotEmpty && int.tryParse(newValueText) == null)) {
+
+    if (newValue.text.isEmpty) return newValue;
+
+    if (newValue.text.isNotEmpty && int.tryParse(newValueText) == null) {
       return oldReturnValue;
     }
 
