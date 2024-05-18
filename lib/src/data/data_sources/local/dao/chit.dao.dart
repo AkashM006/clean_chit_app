@@ -40,6 +40,7 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
   }
 
   Future<void> insertChit(ChitModel chit) async {
+    print("Here: ${chit}");
     await transaction(() async {
       final result = await into(chits).insertReturning(
         modelToChitsCompanion(chit),

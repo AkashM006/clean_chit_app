@@ -93,6 +93,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
 
   void handleFormSubmit() {
     if (widget.chit == null) {
+      newChit = newChit.copyWith(dates: _dates);
       ref.read(chitControllerProvider.notifier).createChit(newChit);
     } else {
       newChit = newChit.copyWith(
