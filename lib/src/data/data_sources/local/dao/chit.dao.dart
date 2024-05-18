@@ -13,7 +13,7 @@ part 'chit.dao.g.dart';
 class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
   ChitDao(super.db);
 
-  Stream<List<ChitWithDates>> watchChits() {
+  Stream<List<ChitModel>> watchChits() {
     final query = select(chits).join(
         [leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id))]);
 
@@ -31,38 +31,37 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
         final chitResult = rows
             .firstWhere((row) => row.readTable(chits).id == entry.key)
             .readTable(chits);
-        return ChitWithDates(
-          chit: chitToModel(chitResult),
+        final chitModel = chitToModel(chitResult).copyWith(
           dates: entry.value.map((e) => chitDateToModel(e)).toList(),
         );
+        return chitModel;
       }).toList();
     });
   }
 
-  Future<List<Chit>> getChits() async {
-    return await select(chits).get();
-  }
-
-  Future<ChitModel> insertChit(ChitModel chit) async {
-    final result = await into(chits).insertReturning(ChitsCompanion(
-      amount: Value(chit.amount),
-      commissionPercentage: Value(chit.commissionPercentage),
-      createdAt: Value(DateTime.now()),
-      endDate: Value(chit.endDate),
-      fManAuctionNumber: Value(chit.fManAuctionNumber),
-      frequencyNumber: Value(chit.frequencyNumber),
-      frequencyType: Value(chit.frequencyType),
-      name: Value(chit.name),
-      people: Value(chit.people),
-      startDate: Value(chit.startDate),
-    ));
-
-    return chitToModel(result);
+  Future<void> insertChit(ChitModel chit) async {
+    await transaction(() async {
+      final result = await into(chits).insertReturning(
+        modelToChitsCompanion(chit),
+      );
+      await batch((batch) => batch.insertAll(
+            chitDates,
+            chitDateListToCompanionsList(chit.dates, result.id),
+          ));
+    });
   }
 
   Future<void> editChit(ChitModel chit) async {
-    // todo: need to implement edit chit
-    // also keep in mind the fact that while editing and setting new dates there might be a problem
-    // delete all dates and the add all, edit is hard!
+    await transaction(() async {
+      await update(chits).replace(modelToChit(chit));
+      await (delete(chitDates)..where((tbl) => tbl.belongsTo.equals(chit.id)))
+          .go();
+      await batch(
+        (batch) => batch.insertAll(
+          chitDates,
+          chitDateListToCompanionsList(chit.dates, chit.id),
+        ),
+      );
+    });
   }
 }

@@ -14,3 +14,13 @@ class ChitDates extends Table {
 DateTime chitDateToModel(ChitDate chitDate) {
   return chitDate.date;
 }
+
+List<ChitDatesCompanion> chitDateListToCompanionsList(
+    List<DateTime> dates, int chitId) {
+  return dates
+      .map((date) => ChitDatesCompanion(
+            date: Value(date),
+            belongsTo: Value(chitId),
+          ))
+      .toList();
+}

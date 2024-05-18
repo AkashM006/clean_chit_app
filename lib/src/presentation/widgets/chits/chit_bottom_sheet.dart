@@ -8,24 +8,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const animationDuration = Duration(milliseconds: 250);
 
-void showChitBottomSheet(context, ChitWithDates? chit) {
+void showChitBottomSheet(context, ChitModel? chit) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     builder: (context) {
       return ChitBottomSheet(
-        chitWithDates: chit,
+        chit: chit,
       );
     },
   );
 }
 
 class ChitBottomSheet extends ConsumerStatefulWidget {
-  final ChitWithDates? chitWithDates;
+  final ChitModel? chit;
   const ChitBottomSheet({
     super.key,
-    this.chitWithDates,
+    this.chit,
   });
 
   @override
@@ -40,16 +40,33 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
 
   @override
   void initState() {
-    newChit = widget.chitWithDates?.chit ?? ChitModel.placeholder;
-    _dates = widget.chitWithDates?.dates ?? [];
+    _dates = widget.chit?.dates != null ? [...widget.chit!.dates] : [];
+    newChit = widget.chit ?? ChitModel.placeholder;
     super.initState();
   }
 
   void onChitDetailSave(ChitModel chit) {
-    final hasUserEditedChitDates = chit.startDate != newChit.startDate ||
-        chit.frequencyType != newChit.frequencyType ||
-        chit.frequencyNumber != newChit.frequencyNumber ||
-        chit.people != newChit.people;
+    // to check if the user has changed the chit details that affect the date
+    final hasUserEditedChitDates =
+        !compareDates(newChit.startDate, chit.startDate) ||
+            chit.frequencyType != newChit.frequencyType ||
+            chit.frequencyNumber != newChit.frequencyNumber ||
+            chit.people != newChit.people;
+
+    if (widget.chit != null && !hasUserEditedChitDates) {
+      newChit = chit.copyWith(
+        dates: newChit.dates,
+        createdAt: newChit.createdAt,
+        endDate: newChit.endDate,
+        startDate: newChit.startDate,
+      );
+
+      setState(() {
+        currentChitStep = 2;
+        _dates = [...widget.chit!.dates];
+      });
+      return;
+    }
 
     newChit = chit;
 
@@ -61,6 +78,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
             chit.people,
           )
         : _dates;
+
     setState(() {
       currentChitStep = 2;
       if (hasUserEditedChitDates) _dates = result;
@@ -74,10 +92,26 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
   }
 
   void handleFormSubmit() {
-    newChit = newChit.copyWith(dates: _dates);
-    if (widget.chitWithDates == null) {
+    if (widget.chit == null) {
       ref.read(chitControllerProvider.notifier).createChit(newChit);
     } else {
+      newChit = newChit.copyWith(
+        id: widget.chit!.id,
+        dates: _dates,
+      );
+
+      // to check if the user has changed any of the chit details, if not no need to call db
+      final isEqual = ChitModel.equals(newChit, widget.chit!);
+
+      if (isEqual) {
+        setState(() {
+          currentChitStep = 1;
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            Navigator.of(context).pop();
+          });
+        });
+        return;
+      }
       ref.read(chitControllerProvider.notifier).editChit(newChit);
     }
   }
@@ -85,42 +119,35 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
   @override
   Widget build(BuildContext context) {
     ref.listen(chitControllerProvider, (previous, next) {
-      if (next.createChit.isLoading) {
+      if (next.createChit.isLoading || next.editChit.isLoading) {
         setState(() {
           isLoading = true;
         });
         return;
       }
       isLoading = false;
-      if (next.createChit.isFailure) {
-        setState(() {
-          currentChitStep = 1;
-        });
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          Navigator.of(context).pop();
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              "Something went wrong when trying to create a chit. Please try again later!",
-            ),
-          ),
-        );
-      } else if (next.createChit.isSuccess) {
-        setState(() {
-          currentChitStep = 1;
-        });
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          Navigator.of(context).pop();
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              "Successfully created your chit!",
-            ),
-          ),
-        );
+      setState(() {
+        currentChitStep = 1;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Navigator.of(context).pop();
+      });
+      String message = "";
+      if (widget.chit != null) {
+        message = next.editChit.isFailure
+            ? "Something went wrong when trying to edit your chit. Please try again later!"
+            : "Successfully edited you chit!";
+      } else {
+        message = next.createChit.isFailure
+            ? "Something went wrong when trying to create a chit. Please try again later!"
+            : "Successfully created your chit!";
       }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
     });
 
     return PopScope(
@@ -136,7 +163,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
         duration: animationDuration,
         child: AnimatedCrossFade(
           firstChild: ChitDetailForm(
-            chit: widget.chitWithDates?.chit,
+            chit: widget.chit,
             onChitDetailSave: onChitDetailSave,
           ),
           secondChild: ChitDateForm(
@@ -147,7 +174,7 @@ class _ChitBottomSheetState extends ConsumerState<ChitBottomSheet> {
               currentChitStep = 1;
             }),
             onSubmitHandler: handleFormSubmit,
-            isCreating: widget.chitWithDates == null,
+            isCreating: widget.chit == null,
           ),
           crossFadeState: currentChitStep == 1
               ? CrossFadeState.showFirst

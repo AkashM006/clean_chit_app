@@ -5,23 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChitItem extends ConsumerWidget {
-  final ChitWithDates chitWithDates;
+  final ChitModel chit;
 
   const ChitItem({
     super.key,
-    required this.chitWithDates,
+    required this.chit,
   });
 
   void handleEdit(BuildContext context, WidgetRef ref) {
-    showChitBottomSheet(context, chitWithDates);
+    showChitBottomSheet(context, chit);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: Text(chitWithDates.chit.name),
-      subtitle:
-          Text('Amount: ${getFormattedCurrency(chitWithDates.chit.amount)}'),
+      title: Text(chit.name),
+      subtitle: Text('Amount: ${getFormattedCurrency(chit.amount)}'),
       trailing: IconButton(
         icon: const Icon(Icons.edit),
         onPressed: () => handleEdit(context, ref),

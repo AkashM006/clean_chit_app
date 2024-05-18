@@ -2,7 +2,6 @@ import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/repositories/chit_repository.dart';
 import 'package:chit_app_clean/src/locator.dart';
 import 'package:chit_app_clean/src/utils/classes/controller_state.dart';
-import 'package:chit_app_clean/src/utils/classes/data_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -30,27 +29,11 @@ class ChitController extends _$ChitController {
     state = state.copyWith(
       createChit: state.createChit.setLoading(),
     );
-
     final result = await _chitRepository.createChit(newChit);
 
-    if (result is DataFailure) {
-      state = state.copyWith(
-        createChit: state.createChit.setFailure(
-          result.error!.toString(),
-        ),
-      );
-      return;
-    }
-
-    final chitId = result.data!.id;
-
-    final chitDatesResult = await _setChitDates(newChit.dates, chitId);
-
-    state = chitDatesResult.fold(
+    state = result.fold(
       (data) => state.copyWith(
-        createChit: state.createChit.setSuccess(
-          null,
-        ),
+        createChit: state.createChit.setSuccess(null),
       ),
       (error) => state.copyWith(
         createChit: state.createChit.setFailure(
@@ -60,10 +43,22 @@ class ChitController extends _$ChitController {
     );
   }
 
-  Future<DataState<void>> _setChitDates(
-      List<DateTime> dates, int chitId) async {
-    return await _chitRepository.setDates(dates, chitId);
-  }
+  void editChit(ChitModel newChit) async {
+    state = state.copyWith(
+      editChit: state.editChit.setLoading(),
+    );
 
-  void editChit(ChitModel newChit) {}
+    final result = await _chitRepository.editChit(newChit);
+
+    state = result.fold(
+      (data) => state.copyWith(
+        editChit: state.editChit.setSuccess(null),
+      ),
+      (error) => state.copyWith(
+        editChit: state.editChit.setFailure(
+          error.toString(),
+        ),
+      ),
+    );
+  }
 }

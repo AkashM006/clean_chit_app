@@ -86,3 +86,16 @@ String getWeekDay(DateTime date) {
       return 'Invalid day of the week';
   }
 }
+
+bool compareDates(DateTime? a, DateTime? b) {
+  if (a == null) {
+    return a == b;
+  } else if (b == null) {
+    return false;
+  }
+
+  final newA = DateTime(a.year, a.month, a.day, a.hour, a.minute);
+  final newB = DateTime(b.year, b.month, b.day, b.hour, b.minute);
+
+  return newA == newB;
+}

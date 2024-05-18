@@ -28,4 +28,8 @@ class ChitDatesDao extends DatabaseAccessor<AppDatabase>
         .toList();
     await batch((batch) => batch.insertAll(chitDates, dateCompanions));
   }
+
+  Future<void> clearDates(int chitId) async {
+    (delete(chitDates)..where((tbl) => tbl.belongsTo.equals(chitId))).go();
+  }
 }

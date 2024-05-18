@@ -1,3 +1,5 @@
+import 'package:chit_app_clean/src/utils/functions/date.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chit.model.freezed.dart';
@@ -17,6 +19,7 @@ class ChitModel with _$ChitModel {
     required int fManAuctionNumber,
     required DateTime startDate,
     required DateTime endDate,
+    DateTime? createdAt,
     @Default([]) List<DateTime> dates,
   }) = _ChitModel;
 
@@ -31,7 +34,24 @@ class ChitModel with _$ChitModel {
         endDate: DateTime.now(),
         frequencyType: FrequencyType.monthly,
         dates: [],
+        createdAt: DateTime.now(),
       );
+
+  static bool equals(ChitModel a, ChitModel b) {
+    final areDetailsEqual = a.amount == b.amount &&
+        a.commissionPercentage == b.commissionPercentage &&
+        compareDates(a.endDate, b.endDate) &&
+        a.fManAuctionNumber == b.fManAuctionNumber &&
+        a.frequencyNumber == b.frequencyNumber &&
+        a.frequencyType == b.frequencyType &&
+        a.id == b.id &&
+        a.name == b.name &&
+        a.people == b.people &&
+        compareDates(a.startDate, b.startDate);
+    if (!areDetailsEqual) return false;
+
+    return listEquals(a.dates, b.dates);
+  }
 }
 
 @freezed

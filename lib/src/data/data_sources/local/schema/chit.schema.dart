@@ -34,3 +34,34 @@ ChitModel chitToModel(Chit chit) {
     endDate: chit.endDate,
   );
 }
+
+Chit modelToChit(ChitModel model) {
+  return Chit(
+    id: model.id,
+    name: model.name,
+    amount: model.amount,
+    people: model.people,
+    commissionPercentage: model.commissionPercentage,
+    frequencyType: model.frequencyType,
+    frequencyNumber: model.frequencyNumber,
+    fManAuctionNumber: model.fManAuctionNumber,
+    startDate: model.startDate, 
+    endDate: model.endDate,
+    createdAt: model.createdAt ?? DateTime.now(),
+  );
+}
+
+ChitsCompanion modelToChitsCompanion(ChitModel model) {
+  return ChitsCompanion(
+    amount: Value(model.amount),
+    commissionPercentage: Value(model.commissionPercentage),
+    createdAt: Value(model.createdAt ?? DateTime.now()),
+    endDate: Value(model.endDate),
+    fManAuctionNumber: Value(model.fManAuctionNumber),
+    frequencyNumber: Value(model.frequencyNumber),
+    frequencyType: Value(model.frequencyType),
+    name: Value(model.name),
+    people: Value(model.people),
+    startDate: Value(model.startDate),
+  );
+}

@@ -15,42 +15,24 @@ class ChitRepositoryImplementation extends BaseDbRepository
   const ChitRepositoryImplementation(this._appDatabase);
 
   @override
-  Stream<List<ChitWithDates>> watchChits() {
+  Stream<List<ChitModel>> watchChits() {
     return _appDatabase.chitDao.watchChits();
   }
 
   @override
-  Future<DataState<ChitModel>> createChit(ChitModel newChit) {
+  Future<DataState<void>> createChit(ChitModel newChit) {
     return safeExecute(() => _appDatabase.chitDao.insertChit(newChit));
   }
 
   @override
-  Future<DataState<void>> setDates(List<DateTime> dates, int chitId) {
-    return safeExecute(() => _appDatabase.chitDatesDao.addDates(dates, chitId));
-  }
-
-  @override
-  Future<List<DateTime>> getDates(int chitId) {
-    return _appDatabase.chitDatesDao.getDates(chitId);
-  }
-  
-  @override
   Future<DataState<void>> editChit(ChitModel newChit) {
-    // TODO: implement editChit
-    throw UnimplementedError();
+    return safeExecute(() => _appDatabase.chitDao.editChit(newChit));
   }
 }
 
 @riverpod
-Stream<List<ChitWithDates>> chits(ChitsRef ref) {
+Stream<List<ChitModel>> chits(ChitsRef ref) {
   final chitRepository = locator<ChitRepository>();
 
   return chitRepository.watchChits();
-}
-
-@riverpod
-Future<List<DateTime>> chitDates(ChitDatesRef ref, int chitId) {
-  final chitRepository = locator<ChitRepository>();
-
-  return chitRepository.getDates(chitId);
 }
