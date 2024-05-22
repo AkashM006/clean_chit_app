@@ -27,13 +27,21 @@ final chitRoute = Route(
   leading: const Icon(Icons.create_new_folder_rounded),
   path: PAGES.chits.path,
 );
+final chitPaymentRoute = Route(
+  name: PAGES.chitpayments.name,
+  appBarTitle: 'Chit Payments',
+  leading: const Icon(Icons.payment),
+  path: PAGES.chitpayments.path,
+);
 
 final Map<String, List<Route>> routesMappedIntoSections = {
   "": [homeRoute],
   "Master": [chitRoute],
+  "Payments": [chitPaymentRoute]
 };
 
 final List<Route> routes = [
   homeRoute,
   chitRoute,
+  chitPaymentRoute,
 ];

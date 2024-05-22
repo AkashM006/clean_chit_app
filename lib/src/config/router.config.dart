@@ -1,5 +1,6 @@
 import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chit_payments.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/home.page.dart';
 import 'package:chit_app_clean/src/utils/widgets/auth_checker.middleware.dart';
@@ -12,6 +13,7 @@ enum PAGES {
   home,
   pinsetup,
   chits,
+  chitpayments,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -25,6 +27,8 @@ extension AppRoutesExtension on PAGES {
         return '/pin-setup';
       case PAGES.chits:
         return '/chits';
+      case PAGES.chitpayments:
+        return '/chit-payments';
     }
   }
 
@@ -38,6 +42,8 @@ extension AppRoutesExtension on PAGES {
         return "Setup Pin";
       case PAGES.chits:
         return 'Chits';
+      case PAGES.chitpayments:
+        return "Chit Payment";
     }
   }
 
@@ -72,6 +78,12 @@ extension AppRoutesExtension on PAGES {
               path: path,
               shouldBeLoggedIn: true,
               child: const ChitPage(),
+            );
+      case PAGES.chitpayments:
+        return (context, routerState) => AuthCheckerMiddleware(
+              path: path,
+              shouldBeLoggedIn: true,
+              child: const ChitPaymentsPage(),
             );
     }
   }

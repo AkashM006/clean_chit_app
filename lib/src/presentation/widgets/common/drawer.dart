@@ -23,11 +23,13 @@ class AppDrawer extends StatelessWidget {
         .map(
           (e) {
             List<Widget> widgets = [];
-            if (routesMappedIntoSections.keys.first != e.key) {
+            final isSectionHavingMoreThanOneItem = e.value.length > 1;
+            if (routesMappedIntoSections.keys.first != e.key &&
+                isSectionHavingMoreThanOneItem) {
               // add divider to the top from the second element
               widgets.add(const Divider());
             }
-            if (e.key.isNotEmpty) {
+            if (e.key.isNotEmpty && isSectionHavingMoreThanOneItem) {
               // add the heading if the map's key in not empty
               widgets.add(
                 Padding(
