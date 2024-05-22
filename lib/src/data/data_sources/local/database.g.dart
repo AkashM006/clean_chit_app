@@ -753,6 +753,389 @@ class ChitDatesCompanion extends UpdateCompanion<ChitDate> {
   }
 }
 
+class $ChitPaymentsTable extends ChitPayments
+    with TableInfo<$ChitPaymentsTable, ChitPayment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChitPaymentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _paymentDateMeta =
+      const VerificationMeta('paymentDate');
+  @override
+  late final GeneratedColumn<DateTime> paymentDate = GeneratedColumn<DateTime>(
+      'payment_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _paidAmountMeta =
+      const VerificationMeta('paidAmount');
+  @override
+  late final GeneratedColumn<double> paidAmount = GeneratedColumn<double>(
+      'paid_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _receivedAmountMeta =
+      const VerificationMeta('receivedAmount');
+  @override
+  late final GeneratedColumn<double> receivedAmount = GeneratedColumn<double>(
+      'received_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _belongsToMeta =
+      const VerificationMeta('belongsTo');
+  @override
+  late final GeneratedColumn<int> belongsTo = GeneratedColumn<int>(
+      'belongs_to', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES chits (id) ON DELETE CASCADE'));
+  static const VerificationMeta _paymentTypeMeta =
+      const VerificationMeta('paymentType');
+  @override
+  late final GeneratedColumnWithTypeConverter<PaymentType, int> paymentType =
+      GeneratedColumn<int>('payment_type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<PaymentType>($ChitPaymentsTable.$converterpaymentType);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now());
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        paymentDate,
+        paidAmount,
+        receivedAmount,
+        belongsTo,
+        paymentType,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'chit_payments';
+  @override
+  VerificationContext validateIntegrity(Insertable<ChitPayment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('payment_date')) {
+      context.handle(
+          _paymentDateMeta,
+          paymentDate.isAcceptableOrUnknown(
+              data['payment_date']!, _paymentDateMeta));
+    } else if (isInserting) {
+      context.missing(_paymentDateMeta);
+    }
+    if (data.containsKey('paid_amount')) {
+      context.handle(
+          _paidAmountMeta,
+          paidAmount.isAcceptableOrUnknown(
+              data['paid_amount']!, _paidAmountMeta));
+    } else if (isInserting) {
+      context.missing(_paidAmountMeta);
+    }
+    if (data.containsKey('received_amount')) {
+      context.handle(
+          _receivedAmountMeta,
+          receivedAmount.isAcceptableOrUnknown(
+              data['received_amount']!, _receivedAmountMeta));
+    } else if (isInserting) {
+      context.missing(_receivedAmountMeta);
+    }
+    if (data.containsKey('belongs_to')) {
+      context.handle(_belongsToMeta,
+          belongsTo.isAcceptableOrUnknown(data['belongs_to']!, _belongsToMeta));
+    } else if (isInserting) {
+      context.missing(_belongsToMeta);
+    }
+    context.handle(_paymentTypeMeta, const VerificationResult.success());
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ChitPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChitPayment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      paymentDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}payment_date'])!,
+      paidAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}paid_amount'])!,
+      receivedAmount: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}received_amount'])!,
+      belongsTo: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}belongs_to'])!,
+      paymentType: $ChitPaymentsTable.$converterpaymentType.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.int, data['${effectivePrefix}payment_type'])!),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $ChitPaymentsTable createAlias(String alias) {
+    return $ChitPaymentsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<PaymentType, int, int> $converterpaymentType =
+      const EnumIndexConverter<PaymentType>(PaymentType.values);
+}
+
+class ChitPayment extends DataClass implements Insertable<ChitPayment> {
+  final int id;
+  final DateTime paymentDate;
+  final double paidAmount;
+  final double receivedAmount;
+  final int belongsTo;
+  final PaymentType paymentType;
+  final DateTime createdAt;
+  const ChitPayment(
+      {required this.id,
+      required this.paymentDate,
+      required this.paidAmount,
+      required this.receivedAmount,
+      required this.belongsTo,
+      required this.paymentType,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['payment_date'] = Variable<DateTime>(paymentDate);
+    map['paid_amount'] = Variable<double>(paidAmount);
+    map['received_amount'] = Variable<double>(receivedAmount);
+    map['belongs_to'] = Variable<int>(belongsTo);
+    {
+      map['payment_type'] = Variable<int>(
+          $ChitPaymentsTable.$converterpaymentType.toSql(paymentType));
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ChitPaymentsCompanion toCompanion(bool nullToAbsent) {
+    return ChitPaymentsCompanion(
+      id: Value(id),
+      paymentDate: Value(paymentDate),
+      paidAmount: Value(paidAmount),
+      receivedAmount: Value(receivedAmount),
+      belongsTo: Value(belongsTo),
+      paymentType: Value(paymentType),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ChitPayment.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChitPayment(
+      id: serializer.fromJson<int>(json['id']),
+      paymentDate: serializer.fromJson<DateTime>(json['paymentDate']),
+      paidAmount: serializer.fromJson<double>(json['paidAmount']),
+      receivedAmount: serializer.fromJson<double>(json['receivedAmount']),
+      belongsTo: serializer.fromJson<int>(json['belongsTo']),
+      paymentType: $ChitPaymentsTable.$converterpaymentType
+          .fromJson(serializer.fromJson<int>(json['paymentType'])),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'paymentDate': serializer.toJson<DateTime>(paymentDate),
+      'paidAmount': serializer.toJson<double>(paidAmount),
+      'receivedAmount': serializer.toJson<double>(receivedAmount),
+      'belongsTo': serializer.toJson<int>(belongsTo),
+      'paymentType': serializer.toJson<int>(
+          $ChitPaymentsTable.$converterpaymentType.toJson(paymentType)),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ChitPayment copyWith(
+          {int? id,
+          DateTime? paymentDate,
+          double? paidAmount,
+          double? receivedAmount,
+          int? belongsTo,
+          PaymentType? paymentType,
+          DateTime? createdAt}) =>
+      ChitPayment(
+        id: id ?? this.id,
+        paymentDate: paymentDate ?? this.paymentDate,
+        paidAmount: paidAmount ?? this.paidAmount,
+        receivedAmount: receivedAmount ?? this.receivedAmount,
+        belongsTo: belongsTo ?? this.belongsTo,
+        paymentType: paymentType ?? this.paymentType,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ChitPayment(')
+          ..write('id: $id, ')
+          ..write('paymentDate: $paymentDate, ')
+          ..write('paidAmount: $paidAmount, ')
+          ..write('receivedAmount: $receivedAmount, ')
+          ..write('belongsTo: $belongsTo, ')
+          ..write('paymentType: $paymentType, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, paymentDate, paidAmount, receivedAmount,
+      belongsTo, paymentType, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChitPayment &&
+          other.id == this.id &&
+          other.paymentDate == this.paymentDate &&
+          other.paidAmount == this.paidAmount &&
+          other.receivedAmount == this.receivedAmount &&
+          other.belongsTo == this.belongsTo &&
+          other.paymentType == this.paymentType &&
+          other.createdAt == this.createdAt);
+}
+
+class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
+  final Value<int> id;
+  final Value<DateTime> paymentDate;
+  final Value<double> paidAmount;
+  final Value<double> receivedAmount;
+  final Value<int> belongsTo;
+  final Value<PaymentType> paymentType;
+  final Value<DateTime> createdAt;
+  const ChitPaymentsCompanion({
+    this.id = const Value.absent(),
+    this.paymentDate = const Value.absent(),
+    this.paidAmount = const Value.absent(),
+    this.receivedAmount = const Value.absent(),
+    this.belongsTo = const Value.absent(),
+    this.paymentType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  ChitPaymentsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime paymentDate,
+    required double paidAmount,
+    required double receivedAmount,
+    required int belongsTo,
+    required PaymentType paymentType,
+    this.createdAt = const Value.absent(),
+  })  : paymentDate = Value(paymentDate),
+        paidAmount = Value(paidAmount),
+        receivedAmount = Value(receivedAmount),
+        belongsTo = Value(belongsTo),
+        paymentType = Value(paymentType);
+  static Insertable<ChitPayment> custom({
+    Expression<int>? id,
+    Expression<DateTime>? paymentDate,
+    Expression<double>? paidAmount,
+    Expression<double>? receivedAmount,
+    Expression<int>? belongsTo,
+    Expression<int>? paymentType,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (paymentDate != null) 'payment_date': paymentDate,
+      if (paidAmount != null) 'paid_amount': paidAmount,
+      if (receivedAmount != null) 'received_amount': receivedAmount,
+      if (belongsTo != null) 'belongs_to': belongsTo,
+      if (paymentType != null) 'payment_type': paymentType,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  ChitPaymentsCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? paymentDate,
+      Value<double>? paidAmount,
+      Value<double>? receivedAmount,
+      Value<int>? belongsTo,
+      Value<PaymentType>? paymentType,
+      Value<DateTime>? createdAt}) {
+    return ChitPaymentsCompanion(
+      id: id ?? this.id,
+      paymentDate: paymentDate ?? this.paymentDate,
+      paidAmount: paidAmount ?? this.paidAmount,
+      receivedAmount: receivedAmount ?? this.receivedAmount,
+      belongsTo: belongsTo ?? this.belongsTo,
+      paymentType: paymentType ?? this.paymentType,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (paymentDate.present) {
+      map['payment_date'] = Variable<DateTime>(paymentDate.value);
+    }
+    if (paidAmount.present) {
+      map['paid_amount'] = Variable<double>(paidAmount.value);
+    }
+    if (receivedAmount.present) {
+      map['received_amount'] = Variable<double>(receivedAmount.value);
+    }
+    if (belongsTo.present) {
+      map['belongs_to'] = Variable<int>(belongsTo.value);
+    }
+    if (paymentType.present) {
+      map['payment_type'] = Variable<int>(
+          $ChitPaymentsTable.$converterpaymentType.toSql(paymentType.value));
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChitPaymentsCompanion(')
+          ..write('id: $id, ')
+          ..write('paymentDate: $paymentDate, ')
+          ..write('paidAmount: $paidAmount, ')
+          ..write('receivedAmount: $receivedAmount, ')
+          ..write('belongsTo: $belongsTo, ')
+          ..write('paymentType: $paymentType, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $UserSettingsTable extends UserSettings
     with TableInfo<$UserSettingsTable, UserSetting> {
   @override
@@ -931,6 +1314,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
   late final $ChitsTable chits = $ChitsTable(this);
   late final $ChitDatesTable chitDates = $ChitDatesTable(this);
+  late final $ChitPaymentsTable chitPayments = $ChitPaymentsTable(this);
   late final $UserSettingsTable userSettings = $UserSettingsTable(this);
   late final ChitDao chitDao = ChitDao(this as AppDatabase);
   late final ChitDatesDao chitDatesDao = ChitDatesDao(this as AppDatabase);
@@ -941,7 +1325,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [chits, chitDates, userSettings];
+      [chits, chitDates, chitPayments, userSettings];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
@@ -950,6 +1334,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('chit_dates', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('chits',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('chit_payments', kind: UpdateKind.delete),
             ],
           ),
         ],
@@ -1140,6 +1531,19 @@ class $$ChitsTableFilterComposer
                 $state.db, $state.db.chitDates, joinBuilder, parentComposers)));
     return f(composer);
   }
+
+  ComposableFilter chitPaymentsRefs(
+      ComposableFilter Function($$ChitPaymentsTableFilterComposer f) f) {
+    final $$ChitPaymentsTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.chitPayments,
+        getReferencedColumn: (t) => t.belongsTo,
+        builder: (joinBuilder, parentComposers) =>
+            $$ChitPaymentsTableFilterComposer(ComposerState($state.db,
+                $state.db.chitPayments, joinBuilder, parentComposers)));
+    return f(composer);
+  }
 }
 
 class $$ChitsTableOrderingComposer
@@ -1318,6 +1722,191 @@ class $$ChitDatesTableOrderingComposer
   }
 }
 
+typedef $$ChitPaymentsTableInsertCompanionBuilder = ChitPaymentsCompanion
+    Function({
+  Value<int> id,
+  required DateTime paymentDate,
+  required double paidAmount,
+  required double receivedAmount,
+  required int belongsTo,
+  required PaymentType paymentType,
+  Value<DateTime> createdAt,
+});
+typedef $$ChitPaymentsTableUpdateCompanionBuilder = ChitPaymentsCompanion
+    Function({
+  Value<int> id,
+  Value<DateTime> paymentDate,
+  Value<double> paidAmount,
+  Value<double> receivedAmount,
+  Value<int> belongsTo,
+  Value<PaymentType> paymentType,
+  Value<DateTime> createdAt,
+});
+
+class $$ChitPaymentsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ChitPaymentsTable,
+    ChitPayment,
+    $$ChitPaymentsTableFilterComposer,
+    $$ChitPaymentsTableOrderingComposer,
+    $$ChitPaymentsTableProcessedTableManager,
+    $$ChitPaymentsTableInsertCompanionBuilder,
+    $$ChitPaymentsTableUpdateCompanionBuilder> {
+  $$ChitPaymentsTableTableManager(_$AppDatabase db, $ChitPaymentsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ChitPaymentsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ChitPaymentsTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$ChitPaymentsTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<DateTime> paymentDate = const Value.absent(),
+            Value<double> paidAmount = const Value.absent(),
+            Value<double> receivedAmount = const Value.absent(),
+            Value<int> belongsTo = const Value.absent(),
+            Value<PaymentType> paymentType = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+          }) =>
+              ChitPaymentsCompanion(
+            id: id,
+            paymentDate: paymentDate,
+            paidAmount: paidAmount,
+            receivedAmount: receivedAmount,
+            belongsTo: belongsTo,
+            paymentType: paymentType,
+            createdAt: createdAt,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required DateTime paymentDate,
+            required double paidAmount,
+            required double receivedAmount,
+            required int belongsTo,
+            required PaymentType paymentType,
+            Value<DateTime> createdAt = const Value.absent(),
+          }) =>
+              ChitPaymentsCompanion.insert(
+            id: id,
+            paymentDate: paymentDate,
+            paidAmount: paidAmount,
+            receivedAmount: receivedAmount,
+            belongsTo: belongsTo,
+            paymentType: paymentType,
+            createdAt: createdAt,
+          ),
+        ));
+}
+
+class $$ChitPaymentsTableProcessedTableManager extends ProcessedTableManager<
+    _$AppDatabase,
+    $ChitPaymentsTable,
+    ChitPayment,
+    $$ChitPaymentsTableFilterComposer,
+    $$ChitPaymentsTableOrderingComposer,
+    $$ChitPaymentsTableProcessedTableManager,
+    $$ChitPaymentsTableInsertCompanionBuilder,
+    $$ChitPaymentsTableUpdateCompanionBuilder> {
+  $$ChitPaymentsTableProcessedTableManager(super.$state);
+}
+
+class $$ChitPaymentsTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ChitPaymentsTable> {
+  $$ChitPaymentsTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get paymentDate => $state.composableBuilder(
+      column: $state.table.paymentDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get paidAmount => $state.composableBuilder(
+      column: $state.table.paidAmount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get receivedAmount => $state.composableBuilder(
+      column: $state.table.receivedAmount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<PaymentType, PaymentType, int>
+      get paymentType => $state.composableBuilder(
+          column: $state.table.paymentType,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ChitsTableFilterComposer get belongsTo {
+    final $$ChitsTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.belongsTo,
+        referencedTable: $state.db.chits,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$ChitsTableFilterComposer(
+            ComposerState(
+                $state.db, $state.db.chits, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$ChitPaymentsTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ChitPaymentsTable> {
+  $$ChitPaymentsTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get paymentDate => $state.composableBuilder(
+      column: $state.table.paymentDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get paidAmount => $state.composableBuilder(
+      column: $state.table.paidAmount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get receivedAmount => $state.composableBuilder(
+      column: $state.table.receivedAmount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get paymentType => $state.composableBuilder(
+      column: $state.table.paymentType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
+      column: $state.table.createdAt,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ChitsTableOrderingComposer get belongsTo {
+    final $$ChitsTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.belongsTo,
+        referencedTable: $state.db.chits,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$ChitsTableOrderingComposer(
+            ComposerState(
+                $state.db, $state.db.chits, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 typedef $$UserSettingsTableInsertCompanionBuilder = UserSettingsCompanion
     Function({
   Value<int> id,
@@ -1414,6 +2003,8 @@ class _$AppDatabaseManager {
       $$ChitsTableTableManager(_db, _db.chits);
   $$ChitDatesTableTableManager get chitDates =>
       $$ChitDatesTableTableManager(_db, _db.chitDates);
+  $$ChitPaymentsTableTableManager get chitPayments =>
+      $$ChitPaymentsTableTableManager(_db, _db.chitPayments);
   $$UserSettingsTableTableManager get userSettings =>
       $$UserSettingsTableTableManager(_db, _db.userSettings);
 }

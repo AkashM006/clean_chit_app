@@ -5,12 +5,14 @@ import 'package:chit_app_clean/src/data/data_sources/local/dao/chit_dates.dao.da
 import 'package:chit_app_clean/src/data/data_sources/local/dao/user_settings.dao.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
+import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_payments.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/user_settings.schema.dart';
-import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
@@ -21,6 +23,7 @@ part 'database.g.dart';
   tables: [
     Chits,
     ChitDates,
+    ChitPayments,
     UserSettings,
   ],
   daos: [
