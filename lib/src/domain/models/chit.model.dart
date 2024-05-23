@@ -61,3 +61,11 @@ class ChitWithDates with _$ChitWithDates {
     required List<DateTime> dates,
   }) = $ChitWithDates;
 }
+
+@freezed
+class ChitNameAndId with _$ChitNameAndId {
+  const factory ChitNameAndId({
+    required int id,
+    required String name,
+  }) = $ChitNameAndId;
+}

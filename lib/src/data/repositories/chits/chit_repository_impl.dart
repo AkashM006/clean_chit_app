@@ -28,6 +28,11 @@ class ChitRepositoryImplementation extends BaseDbRepository
   Future<DataState<void>> editChit(ChitModel newChit) {
     return safeExecute(() => _appDatabase.chitDao.editChit(newChit));
   }
+
+  @override
+  Future<List<ChitNameAndId>> getChitNamesAndIds() {
+    return _appDatabase.chitDao.getChitNamesAndIds();
+  }
 }
 
 @riverpod
@@ -35,4 +40,11 @@ Stream<List<ChitModel>> chits(ChitsRef ref) {
   final chitRepository = locator<ChitRepository>();
 
   return chitRepository.watchChits();
+}
+
+@riverpod
+Future<List<ChitNameAndId>> chitNamesAndIds(ChitNamesAndIdsRef ref) {
+  final chitRepository = locator<ChitRepository>();
+
+  return chitRepository.getChitNamesAndIds();
 }

@@ -51,7 +51,9 @@ class App extends ConsumerWidget {
       ),
       loading: () => const Scaffold(
         body: Center(
-          child: CustomLoaderWidget(),
+          child: CustomLoaderWidget(
+            text: "Chit App",
+          ),
         ),
       ),
     );

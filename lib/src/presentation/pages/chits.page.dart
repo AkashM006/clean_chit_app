@@ -82,25 +82,9 @@ class _ChitPageState extends ConsumerState<ChitPage> {
               controller: scrollController,
             ),
           AsyncError(:final error) => CustomErrorWidget(error.toString()),
-          _ => buildLoader(context),
+          _ => const CustomLoaderWidget(
+              text: "Loading your Chits",
+            ),
         });
-  }
-
-  Widget buildLoader(context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Loading your Chits",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          SizedBox(
-            height: SizeConfig.safeBlockVertical * 2,
-          ),
-          const CustomLoaderWidget(),
-        ],
-      ),
-    );
   }
 }

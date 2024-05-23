@@ -5,4 +5,5 @@ abstract interface class ChitRepository {
   Stream<List<ChitModel>> watchChits();
   Future<DataState<void>> createChit(ChitModel newChit);
   Future<DataState<void>> editChit(ChitModel newChit);
+  Future<List<ChitNameAndId>> getChitNamesAndIds();
 }

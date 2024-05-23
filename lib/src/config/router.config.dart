@@ -1,6 +1,7 @@
 import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
-import 'package:chit_app_clean/src/presentation/pages/chit_payments.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments_create.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/home.page.dart';
 import 'package:chit_app_clean/src/utils/widgets/auth_checker.middleware.dart';
@@ -8,13 +9,7 @@ import 'package:chit_app_clean/src/utils/widgets/background_listener.wrapper.dar
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
-enum PAGES {
-  auth,
-  home,
-  pinsetup,
-  chits,
-  chitpayments,
-}
+enum PAGES { auth, home, pinsetup, chits, chitpayments, chitpaymentscreate }
 
 extension AppRoutesExtension on PAGES {
   String get path {
@@ -29,6 +24,8 @@ extension AppRoutesExtension on PAGES {
         return '/chits';
       case PAGES.chitpayments:
         return '/chit-payments';
+      case PAGES.chitpaymentscreate:
+        return '/chit-payments-create';
     }
   }
 
@@ -44,6 +41,8 @@ extension AppRoutesExtension on PAGES {
         return 'Chits';
       case PAGES.chitpayments:
         return "Chit Payment";
+      case PAGES.chitpaymentscreate:
+        return "Create Chit Payment";
     }
   }
 
@@ -84,6 +83,12 @@ extension AppRoutesExtension on PAGES {
               path: path,
               shouldBeLoggedIn: true,
               child: const ChitPaymentsPage(),
+            );
+      case PAGES.chitpaymentscreate:
+        return (context, routerState) => AuthCheckerMiddleware(
+              shouldBeLoggedIn: true,
+              path: path,
+              child: const ChitPaymentsCreatePage(),
             );
     }
   }
