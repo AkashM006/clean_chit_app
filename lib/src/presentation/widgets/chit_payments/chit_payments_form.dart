@@ -1,4 +1,6 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/presentation/controllers/chit_payments/chit_payments.controller.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/classes/validators.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
@@ -6,8 +8,10 @@ import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:chit_app_clean/src/utils/widgets/bordered_input_decoration.dart';
 import 'package:chit_app_clean/src/utils/widgets/required_input_label.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class ChitPaymentsForm extends StatefulWidget {
+class ChitPaymentsForm extends ConsumerStatefulWidget {
   final List<ChitNameAndId> chitNamesAndIds;
   final bool isFormEdit;
 
@@ -18,22 +22,26 @@ class ChitPaymentsForm extends StatefulWidget {
   });
 
   @override
-  State<ChitPaymentsForm> createState() => _ChitPaymentsFormState();
+  ConsumerState<ChitPaymentsForm> createState() => _ChitPaymentsFormState();
 }
 
-class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
+class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _dateController = TextEditingController();
 
-  DateTime _date = DateTime.now();
-  int _chitId = -1;
+  DateTime _paymentDate = DateTime.now();
+  // int _chitId = -1;
+  ChitNameAndId? _selectedChit;
   int _paidAmount = 0;
   int _receivedAmount = 0;
+  PaymentType _paymentType = PaymentType.payment;
+
+  bool isLoading = false;
 
   void _setDate(DateTime date) {
     setState(() {
-      _date = date;
+      _paymentDate = date;
       _dateController.text = getFormattedDate(date);
     });
   }
@@ -54,13 +62,47 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
 
   void initializer() {
     if (!widget.isFormEdit) {
-      _setDate(_date);
+      _setDate(_paymentDate);
     }
+  }
+
+  void showErrorDialog() {
+    // Both paid amount and received amount cannot be 0, Handling that case here:
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Incorrect Details!"),
+        content: const Text(
+          "Both Paid amount and received amount cannot be 0. Any one of them should not be zero. Please try again!",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Ok"),
+          ),
+        ],
+      ),
+    );
   }
 
   void onFormSubmit() {
     if (!_formKey.currentState!.validate()) return;
-    // todo: handle form submission, loading, success and failure
+    _formKey.currentState!.save();
+    if (_paidAmount == 0 && _receivedAmount == 0) {
+      showErrorDialog();
+      return;
+    }
+    final chitPayment = ChitPaymentsModel(
+      paymentDate: _paymentDate,
+      paidAmount: _paidAmount,
+      receivedAmount: _receivedAmount,
+      chit: _selectedChit!.copyWith(),
+      paymentType: _paymentType,
+    );
+
+    ref
+        .read(chitPaymentsControllerProvider.notifier)
+        .createChitPayment(chitPayment);
   }
 
   @override
@@ -77,6 +119,31 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
 
   @override
   Widget build(BuildContext context) {
+    final isCreateChitLoading =
+        ref.watch(chitPaymentsControllerProvider).createChitPayment.isLoading;
+
+    ref.listen(
+      chitPaymentsControllerProvider,
+      (previous, next) {
+        String message = "";
+        if (next.createChitPayment.isFailure) {
+          message =
+              "Something went wrong when trying to create a new payment. Please try again later";
+        } else if (next.createChitPayment.isSuccess) {
+          message = "Successfully created your payment";
+          context.pop();
+        }
+
+        if (message.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+            ),
+          );
+        }
+      },
+    );
+
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.safeBlockHorizontal * 3,
@@ -96,7 +163,7 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
                   decoration: BorderedInputDecoration(
                     labelWidget:
                         const RequiredInputLabel(label: "Starting Date"),
-                    helperTextString: getWeekDay(_date),
+                    helperTextString: getWeekDay(_paymentDate),
                     suffixIconWidget: IconButton(
                       onPressed: _pickDate,
                       icon: Icon(
@@ -112,10 +179,38 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 5,
                 ),
-                DropdownButtonFormField<int>(
+                DropdownButtonFormField<PaymentType>(
+                  decoration: const BorderedInputDecoration(
+                    labelWidget: RequiredInputLabel(label: "Payment Type"),
+                  ),
+                  value: _paymentType,
+                  items: const [
+                    DropdownMenuItem(
+                      value: PaymentType.receipt,
+                      child: Text("Receipt"),
+                    ),
+                    DropdownMenuItem(
+                      value: PaymentType.payment,
+                      child: Text("Payment"),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value == null) return;
+                    _paymentType = value;
+                  },
+                  validator: (value) {
+                    if (value == null) return "Please select payment type";
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 5,
+                ),
+                DropdownButtonFormField<ChitNameAndId>(
                   decoration: const BorderedInputDecoration(
                     labelWidget: RequiredInputLabel(label: "Chit"),
                   ),
+                  value: _selectedChit,
                   validator: (value) {
                     if (value == null) return "Please select a chit";
                     return null;
@@ -123,7 +218,7 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
                   items: widget.chitNamesAndIds
                       .map(
                         (chit) => DropdownMenuItem(
-                          value: chit.id,
+                          value: chit,
                           child: Text(chit.name),
                         ),
                       )
@@ -131,7 +226,7 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
                   onChanged: (value) {
                     if (value == null) return;
                     setState(() {
-                      _chitId = value;
+                      _selectedChit = value;
                     });
                   },
                 ),
@@ -181,14 +276,26 @@ class _ChitPaymentsFormState extends State<ChitPaymentsForm> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: FilledButton(
-                    onPressed: onFormSubmit,
-                    child: Text(widget.isFormEdit ? "Edit" : "Submit"),
+                    onPressed: isCreateChitLoading ? null : onFormSubmit,
+                    child: isCreateChitLoading
+                        ? _buildLoader()
+                        : Text(widget.isFormEdit ? "Edit" : "Submit"),
                   ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoader() {
+    return const SizedBox(
+      height: 20,
+      width: 20,
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
       ),
     );
   }

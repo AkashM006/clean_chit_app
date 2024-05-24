@@ -7,8 +7,8 @@ import 'package:drift/drift.dart';
 class ChitPayments extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get paymentDate => dateTime()();
-  RealColumn get paidAmount => real()();
-  RealColumn get receivedAmount => real()();
+  IntColumn get paidAmount => integer()();
+  IntColumn get receivedAmount => integer()();
   IntColumn get belongsTo =>
       integer().references(Chits, #id, onDelete: KeyAction.cascade)();
   IntColumn get paymentType => intEnum<PaymentType>()();

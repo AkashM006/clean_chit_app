@@ -13,10 +13,10 @@ class ChitPaymentsModel with _$ChitPaymentsModel {
   const factory ChitPaymentsModel({
     @Default(-1) int id,
     required DateTime paymentDate,
-    required double paidAmount,
-    required double receivedAmount,
-    required ChitModel chit,
+    required int paidAmount,
+    required int receivedAmount,
+    required ChitNameAndId chit,
     required PaymentType paymentType,
-    required DateTime createdAt,
+    @Default(null) DateTime? createdAt,
   }) = _ChitPaymentsModel;
 }

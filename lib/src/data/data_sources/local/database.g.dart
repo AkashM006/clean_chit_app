@@ -777,15 +777,15 @@ class $ChitPaymentsTable extends ChitPayments
   static const VerificationMeta _paidAmountMeta =
       const VerificationMeta('paidAmount');
   @override
-  late final GeneratedColumn<double> paidAmount = GeneratedColumn<double>(
+  late final GeneratedColumn<int> paidAmount = GeneratedColumn<int>(
       'paid_amount', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _receivedAmountMeta =
       const VerificationMeta('receivedAmount');
   @override
-  late final GeneratedColumn<double> receivedAmount = GeneratedColumn<double>(
+  late final GeneratedColumn<int> receivedAmount = GeneratedColumn<int>(
       'received_amount', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _belongsToMeta =
       const VerificationMeta('belongsTo');
   @override
@@ -882,9 +882,9 @@ class $ChitPaymentsTable extends ChitPayments
       paymentDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}payment_date'])!,
       paidAmount: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}paid_amount'])!,
-      receivedAmount: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}received_amount'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}paid_amount'])!,
+      receivedAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}received_amount'])!,
       belongsTo: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}belongs_to'])!,
       paymentType: $ChitPaymentsTable.$converterpaymentType.fromSql(
@@ -907,8 +907,8 @@ class $ChitPaymentsTable extends ChitPayments
 class ChitPayment extends DataClass implements Insertable<ChitPayment> {
   final int id;
   final DateTime paymentDate;
-  final double paidAmount;
-  final double receivedAmount;
+  final int paidAmount;
+  final int receivedAmount;
   final int belongsTo;
   final PaymentType paymentType;
   final DateTime createdAt;
@@ -925,8 +925,8 @@ class ChitPayment extends DataClass implements Insertable<ChitPayment> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['payment_date'] = Variable<DateTime>(paymentDate);
-    map['paid_amount'] = Variable<double>(paidAmount);
-    map['received_amount'] = Variable<double>(receivedAmount);
+    map['paid_amount'] = Variable<int>(paidAmount);
+    map['received_amount'] = Variable<int>(receivedAmount);
     map['belongs_to'] = Variable<int>(belongsTo);
     {
       map['payment_type'] = Variable<int>(
@@ -954,8 +954,8 @@ class ChitPayment extends DataClass implements Insertable<ChitPayment> {
     return ChitPayment(
       id: serializer.fromJson<int>(json['id']),
       paymentDate: serializer.fromJson<DateTime>(json['paymentDate']),
-      paidAmount: serializer.fromJson<double>(json['paidAmount']),
-      receivedAmount: serializer.fromJson<double>(json['receivedAmount']),
+      paidAmount: serializer.fromJson<int>(json['paidAmount']),
+      receivedAmount: serializer.fromJson<int>(json['receivedAmount']),
       belongsTo: serializer.fromJson<int>(json['belongsTo']),
       paymentType: $ChitPaymentsTable.$converterpaymentType
           .fromJson(serializer.fromJson<int>(json['paymentType'])),
@@ -968,8 +968,8 @@ class ChitPayment extends DataClass implements Insertable<ChitPayment> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'paymentDate': serializer.toJson<DateTime>(paymentDate),
-      'paidAmount': serializer.toJson<double>(paidAmount),
-      'receivedAmount': serializer.toJson<double>(receivedAmount),
+      'paidAmount': serializer.toJson<int>(paidAmount),
+      'receivedAmount': serializer.toJson<int>(receivedAmount),
       'belongsTo': serializer.toJson<int>(belongsTo),
       'paymentType': serializer.toJson<int>(
           $ChitPaymentsTable.$converterpaymentType.toJson(paymentType)),
@@ -980,8 +980,8 @@ class ChitPayment extends DataClass implements Insertable<ChitPayment> {
   ChitPayment copyWith(
           {int? id,
           DateTime? paymentDate,
-          double? paidAmount,
-          double? receivedAmount,
+          int? paidAmount,
+          int? receivedAmount,
           int? belongsTo,
           PaymentType? paymentType,
           DateTime? createdAt}) =>
@@ -1027,8 +1027,8 @@ class ChitPayment extends DataClass implements Insertable<ChitPayment> {
 class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
   final Value<int> id;
   final Value<DateTime> paymentDate;
-  final Value<double> paidAmount;
-  final Value<double> receivedAmount;
+  final Value<int> paidAmount;
+  final Value<int> receivedAmount;
   final Value<int> belongsTo;
   final Value<PaymentType> paymentType;
   final Value<DateTime> createdAt;
@@ -1044,8 +1044,8 @@ class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
   ChitPaymentsCompanion.insert({
     this.id = const Value.absent(),
     required DateTime paymentDate,
-    required double paidAmount,
-    required double receivedAmount,
+    required int paidAmount,
+    required int receivedAmount,
     required int belongsTo,
     required PaymentType paymentType,
     this.createdAt = const Value.absent(),
@@ -1057,8 +1057,8 @@ class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
   static Insertable<ChitPayment> custom({
     Expression<int>? id,
     Expression<DateTime>? paymentDate,
-    Expression<double>? paidAmount,
-    Expression<double>? receivedAmount,
+    Expression<int>? paidAmount,
+    Expression<int>? receivedAmount,
     Expression<int>? belongsTo,
     Expression<int>? paymentType,
     Expression<DateTime>? createdAt,
@@ -1077,8 +1077,8 @@ class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
   ChitPaymentsCompanion copyWith(
       {Value<int>? id,
       Value<DateTime>? paymentDate,
-      Value<double>? paidAmount,
-      Value<double>? receivedAmount,
+      Value<int>? paidAmount,
+      Value<int>? receivedAmount,
       Value<int>? belongsTo,
       Value<PaymentType>? paymentType,
       Value<DateTime>? createdAt}) {
@@ -1103,10 +1103,10 @@ class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
       map['payment_date'] = Variable<DateTime>(paymentDate.value);
     }
     if (paidAmount.present) {
-      map['paid_amount'] = Variable<double>(paidAmount.value);
+      map['paid_amount'] = Variable<int>(paidAmount.value);
     }
     if (receivedAmount.present) {
-      map['received_amount'] = Variable<double>(receivedAmount.value);
+      map['received_amount'] = Variable<int>(receivedAmount.value);
     }
     if (belongsTo.present) {
       map['belongs_to'] = Variable<int>(belongsTo.value);
@@ -1320,6 +1320,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final ChitDatesDao chitDatesDao = ChitDatesDao(this as AppDatabase);
   late final UserSettingsDao userSettingsDao =
       UserSettingsDao(this as AppDatabase);
+  late final ChitPaymentsDao chitPaymentsDao =
+      ChitPaymentsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1726,8 +1728,8 @@ typedef $$ChitPaymentsTableInsertCompanionBuilder = ChitPaymentsCompanion
     Function({
   Value<int> id,
   required DateTime paymentDate,
-  required double paidAmount,
-  required double receivedAmount,
+  required int paidAmount,
+  required int receivedAmount,
   required int belongsTo,
   required PaymentType paymentType,
   Value<DateTime> createdAt,
@@ -1736,8 +1738,8 @@ typedef $$ChitPaymentsTableUpdateCompanionBuilder = ChitPaymentsCompanion
     Function({
   Value<int> id,
   Value<DateTime> paymentDate,
-  Value<double> paidAmount,
-  Value<double> receivedAmount,
+  Value<int> paidAmount,
+  Value<int> receivedAmount,
   Value<int> belongsTo,
   Value<PaymentType> paymentType,
   Value<DateTime> createdAt,
@@ -1765,8 +1767,8 @@ class $$ChitPaymentsTableTableManager extends RootTableManager<
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             Value<DateTime> paymentDate = const Value.absent(),
-            Value<double> paidAmount = const Value.absent(),
-            Value<double> receivedAmount = const Value.absent(),
+            Value<int> paidAmount = const Value.absent(),
+            Value<int> receivedAmount = const Value.absent(),
             Value<int> belongsTo = const Value.absent(),
             Value<PaymentType> paymentType = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
@@ -1783,8 +1785,8 @@ class $$ChitPaymentsTableTableManager extends RootTableManager<
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
             required DateTime paymentDate,
-            required double paidAmount,
-            required double receivedAmount,
+            required int paidAmount,
+            required int receivedAmount,
             required int belongsTo,
             required PaymentType paymentType,
             Value<DateTime> createdAt = const Value.absent(),
@@ -1826,12 +1828,12 @@ class $$ChitPaymentsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<double> get paidAmount => $state.composableBuilder(
+  ColumnFilters<int> get paidAmount => $state.composableBuilder(
       column: $state.table.paidAmount,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<double> get receivedAmount => $state.composableBuilder(
+  ColumnFilters<int> get receivedAmount => $state.composableBuilder(
       column: $state.table.receivedAmount,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -1874,12 +1876,12 @@ class $$ChitPaymentsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<double> get paidAmount => $state.composableBuilder(
+  ColumnOrderings<int> get paidAmount => $state.composableBuilder(
       column: $state.table.paidAmount,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<double> get receivedAmount => $state.composableBuilder(
+  ColumnOrderings<int> get receivedAmount => $state.composableBuilder(
       column: $state.table.receivedAmount,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));

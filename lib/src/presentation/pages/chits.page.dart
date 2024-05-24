@@ -5,7 +5,6 @@ import 'package:chit_app_clean/src/presentation/widgets/chits/chit_list.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/drawer.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/extendable_fab.dart';
-import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_loader.widget.dart';
 import 'package:flutter/material.dart';

@@ -64,19 +64,4 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
       );
     });
   }
-
-  Future<List<ChitNameAndId>> getChitNamesAndIds() async {
-    final query = selectOnly(chits)..addColumns([chits.id, chits.name]);
-
-    final results = await query
-        .map(
-          (row) => ChitNameAndId(
-            id: row.read<int>(chits.id) ?? -1,
-            name: row.read<String>(chits.name) ?? "",
-          ),
-        )
-        .get();
-
-    return results;
-  }
 }
