@@ -1,7 +1,8 @@
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
+    (In progress)
 2. Also provide a way to see all the payments made in a particular chit (Maybe add a button in chits page to see the entire details of the chit)
 3. Implement delete in chits
-4. Chit create page ( In progress )
+4. Chit create page ( DONE )
 
 Upon continuation start at:
 lib\src\presentation\widgets\chit_payments\chit_payments_form.dart
