@@ -5,4 +5,4 @@
 4. Chit create page ( DONE )
 
 Upon continuation start at:
-lib\src\presentation\widgets\chit_payments\chit_payments_form.dart
+lib\src\presentation\widgets\chit_payments\chit_payment_item.dart

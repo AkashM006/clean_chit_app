@@ -26,11 +26,23 @@ class ChitPaymentsRepositoryImplementation extends BaseDbRepository
       () => _appDatabase.chitPaymentsDao.addPayments(chitPayment),
     );
   }
+
+  @override
+  Stream<List<ChitPaymentsModel>> watchChitPayments() {
+    return _appDatabase.chitPaymentsDao.watchChitPayments();
+  }
+}
+
+@riverpod
+Stream<List<ChitPaymentsModel>> chitPayments(ChitPaymentsRef ref) {
+  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
+
+  return chitPaymentsRepository.watchChitPayments();
 }
 
 @riverpod
 Future<List<ChitNameAndId>> chitNamesAndIds(ChitNamesAndIdsRef ref) {
-  final chitRepository = locator<ChitPaymentsRepository>();
+  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
 
-  return chitRepository.getChitNamesAndIds();
+  return chitPaymentsRepository.getChitNamesAndIds();
 }

@@ -1,6 +1,10 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payments_repository.impl.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chit_payments/chit_payments_list.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/drawer.dart';
+import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';
+import 'package:chit_app_clean/src/utils/widgets/custom_loader.widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +20,8 @@ class ChitPaymentsPage extends ConsumerWidget {
       context.push(PAGES.chitpaymentscreate.path);
     }
 
+    final chitPayments = ref.watch(chitPaymentsProvider);
+
     return Scaffold(
       appBar: const CustomAppBar(title: "Chit Payments"),
       drawer: const AppDrawer(currentPage: PAGES.chitpayments),
@@ -23,8 +29,12 @@ class ChitPaymentsPage extends ConsumerWidget {
         onPressed: onChitPaymentCreate,
         child: const Icon(Icons.add),
       ),
-      body: const Center(
-        child: Text("Chit Payments"),
+      body: chitPayments.when(
+        data: (data) => ChitPaymentsList(chitPayments: data),
+        error: (error, stackTrace) => CustomErrorWidget(error.toString()),
+        loading: () => const CustomLoaderWidget(
+          text: "Loading your chit Payments",
+        ),
       ),
     );
   }

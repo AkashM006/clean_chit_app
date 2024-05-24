@@ -12,6 +12,27 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
     with _$ChitPaymentsDaoMixin {
   ChitPaymentsDao(super.db);
 
+  Stream<List<ChitPaymentsModel>> watchChitPayments() {
+    final query = select(chitPayments).join([
+      leftOuterJoin(chits, chitPayments.belongsTo.equalsExp(chits.id)),
+    ]);
+
+    return query.watch().map((rows) {
+      return rows.map((row) {
+        final chitPayment = row.readTable(chitPayments);
+        final chit = row.readTable(chits);
+
+        return ChitPaymentsModel(
+          paymentDate: chitPayment.paymentDate,
+          paidAmount: chitPayment.paidAmount,
+          receivedAmount: chitPayment.receivedAmount,
+          chit: ChitNameAndId(id: chit.id, name: chit.name),
+          paymentType: chitPayment.paymentType,
+        );
+      }).toList();
+    });
+  }
+
   Future<List<ChitNameAndId>> getChitNamesAndIds() async {
     final query = selectOnly(chits)..addColumns([chits.id, chits.name]);
 

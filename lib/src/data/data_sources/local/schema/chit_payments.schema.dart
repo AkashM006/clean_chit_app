@@ -1,6 +1,8 @@
 // ignore_for_file: recursive_getters
 
+import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:drift/drift.dart';
 
@@ -14,4 +16,14 @@ class ChitPayments extends Table {
   IntColumn get paymentType => intEnum<PaymentType>()();
   DateTimeColumn get createdAt =>
       dateTime().clientDefault(() => DateTime.now())();
+}
+
+ChitPaymentsModel chitPaymentsToModel(ChitPayment chitPayment, Chit chit) {
+  return ChitPaymentsModel(
+    paymentDate: chitPayment.paymentDate,
+    paidAmount: chitPayment.paidAmount,
+    receivedAmount: chitPayment.receivedAmount,
+    chit: ChitNameAndId(id: chit.id, name: chit.name),
+    paymentType: chitPayment.paymentType,
+  );
 }
