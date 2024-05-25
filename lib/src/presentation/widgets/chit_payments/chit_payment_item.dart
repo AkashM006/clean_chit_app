@@ -25,33 +25,43 @@ class ChitPaymentsItem extends StatelessWidget {
         ? ''
         : getFormattedCurrency(chitPayment.receivedAmount);
 
+    final List<Widget> amountWidgets = [];
+
+    if (receivedAmount.isNotEmpty) {
+      amountWidgets.add(
+        Text(
+          "+ $receivedAmount",
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: greenColor),
+        ),
+      );
+    }
+
+    if (paidAmount.isNotEmpty) {
+      amountWidgets.add(
+        Text(
+          "- $paidAmount",
+          style:
+              Theme.of(context).textTheme.bodyLarge!.copyWith(color: redColor),
+        ),
+      );
+    }
+
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(chitPayment.chit.name),
-          if (paidAmount.isNotEmpty)
-            Text(
-              "- $paidAmount",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: redColor),
-            ),
+          amountWidgets[0],
         ],
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(getFormattedDate(chitPayment.paymentDate)),
-          if (receivedAmount.isNotEmpty)
-            Text(
-              "+ $receivedAmount",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: greenColor),
-            )
+          if (amountWidgets.length == 2) amountWidgets[1],
         ],
       ),
     );
