@@ -31,7 +31,6 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   final TextEditingController _dateController = TextEditingController();
 
   DateTime _paymentDate = DateTime.now();
-  // int _chitId = -1;
   ChitNameAndId? _selectedChit;
   int _paidAmount = 0;
   int _receivedAmount = 0;

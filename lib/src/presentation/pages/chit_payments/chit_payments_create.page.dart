@@ -11,18 +11,20 @@ class ChitPaymentsCreatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // todo:
-    // 1. Fetch all the chits (names and id)
-    // 2. Then display the form
-
     final chitNamesAndIds = ref.watch(chitNamesAndIdsProvider);
 
     return Scaffold(
         appBar: const CustomAppBar(title: "Add Chit Payment"),
         body: switch (chitNamesAndIds) {
-          AsyncData(value: final chits) => ChitPaymentsForm(
-              chitNamesAndIds: chits,
-            ),
+          AsyncData(value: final chits) => chits.isEmpty
+              ? const Center(
+                  child: Text(
+                    "You have no chits. Add one to create a Chit Payment",
+                  ),
+                )
+              : ChitPaymentsForm(
+                  chitNamesAndIds: chits,
+                ),
           AsyncError(error: final error) => CustomErrorWidget(error.toString()),
           _ => const CustomLoaderWidget(text: "Loading your Payments"),
         });
