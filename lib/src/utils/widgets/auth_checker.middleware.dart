@@ -35,7 +35,8 @@ class _AuthCheckerMiddlewareState extends ConsumerState<AuthCheckerMiddleware> {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = router.routeInformationProvider.value.uri.path;
+    final currentRoute =
+        GoRouter.of(context).routeInformationProvider.value.uri.path;
 
     final isLoggedIn = ref.watch(authStateProvider);
 

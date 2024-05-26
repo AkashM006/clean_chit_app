@@ -1,5 +1,6 @@
 import 'package:chit_app_clean/src/config/settings.config.dart';
 import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
+import 'package:chit_app_clean/src/presentation/state/auth_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +22,7 @@ class BackgroundListenerWrapper extends ConsumerStatefulWidget {
 class _BackgroundListenerWrapperState
     extends ConsumerState<BackgroundListenerWrapper>
     with WidgetsBindingObserver {
-  DateTime lastSeen = DateTime.now();
+  // DateTime lastSeen = DateTime.now();
 
   @override
   void initState() {
@@ -40,10 +41,11 @@ class _BackgroundListenerWrapperState
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.paused:
-        lastSeen = DateTime.now();
+        ref.read(authStatusProvider.notifier).setLastSeen();
         break;
       case AppLifecycleState.resumed:
         final now = DateTime.now();
+        final lastSeen = ref.read(authStatusProvider);
         if (now.difference(lastSeen) > appInactivityDuration) {
           ref.read(authStateProvider.notifier).logout();
         }
