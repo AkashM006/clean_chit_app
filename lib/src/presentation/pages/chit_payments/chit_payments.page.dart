@@ -14,8 +14,6 @@ class ChitPaymentsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // todo: Create a stream that returns List<ChitPaymentsModel> and listen to it here
-
     void onChitPaymentCreate() {
       context.push(PAGES.chitpaymentscreate.path);
     }
