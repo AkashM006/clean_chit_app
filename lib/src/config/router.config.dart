@@ -92,13 +92,10 @@ extension AppRoutesExtension on PAGES {
               child: const ChitPage(),
             );
       case PAGES.chitscreate:
-        // todo: From here, start with getting params and passing to child
         return (context, routerState) => AuthCheckerMiddleware(
               path: path,
               shouldBeLoggedIn: true,
-              child: ChitsCreatePage(
-                chitId: 0,
-              ),
+              child: const ChitsCreatePage(),
             );
       case PAGES.chitpayments:
         return (context, routerState) => AuthCheckerMiddleware(
