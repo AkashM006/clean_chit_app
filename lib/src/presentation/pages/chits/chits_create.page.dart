@@ -98,6 +98,7 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
       onPopInvoked: _backHandler,
       child: Scaffold(
         appBar: const CustomAppBar(title: 'Create Chit'),
+        // todo: start from here, check the console error
         // body: PageView(
         //   controller: _pageController,
         //   physics: const NeverScrollableScrollPhysics(),
