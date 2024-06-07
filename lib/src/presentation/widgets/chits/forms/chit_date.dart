@@ -58,34 +58,17 @@ class _ChitDateState extends State<ChitDate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: TextField(
-              controller: _controller,
-              decoration: BorderedInputDecoration(
-                labelWidget: Text(widget.label),
-                suffixIconWidget: IconButton(
-                  onPressed: _handleSelectDate,
-                  icon: const Icon(Icons.date_range),
-                ),
-              ),
-              readOnly: true,
-            ),
+      margin: EdgeInsets.symmetric(vertical: SizeConfig.safeBlockVertical * 2),
+      child: TextField(
+        controller: _controller,
+        decoration: BorderedInputDecoration(
+          labelWidget: Text(widget.label),
+          suffixIconWidget: IconButton(
+            onPressed: _handleSelectDate,
+            icon: const Icon(Icons.date_range),
           ),
-          SizedBox(
-            width: SizeConfig.safeBlockHorizontal * 2,
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              getWeekDay(_currentDate),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+          helperTextString: getWeekDay(_currentDate),
+        ),
       ),
     );
   }

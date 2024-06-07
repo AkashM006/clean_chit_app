@@ -1,6 +1,7 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/classes/validators.dart';
+import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:chit_app_clean/src/utils/widgets/bordered_input_decoration.dart';
 import 'package:chit_app_clean/src/utils/widgets/required_input_label.dart';
@@ -10,7 +11,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final now = DateTime.now();
 
 class ChitDetailForm extends ConsumerStatefulWidget {
-  const ChitDetailForm({super.key});
+  final void Function(ChitModel newChit) onSubmitHandler;
+  const ChitDetailForm({
+    super.key,
+    required this.onSubmitHandler,
+  });
 
   @override
   ConsumerState<ChitDetailForm> createState() => _ChitDetailFormState();
@@ -85,7 +90,35 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
     _setFormattedTime(result);
   }
 
-  void _nextHandler() {}
+  void _nextHandler() {
+    final isFormValid = _formKey.currentState!.validate();
+
+    if (!isFormValid) return;
+
+    _formKey.currentState!.save();
+
+    final scheduledDates = getScheduledDates(
+      _startDate,
+      _frequencyType,
+      _frequencyNumber,
+      _people,
+    );
+
+    final newChit = ChitModel(
+      name: _name,
+      amount: _amount,
+      people: _people,
+      commissionPercentage: _commissionPercentage,
+      frequencyType: _frequencyType,
+      frequencyNumber: _frequencyNumber,
+      fManAuctionNumber: _fManAuctionNumber,
+      startDate: _startDate,
+      endDate: _startDate,
+      dates: scheduledDates,
+    );
+
+    widget.onSubmitHandler(newChit);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -237,9 +270,10 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                     required: false,
                     canBeNegative: false,
                   ),
-                  onSaved: (newValue) => _fManAuctionNumber = newValue != null
-                      ? int.parse(undoFormatting(newValue))
-                      : 0,
+                  onSaved: (newValue) => _fManAuctionNumber =
+                      newValue != null && newValue.isNotEmpty
+                          ? int.parse(undoFormatting(newValue))
+                          : 0,
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,

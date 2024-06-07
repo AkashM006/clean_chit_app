@@ -1,18 +1,70 @@
+import 'package:chit_app_clean/src/presentation/widgets/chits/forms/chit_date.dart';
+import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChitDatesForm extends ConsumerStatefulWidget {
-  const ChitDatesForm({super.key});
+class ChitDatesForm extends StatelessWidget {
+  final List<DateTime> dates;
+  final bool isLoading;
+  final void Function(int index, DateTime date) onDateChanged;
+  final void Function() onSubmit;
+  final void Function() onBack;
 
-  @override
-  ConsumerState<ChitDatesForm> createState() => _ChitDatesFormState();
-}
+  const ChitDatesForm({
+    super.key,
+    required this.dates,
+    required this.onDateChanged,
+    required this.onSubmit,
+    required this.onBack,
+    required this.isLoading,
+  });
 
-class _ChitDatesFormState extends ConsumerState<ChitDatesForm> {
   @override
   Widget build(BuildContext context) {
-    return const Form(
-      child: Text("Screen 2"),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 600),
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: SizeConfig.safeBlockHorizontal * 3,
+          right: SizeConfig.safeBlockHorizontal * 3,
+          top: SizeConfig.safeBlockVertical * 3,
+          bottom: MediaQuery.of(context).viewInsets.bottom +
+              SizeConfig.safeBlockVertical * 3,
+        ),
+        child: CustomScrollView(
+          slivers: [
+            SliverList.builder(
+              itemBuilder: (context, index) => ChitDate(
+                initialDate: dates[index],
+                label: 'Chit ${index + 1} Date:',
+                onDateChanged: (date) => onDateChanged(index, date),
+              ),
+              itemCount: dates.length,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: SizeConfig.safeBlockVertical * 3,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Row(
+                children: [
+                  FilledButton(
+                    onPressed: onSubmit,
+                    child: const Text("Create"),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 3,
+                  ),
+                  TextButton(
+                    onPressed: onBack,
+                    child: const Text("Back"),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
