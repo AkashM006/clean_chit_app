@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
+import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_dates_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_detail_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
@@ -18,7 +19,6 @@ class ChitsCreatePage extends ConsumerStatefulWidget {
 }
 
 class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
-  late PageController _pageController;
   int step = 1;
   bool isLoading = false;
 
@@ -26,31 +26,21 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
 
   @override
   void initState() {
-    _pageController = PageController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
   void _pageGoBack() async {
-    // await _pageController.previousPage(
-    //   duration: pageAnimationDuration,
-    //   curve: pageAnimattionCurve,
-    // );
     setState(() {
       step = 1;
     });
   }
 
   void _pageGoNext() async {
-    // await _pageController.nextPage(
-    //   duration: pageAnimationDuration,
-    //   curve: pageAnimattionCurve,
-    // );
     setState(() {
       step = 2;
     });
@@ -73,6 +63,12 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   }
 
   void submitHandler(ChitModel newChit) {
+    if (newChit.people == currentChit.people &&
+        newChit.frequencyNumber == currentChit.frequencyNumber &&
+        newChit.frequencyType == currentChit.frequencyType &&
+        newChit.startDate == currentChit.startDate) {
+      newChit = newChit.copyWith(dates: currentChit.dates);
+    }
     setState(() {
       currentChit = newChit;
     });
@@ -80,7 +76,7 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   }
 
   void handleChitDateChange(int index, DateTime date) {
-    final newDates = currentChit.dates;
+    final newDates = currentChit.dates.map((date) => date.copyWith()).toList();
     newDates[index] = date;
     setState(() {
       currentChit = currentChit.copyWith(dates: newDates);
@@ -88,33 +84,48 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   }
 
   void chitCreateHandler() {
-    // todo: Call controller method and  handle loading state
+    ref.read(chitControllerProvider.notifier).createChit(currentChit);
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(
+      chitControllerProvider,
+      (previous, next) {
+        if (next.createChit.isLoading) {
+          setState(() {
+            isLoading = true;
+          });
+          return;
+        }
+
+        setState(() {
+          isLoading = false;
+        });
+
+        final message = next.createChit.isFailure
+            ? "Something went wrong when trying to create a chit. Please try again later!"
+            : "Successfully created your chit!";
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+          ),
+        );
+        WidgetsBinding.instance.addPostFrameCallback(
+          (timeStamp) {
+            _pageGoBack();
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+
     return PopScope(
       canPop: step == 1,
       onPopInvoked: _backHandler,
       child: Scaffold(
         appBar: const CustomAppBar(title: 'Create Chit'),
-        // todo: start from here, check the console error
-        // body: PageView(
-        //   controller: _pageController,
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   children: [
-        // ChitDetailForm(
-        //   onSubmitHandler: submitHandler,
-        // ),
-        // ChitDatesForm(
-        //   dates: currentChit.dates,
-        //   onDateChanged: handleChitDateChange,
-        //   onSubmit: chitCreateHandler,
-        //   onBack: _pageGoBack,
-        //   isLoading: isLoading,
-        // ),
-        //   ],
-        // ),
         body: AnimatedContainer(
           duration: pageAnimationDuration,
           child: AnimatedCrossFade(

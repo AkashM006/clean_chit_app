@@ -20,15 +20,15 @@ class ChitDatesForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
+    return Container(
       constraints: const BoxConstraints(maxWidth: 600),
+      height: MediaQuery.of(context).size.height,
       child: Padding(
         padding: EdgeInsets.only(
           left: SizeConfig.safeBlockHorizontal * 3,
           right: SizeConfig.safeBlockHorizontal * 3,
           top: SizeConfig.safeBlockVertical * 3,
-          bottom: MediaQuery.of(context).viewInsets.bottom +
-              SizeConfig.safeBlockVertical * 3,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: CustomScrollView(
           slivers: [
@@ -61,7 +61,12 @@ class ChitDatesForm extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: SizeConfig.safeBlockVertical * 3,
+              ),
+            ),
           ],
         ),
       ),
