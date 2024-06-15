@@ -1,3 +1,4 @@
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -68,4 +69,12 @@ class ChitNameAndId with _$ChitNameAndId {
     required int id,
     required String name,
   }) = $ChitNameAndId;
+}
+
+@freezed
+class ChitDetailWithDatesAndPayments with _$ChitDetailWithDatesAndPayments {
+  const factory ChitDetailWithDatesAndPayments({
+    required ChitModel chit,
+    required List<ChitPaymentsModel> chitPayments,
+  }) = $ChitDetailWithDatesAndPayments;
 }

@@ -1,8 +1,6 @@
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
-    (In progress)
-2. Also provide a way to see all the payments made in a particular chit (Maybe add a button in chits page to see the entire details of the chit)
+    ( DONE )
+2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart )
 3. Implement delete in chits
 4. Chit create page ( DONE )
-
-Upon continuation start at:
-lib\src\presentation\widgets\chit_payments\chit_payment_item.dart
+5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( IN PROGRESS )

@@ -1,6 +1,7 @@
 import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
+import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_payments.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:drift/drift.dart';
 
@@ -9,13 +10,15 @@ part 'chit.dao.g.dart';
 @DriftAccessor(tables: [
   Chits,
   ChitDates,
+  ChitPayments,
 ])
 class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
   ChitDao(super.db);
 
   Stream<List<ChitModel>> watchChits() {
-    final query = select(chits).join(
-        [leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id))]);
+    final query = select(chits).join([
+      leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id)),
+    ]);
 
     return query.watch().map((rows) {
       final Map<int, List<ChitDate>> grouped = {};
@@ -37,6 +40,15 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
         return chitModel;
       }).toList();
     });
+  }
+
+  // Stream<ChitModel> watchChit(int id) {
+  void watchChit(int id) {
+    // (select(chits)..where((t) => t.id.equals(id))).watchSingle().map((row) {
+    final query = select(chits).join([
+      leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id)),
+      leftOuterJoin(chitPayments, chitPayments.belongsTo.equalsExp(chits.id)),
+    ]);
   }
 
   Future<void> insertChit(ChitModel chit) async {

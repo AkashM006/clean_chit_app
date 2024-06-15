@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/presentation/widgets/chits/forms/chit_date.dart';
+import 'package:chit_app_clean/src/presentation/widgets/common/date_field.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class ChitDatesForm extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverList.builder(
-              itemBuilder: (context, index) => ChitDate(
+              itemBuilder: (context, index) => DateField(
                 initialDate: dates[index],
                 label: 'Chit ${index + 1} Date:',
                 onDateChanged: (date) => onDateChanged(index, date),

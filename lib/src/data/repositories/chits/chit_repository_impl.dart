@@ -20,6 +20,12 @@ class ChitRepositoryImplementation extends BaseDbRepository
   }
 
   @override
+  Stream<ChitModel> watchChit(int id) {
+    // TODO: implement getChit
+    throw UnimplementedError();
+  }
+
+  @override
   Future<DataState<void>> createChit(ChitModel newChit) {
     return safeExecute(() => _appDatabase.chitDao.insertChit(newChit));
   }

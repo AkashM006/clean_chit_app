@@ -714,3 +714,183 @@ abstract class $ChitNameAndId implements ChitNameAndId {
   _$$$ChitNameAndIdImplCopyWith<_$$ChitNameAndIdImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$ChitDetailWithDatesAndPayments {
+  ChitModel get chit => throw _privateConstructorUsedError;
+  List<ChitPaymentsModel> get chitPayments =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ChitDetailWithDatesAndPaymentsCopyWith<ChitDetailWithDatesAndPayments>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChitDetailWithDatesAndPaymentsCopyWith<$Res> {
+  factory $ChitDetailWithDatesAndPaymentsCopyWith(
+          ChitDetailWithDatesAndPayments value,
+          $Res Function(ChitDetailWithDatesAndPayments) then) =
+      _$ChitDetailWithDatesAndPaymentsCopyWithImpl<$Res,
+          ChitDetailWithDatesAndPayments>;
+  @useResult
+  $Res call({ChitModel chit, List<ChitPaymentsModel> chitPayments});
+
+  $ChitModelCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class _$ChitDetailWithDatesAndPaymentsCopyWithImpl<$Res,
+        $Val extends ChitDetailWithDatesAndPayments>
+    implements $ChitDetailWithDatesAndPaymentsCopyWith<$Res> {
+  _$ChitDetailWithDatesAndPaymentsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chit = null,
+    Object? chitPayments = null,
+  }) {
+    return _then(_value.copyWith(
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitModel,
+      chitPayments: null == chitPayments
+          ? _value.chitPayments
+          : chitPayments // ignore: cast_nullable_to_non_nullable
+              as List<ChitPaymentsModel>,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChitModelCopyWith<$Res> get chit {
+    return $ChitModelCopyWith<$Res>(_value.chit, (value) {
+      return _then(_value.copyWith(chit: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$$ChitDetailWithDatesAndPaymentsImplCopyWith<$Res>
+    implements $ChitDetailWithDatesAndPaymentsCopyWith<$Res> {
+  factory _$$$ChitDetailWithDatesAndPaymentsImplCopyWith(
+          _$$ChitDetailWithDatesAndPaymentsImpl value,
+          $Res Function(_$$ChitDetailWithDatesAndPaymentsImpl) then) =
+      __$$$ChitDetailWithDatesAndPaymentsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ChitModel chit, List<ChitPaymentsModel> chitPayments});
+
+  @override
+  $ChitModelCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class __$$$ChitDetailWithDatesAndPaymentsImplCopyWithImpl<$Res>
+    extends _$ChitDetailWithDatesAndPaymentsCopyWithImpl<$Res,
+        _$$ChitDetailWithDatesAndPaymentsImpl>
+    implements _$$$ChitDetailWithDatesAndPaymentsImplCopyWith<$Res> {
+  __$$$ChitDetailWithDatesAndPaymentsImplCopyWithImpl(
+      _$$ChitDetailWithDatesAndPaymentsImpl _value,
+      $Res Function(_$$ChitDetailWithDatesAndPaymentsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chit = null,
+    Object? chitPayments = null,
+  }) {
+    return _then(_$$ChitDetailWithDatesAndPaymentsImpl(
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitModel,
+      chitPayments: null == chitPayments
+          ? _value._chitPayments
+          : chitPayments // ignore: cast_nullable_to_non_nullable
+              as List<ChitPaymentsModel>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$$ChitDetailWithDatesAndPaymentsImpl
+    with DiagnosticableTreeMixin
+    implements $ChitDetailWithDatesAndPayments {
+  const _$$ChitDetailWithDatesAndPaymentsImpl(
+      {required this.chit, required final List<ChitPaymentsModel> chitPayments})
+      : _chitPayments = chitPayments;
+
+  @override
+  final ChitModel chit;
+  final List<ChitPaymentsModel> _chitPayments;
+  @override
+  List<ChitPaymentsModel> get chitPayments {
+    if (_chitPayments is EqualUnmodifiableListView) return _chitPayments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chitPayments);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChitDetailWithDatesAndPayments(chit: $chit, chitPayments: $chitPayments)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChitDetailWithDatesAndPayments'))
+      ..add(DiagnosticsProperty('chit', chit))
+      ..add(DiagnosticsProperty('chitPayments', chitPayments));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$$ChitDetailWithDatesAndPaymentsImpl &&
+            (identical(other.chit, chit) || other.chit == chit) &&
+            const DeepCollectionEquality()
+                .equals(other._chitPayments, _chitPayments));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, chit, const DeepCollectionEquality().hash(_chitPayments));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$$ChitDetailWithDatesAndPaymentsImplCopyWith<
+          _$$ChitDetailWithDatesAndPaymentsImpl>
+      get copyWith => __$$$ChitDetailWithDatesAndPaymentsImplCopyWithImpl<
+          _$$ChitDetailWithDatesAndPaymentsImpl>(this, _$identity);
+}
+
+abstract class $ChitDetailWithDatesAndPayments
+    implements ChitDetailWithDatesAndPayments {
+  const factory $ChitDetailWithDatesAndPayments(
+          {required final ChitModel chit,
+          required final List<ChitPaymentsModel> chitPayments}) =
+      _$$ChitDetailWithDatesAndPaymentsImpl;
+
+  @override
+  ChitModel get chit;
+  @override
+  List<ChitPaymentsModel> get chitPayments;
+  @override
+  @JsonKey(ignore: true)
+  _$$$ChitDetailWithDatesAndPaymentsImplCopyWith<
+          _$$ChitDetailWithDatesAndPaymentsImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

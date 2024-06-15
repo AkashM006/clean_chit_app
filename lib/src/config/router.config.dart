@@ -2,6 +2,7 @@ import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments_create.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chits/chit_detail.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chits_create.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/home.page.dart';
@@ -17,7 +18,8 @@ enum PAGES {
   chits,
   chitscreate,
   chitpayments,
-  chitpaymentscreate
+  chitpaymentscreate,
+  chitDetail,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -37,6 +39,8 @@ extension AppRoutesExtension on PAGES {
         return '/chit-payments';
       case PAGES.chitpaymentscreate:
         return '/chit-payments-create';
+      case PAGES.chitDetail:
+        return '/chit-detail';
     }
   }
 
@@ -53,9 +57,11 @@ extension AppRoutesExtension on PAGES {
       case PAGES.chitscreate:
         return 'Create Chit';
       case PAGES.chitpayments:
-        return "Chit Payment";
+        return 'Chit Payment';
       case PAGES.chitpaymentscreate:
-        return "Create Chit Payment";
+        return 'Create Chit Payment';
+      case PAGES.chitDetail:
+        return 'Chit Detail';
     }
   }
 
@@ -108,6 +114,14 @@ extension AppRoutesExtension on PAGES {
               shouldBeLoggedIn: true,
               path: path,
               child: const ChitPaymentsCreatePage(),
+            );
+      case PAGES.chitDetail:
+        return (context, routerState) => AuthCheckerMiddleware(
+              shouldBeLoggedIn: true,
+              path: path,
+              child: ChitDetailPage(
+                chitId: routerState.extra as int,
+              ),
             );
     }
   }
