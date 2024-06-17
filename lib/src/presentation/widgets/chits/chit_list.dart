@@ -4,15 +4,15 @@ import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ChitList extends StatelessWidget {
-  final List<ChitModel> chits;
+  final List<ChitWithDates> chitsWithDates;
   const ChitList({
     super.key,
-    required this.chits,
+    required this.chitsWithDates,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (chits.isEmpty) {
+    if (chitsWithDates.isEmpty) {
       return Center(
         child: SizedBox(
           width: SizeConfig.safeBlockHorizontal * 80,
@@ -29,9 +29,9 @@ class ChitList extends StatelessWidget {
     }
 
     return ListView.builder(
-      itemCount: chits.length,
+      itemCount: chitsWithDates.length,
       itemBuilder: (context, index) => ChitItem(
-        chit: chits[index],
+        chitWithDates: chitsWithDates[index],
       ),
     );
   }

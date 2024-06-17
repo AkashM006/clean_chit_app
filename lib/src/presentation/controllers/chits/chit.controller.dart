@@ -25,7 +25,7 @@ class ChitController extends _$ChitController {
     return const ChitControllerState();
   }
 
-  void createChit(ChitModel newChit) async {
+  void createChit(ChitWithDates newChit) async {
     state = state.copyWith(
       createChit: state.createChit.setLoading(),
     );
@@ -43,7 +43,7 @@ class ChitController extends _$ChitController {
     );
   }
 
-  void editChit(ChitModel newChit) async {
+  void editChit(ChitWithDates newChit) async {
     state = state.copyWith(
       editChit: state.editChit.setLoading(),
     );

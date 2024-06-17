@@ -34,6 +34,7 @@ class ChitDatesForm extends StatelessWidget {
           slivers: [
             SliverList.builder(
               itemBuilder: (context, index) => DateField(
+                key: ValueKey(dates[index].toString()),
                 initialDate: dates[index],
                 label: 'Chit ${index + 1} Date:',
                 onDateChanged: (date) => onDateChanged(index, date),

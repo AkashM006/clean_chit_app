@@ -3,6 +3,7 @@ import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controlle
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_dates_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_detail_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
+import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,10 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   int step = 1;
   bool isLoading = false;
 
-  ChitModel currentChit = ChitModel.placeholder;
+  ChitWithDates currentChitWithDates = ChitWithDates(
+    chit: ChitModel.placeholder,
+    dates: [],
+  );
 
   @override
   void initState() {
@@ -63,28 +67,39 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   }
 
   void submitHandler(ChitModel newChit) {
-    if (newChit.people == currentChit.people &&
-        newChit.frequencyNumber == currentChit.frequencyNumber &&
-        newChit.frequencyType == currentChit.frequencyType &&
-        newChit.startDate == currentChit.startDate) {
-      newChit = newChit.copyWith(dates: currentChit.dates);
+    final currentChit = currentChitWithDates.chit;
+    var newChitWithDates =
+        ChitWithDates(chit: newChit, dates: currentChitWithDates.dates);
+
+    if (newChit.people != currentChit.people ||
+        newChit.frequencyNumber != currentChit.frequencyNumber ||
+        newChit.frequencyType != currentChit.frequencyType ||
+        newChit.startDate != currentChit.startDate) {
+      final scheduledDates = getScheduledDates(
+        newChit.startDate,
+        newChit.frequencyType,
+        newChit.frequencyNumber,
+        newChit.people,
+      );
+      newChitWithDates = newChitWithDates.copyWith(dates: scheduledDates);
     }
     setState(() {
-      currentChit = newChit;
+      currentChitWithDates = newChitWithDates;
     });
     _pageGoNext();
   }
 
   void handleChitDateChange(int index, DateTime date) {
-    final newDates = currentChit.dates.map((date) => date.copyWith()).toList();
+    final newDates =
+        currentChitWithDates.dates.map((date) => date.copyWith()).toList();
     newDates[index] = date;
     setState(() {
-      currentChit = currentChit.copyWith(dates: newDates);
+      currentChitWithDates = currentChitWithDates.copyWith(dates: newDates);
     });
   }
 
   void chitCreateHandler() {
-    ref.read(chitControllerProvider.notifier).createChit(currentChit);
+    ref.read(chitControllerProvider.notifier).createChit(currentChitWithDates);
   }
 
   @override
@@ -133,7 +148,7 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
               onSubmitHandler: submitHandler,
             ),
             secondChild: ChitDatesForm(
-              dates: currentChit.dates,
+              dates: currentChitWithDates.dates.map((date) => date).toList(),
               onDateChanged: handleChitDateChange,
               onSubmit: chitCreateHandler,
               onBack: _pageGoBack,

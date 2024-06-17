@@ -15,7 +15,7 @@ part 'chit.dao.g.dart';
 class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
   ChitDao(super.db);
 
-  Stream<List<ChitModel>> watchChits() {
+  Stream<List<ChitWithDates>> watchChits() {
     final query = select(chits).join([
       leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id)),
     ]);
@@ -34,10 +34,10 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
         final chitResult = rows
             .firstWhere((row) => row.readTable(chits).id == entry.key)
             .readTable(chits);
-        final chitModel = chitToModel(chitResult).copyWith(
-          dates: entry.value.map((e) => chitDateToModel(e)).toList(),
-        );
-        return chitModel;
+        final chitModel = chitToModel(chitResult);
+        final chitDates = entry.value.map((e) => chitDateToModel(e)).toList();
+        final result = ChitWithDates(chit: chitModel, dates: chitDates);
+        return result;
       }).toList();
     });
   }
@@ -51,27 +51,29 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
     ]);
   }
 
-  Future<void> insertChit(ChitModel chit) async {
+  Future<void> insertChit(ChitWithDates chitWithDates) async {
     await transaction(() async {
       final result = await into(chits).insertReturning(
-        modelToChitsCompanion(chit),
+        modelToChitsCompanion(chitWithDates.chit),
       );
       await batch((batch) => batch.insertAll(
             chitDates,
-            chitDateListToCompanionsList(chit.dates, result.id),
+            chitDateListToCompanionsList(chitWithDates.dates, result.id),
           ));
     });
   }
 
-  Future<void> editChit(ChitModel chit) async {
+  Future<void> editChit(ChitWithDates chitWithDates) async {
     await transaction(() async {
-      await update(chits).replace(modelToChit(chit));
-      await (delete(chitDates)..where((tbl) => tbl.belongsTo.equals(chit.id)))
+      await update(chits).replace(modelToChit(chitWithDates.chit));
+      await (delete(chitDates)
+            ..where((tbl) => tbl.belongsTo.equals(chitWithDates.chit.id)))
           .go();
       await batch(
         (batch) => batch.insertAll(
           chitDates,
-          chitDateListToCompanionsList(chit.dates, chit.id),
+          chitDateListToCompanionsList(
+              chitWithDates.dates, chitWithDates.chit.id),
         ),
       );
     });

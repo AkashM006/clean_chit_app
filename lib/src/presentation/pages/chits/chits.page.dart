@@ -33,7 +33,7 @@ class ChitPage extends ConsumerWidget {
       ),
       body: switch (chitsStream) {
         AsyncData(value: final chitsWithDates) => ChitList(
-            chits: chitsWithDates,
+            chitsWithDates: chitsWithDates,
           ),
         AsyncError(:final error) => CustomErrorWidget(error.toString()),
         _ => const CustomLoaderWidget(

@@ -6,23 +6,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class ChitItem extends ConsumerWidget {
-  final ChitModel chit;
+  final ChitWithDates chitWithDates;
 
   const ChitItem({
     super.key,
-    required this.chit,
+    required this.chitWithDates,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onViewMore() {
-      context.push(PAGES.chitDetail.path, extra: chit.id);
+      context.push(PAGES.chitDetail.path, extra: chitWithDates.chit.id);
     }
 
     return ListTile(
       onTap: onViewMore,
-      title: Text(chit.name),
-      subtitle: Text('Amount: ${getFormattedCurrency(chit.amount)}'),
+      title: Text(chitWithDates.chit.name),
+      subtitle:
+          Text('Amount: ${getFormattedCurrency(chitWithDates.chit.amount)}'),
       trailing: const Icon(Icons.arrow_right),
     );
   }

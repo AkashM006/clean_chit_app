@@ -27,7 +27,6 @@ mixin _$ChitModel {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  List<DateTime> get dates => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChitModelCopyWith<ChitModel> get copyWith =>
@@ -50,8 +49,7 @@ abstract class $ChitModelCopyWith<$Res> {
       int fManAuctionNumber,
       DateTime startDate,
       DateTime endDate,
-      DateTime? createdAt,
-      List<DateTime> dates});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -78,7 +76,6 @@ class _$ChitModelCopyWithImpl<$Res, $Val extends ChitModel>
     Object? startDate = null,
     Object? endDate = null,
     Object? createdAt = freezed,
-    Object? dates = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -125,10 +122,6 @@ class _$ChitModelCopyWithImpl<$Res, $Val extends ChitModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      dates: null == dates
-          ? _value.dates
-          : dates // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
     ) as $Val);
   }
 }
@@ -152,8 +145,7 @@ abstract class _$$ChitModelImplCopyWith<$Res>
       int fManAuctionNumber,
       DateTime startDate,
       DateTime endDate,
-      DateTime? createdAt,
-      List<DateTime> dates});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -178,7 +170,6 @@ class __$$ChitModelImplCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? createdAt = freezed,
-    Object? dates = null,
   }) {
     return _then(_$ChitModelImpl(
       id: null == id
@@ -225,10 +216,6 @@ class __$$ChitModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      dates: null == dates
-          ? _value._dates
-          : dates // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
     ));
   }
 }
@@ -247,9 +234,7 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
       required this.fManAuctionNumber,
       required this.startDate,
       required this.endDate,
-      this.createdAt,
-      final List<DateTime> dates = const []})
-      : _dates = dates;
+      this.createdAt});
 
   @override
   @JsonKey()
@@ -274,18 +259,10 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
   final DateTime endDate;
   @override
   final DateTime? createdAt;
-  final List<DateTime> _dates;
-  @override
-  @JsonKey()
-  List<DateTime> get dates {
-    if (_dates is EqualUnmodifiableListView) return _dates;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_dates);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChitModel(id: $id, name: $name, amount: $amount, people: $people, commissionPercentage: $commissionPercentage, frequencyType: $frequencyType, frequencyNumber: $frequencyNumber, fManAuctionNumber: $fManAuctionNumber, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, dates: $dates)';
+    return 'ChitModel(id: $id, name: $name, amount: $amount, people: $people, commissionPercentage: $commissionPercentage, frequencyType: $frequencyType, frequencyNumber: $frequencyNumber, fManAuctionNumber: $fManAuctionNumber, startDate: $startDate, endDate: $endDate, createdAt: $createdAt)';
   }
 
   @override
@@ -303,8 +280,7 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
       ..add(DiagnosticsProperty('fManAuctionNumber', fManAuctionNumber))
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('endDate', endDate))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('dates', dates));
+      ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
   @override
@@ -328,8 +304,7 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            const DeepCollectionEquality().equals(other._dates, _dates));
+                other.createdAt == createdAt));
   }
 
   @override
@@ -345,8 +320,7 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
       fManAuctionNumber,
       startDate,
       endDate,
-      createdAt,
-      const DeepCollectionEquality().hash(_dates));
+      createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -367,8 +341,7 @@ abstract class _ChitModel implements ChitModel {
       required final int fManAuctionNumber,
       required final DateTime startDate,
       required final DateTime endDate,
-      final DateTime? createdAt,
-      final List<DateTime> dates}) = _$ChitModelImpl;
+      final DateTime? createdAt}) = _$ChitModelImpl;
 
   @override
   int get id;
@@ -392,8 +365,6 @@ abstract class _ChitModel implements ChitModel {
   DateTime get endDate;
   @override
   DateTime? get createdAt;
-  @override
-  List<DateTime> get dates;
   @override
   @JsonKey(ignore: true)
   _$$ChitModelImplCopyWith<_$ChitModelImpl> get copyWith =>
