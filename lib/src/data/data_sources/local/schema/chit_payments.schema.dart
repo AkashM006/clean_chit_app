@@ -18,12 +18,24 @@ class ChitPayments extends Table {
       dateTime().clientDefault(() => DateTime.now())();
 }
 
-ChitPaymentsModel chitPaymentsToModel(ChitPayment chitPayment, Chit chit) {
-  return ChitPaymentsModel(
+ChitPaymentWithChitNameAndIdModel chitPaymentsWithChitToModel(
+    ChitPayment chitPayment, Chit chit) {
+  return ChitPaymentWithChitNameAndIdModel(
+    id: chitPayment.id,
     paymentDate: chitPayment.paymentDate,
     paidAmount: chitPayment.paidAmount,
     receivedAmount: chitPayment.receivedAmount,
     chit: ChitNameAndId(id: chit.id, name: chit.name),
+    paymentType: chitPayment.paymentType,
+  );
+}
+
+ChitPaymentModel chitPaymentToModel(ChitPayment chitPayment) {
+  return ChitPaymentModel(
+    id: chitPayment.id,
+    paymentDate: chitPayment.paymentDate,
+    paidAmount: chitPayment.paidAmount,
+    receivedAmount: chitPayment.receivedAmount,
     paymentType: chitPayment.paymentType,
   );
 }

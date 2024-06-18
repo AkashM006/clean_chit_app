@@ -91,7 +91,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
       showErrorDialog();
       return;
     }
-    final chitPayment = ChitPaymentsModel(
+    final chitPayment = ChitPaymentWithChitNameAndIdModel(
       paymentDate: _paymentDate,
       paidAmount: _paidAmount,
       receivedAmount: _receivedAmount,

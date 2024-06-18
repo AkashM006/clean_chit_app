@@ -12,7 +12,7 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
     with _$ChitPaymentsDaoMixin {
   ChitPaymentsDao(super.db);
 
-  Stream<List<ChitPaymentsModel>> watchChitPayments() {
+  Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
     final query = select(chitPayments).join([
       leftOuterJoin(chits, chitPayments.belongsTo.equalsExp(chits.id)),
     ]);
@@ -22,7 +22,7 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
         final chitPayment = row.readTable(chitPayments);
         final chit = row.readTable(chits);
 
-        return ChitPaymentsModel(
+        return ChitPaymentWithChitNameAndIdModel(
           paymentDate: chitPayment.paymentDate,
           paidAmount: chitPayment.paidAmount,
           receivedAmount: chitPayment.receivedAmount,
@@ -48,7 +48,8 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
     return results;
   }
 
-  Future<void> addPayments(ChitPaymentsModel chitPayment) async {
+  Future<void> addPayments(
+      ChitPaymentWithChitNameAndIdModel chitPayment) async {
     await into(chitPayments).insert(ChitPaymentsCompanion(
       paidAmount: Value(chitPayment.paidAmount),
       receivedAmount: Value(chitPayment.receivedAmount),

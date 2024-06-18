@@ -24,7 +24,7 @@ class ChitPaymentsController extends _$ChitPaymentsController {
     return const ChitPaymentsControllerState();
   }
 
-  void createChitPayment(ChitPaymentsModel chitPayment) async {
+  void createChitPayment(ChitPaymentWithChitNameAndIdModel chitPayment) async {
     state = state.copyWith(
       createChitPayment: state.createChitPayment.setLoading(),
     );

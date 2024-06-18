@@ -4,6 +4,7 @@ import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.sch
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_payments.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:drift/drift.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'chit.dao.g.dart';
 
@@ -42,13 +43,54 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
     });
   }
 
-  // Stream<ChitModel> watchChit(int id) {
-  void watchChit(int id) {
-    // (select(chits)..where((t) => t.id.equals(id))).watchSingle().map((row) {
-    final query = select(chits).join([
-      leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id)),
+  Stream<ChitDetailWithDatesAndPayments> watchChit(int id) {
+    final chitQuery = select(chits)..where((tbl) => tbl.id.equals(id));
+
+    final chitPaymentsQuery = select(chits).join([
       leftOuterJoin(chitPayments, chitPayments.belongsTo.equalsExp(chits.id)),
-    ]);
+    ])
+      ..where(chits.id.equals(id));
+
+    final chitDatesQuery = select(chits).join([
+      leftOuterJoin(chitDates, chitDates.belongsTo.equalsExp(chits.id)),
+    ])
+      ..where(chits.id.equals(id));
+
+    final chitStream = chitQuery.watchSingle();
+
+    final chitDatesStream = chitDatesQuery.watch().map((rows) {
+      return rows
+          .map((row) => chitDateToModel(row.readTable(chitDates)))
+          .toList();
+    });
+
+    final chitPaymentsStream = chitPaymentsQuery.watch().map((rows) {
+      final List<ChitPayment> result = [];
+      for (final row in rows) {
+        final payment = row.readTableOrNull(chitPayments);
+        if (payment != null) result.add(payment);
+      }
+      return result;
+    });
+
+    return Rx.combineLatest3(
+      chitStream,
+      chitDatesStream,
+      chitPaymentsStream,
+      (
+        Chit chit,
+        List<DateTime> chitDates,
+        List<ChitPayment> chitPayments,
+      ) {
+        return ChitDetailWithDatesAndPayments(
+          chit: chitToModel(chit),
+          chitDates: chitDates,
+          chitPayments: chitPayments
+              .map((payment) => chitPaymentToModel(payment))
+              .toList(),
+        );
+      },
+    );
   }
 
   Future<void> insertChit(ChitWithDates chitWithDates) async {

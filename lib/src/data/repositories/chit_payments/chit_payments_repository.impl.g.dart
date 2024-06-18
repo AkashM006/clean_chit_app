@@ -6,12 +6,12 @@ part of 'chit_payments_repository.impl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chitPaymentsHash() => r'96be3b964209198ef86d7e931279b4ec0fb67345';
+String _$chitPaymentsHash() => r'1ac94e8cf2c497c1e13145d79bc3ad4c57ceb00b';
 
 /// See also [chitPayments].
 @ProviderFor(chitPayments)
 final chitPaymentsProvider =
-    AutoDisposeStreamProvider<List<ChitPaymentsModel>>.internal(
+    AutoDisposeStreamProvider<List<ChitPaymentWithChitNameAndIdModel>>.internal(
   chitPayments,
   name: r'chitPaymentsProvider',
   debugGetCreateSourceHash:
@@ -20,7 +20,8 @@ final chitPaymentsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef ChitPaymentsRef = AutoDisposeStreamProviderRef<List<ChitPaymentsModel>>;
+typedef ChitPaymentsRef
+    = AutoDisposeStreamProviderRef<List<ChitPaymentWithChitNameAndIdModel>>;
 String _$chitNamesAndIdsHash() => r'd62b58024bed449fedf49902e6fc88b51a1225bd';
 
 /// See also [chitNamesAndIds].

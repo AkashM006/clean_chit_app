@@ -20,9 +20,8 @@ class ChitRepositoryImplementation extends BaseDbRepository
   }
 
   @override
-  Stream<ChitModel> watchChit(int id) {
-    // TODO: implement getChit
-    throw UnimplementedError();
+  Stream<ChitDetailWithDatesAndPayments> watchChit(int id) {
+    return _appDatabase.chitDao.watchChit(id);
   }
 
   @override
@@ -41,4 +40,11 @@ Stream<List<ChitWithDates>> chits(ChitsRef ref) {
   final chitRepository = locator<ChitRepository>();
 
   return chitRepository.watchChits();
+}
+
+@riverpod
+Stream<ChitDetailWithDatesAndPayments> chit(ChitRef ref, int id) {
+  final chitRepository = locator<ChitRepository>();
+
+  return chitRepository.watchChit(id);
 }

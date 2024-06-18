@@ -4,7 +4,7 @@ import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/material.dart';
 
 class ChitPaymentsItem extends StatelessWidget {
-  final ChitPaymentsModel chitPayment;
+  final ChitPaymentWithChitNameAndIdModel chitPayment;
   const ChitPaymentsItem({
     super.key,
     required this.chitPayment,

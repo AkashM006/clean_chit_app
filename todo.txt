@@ -1,6 +1,9 @@
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
     ( DONE )
-2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart ) ( IN PROGRESS )
+2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart ) ( DONE )
 3. Implement delete in chits
 4. Chit create page ( DONE )
 5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( DONE )
+6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( IN PROGRESS )
+7. Now that details are present show them in the details page
+8. Implement chit edit page

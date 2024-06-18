@@ -9,8 +9,9 @@ enum PaymentType {
 }
 
 @freezed
-class ChitPaymentsModel with _$ChitPaymentsModel {
-  const factory ChitPaymentsModel({
+class ChitPaymentWithChitNameAndIdModel
+    with _$ChitPaymentWithChitNameAndIdModel {
+  const factory ChitPaymentWithChitNameAndIdModel({
     @Default(-1) int id,
     required DateTime paymentDate,
     required int paidAmount,
@@ -18,5 +19,17 @@ class ChitPaymentsModel with _$ChitPaymentsModel {
     required ChitNameAndId chit,
     required PaymentType paymentType,
     @Default(null) DateTime? createdAt,
-  }) = _ChitPaymentsModel;
+  }) = _ChitPaymentWithChitNameAndIdModel;
+}
+
+@freezed
+class ChitPaymentModel with _$ChitPaymentModel {
+  const factory ChitPaymentModel({
+    @Default(-1) int id,
+    required DateTime paymentDate,
+    required int paidAmount,
+    required int receivedAmount,
+    required PaymentType paymentType,
+    @Default(null) DateTime? createdAt,
+  }) = _ChitPaymentModel;
 }

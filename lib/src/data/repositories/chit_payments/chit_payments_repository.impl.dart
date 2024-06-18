@@ -21,20 +21,22 @@ class ChitPaymentsRepositoryImplementation extends BaseDbRepository
   }
 
   @override
-  Future<DataState<void>> createChitPayments(ChitPaymentsModel chitPayment) {
+  Future<DataState<void>> createChitPayments(
+      ChitPaymentWithChitNameAndIdModel chitPayment) {
     return safeExecute(
       () => _appDatabase.chitPaymentsDao.addPayments(chitPayment),
     );
   }
 
   @override
-  Stream<List<ChitPaymentsModel>> watchChitPayments() {
+  Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
     return _appDatabase.chitPaymentsDao.watchChitPayments();
   }
 }
 
 @riverpod
-Stream<List<ChitPaymentsModel>> chitPayments(ChitPaymentsRef ref) {
+Stream<List<ChitPaymentWithChitNameAndIdModel>> chitPayments(
+    ChitPaymentsRef ref) {
   final chitPaymentsRepository = locator<ChitPaymentsRepository>();
 
   return chitPaymentsRepository.watchChitPayments();

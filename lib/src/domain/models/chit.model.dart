@@ -69,6 +69,14 @@ class ChitWithDates with _$ChitWithDates {
 }
 
 @freezed
+class ChitWithPayments with _$ChitWithPayments {
+  const factory ChitWithPayments({
+    required ChitModel chit,
+    required List<ChitPaymentWithChitNameAndIdModel> payments,
+  }) = $ChitWithPayments;
+}
+
+@freezed
 class ChitNameAndId with _$ChitNameAndId {
   const factory ChitNameAndId({
     required int id,
@@ -80,6 +88,7 @@ class ChitNameAndId with _$ChitNameAndId {
 class ChitDetailWithDatesAndPayments with _$ChitDetailWithDatesAndPayments {
   const factory ChitDetailWithDatesAndPayments({
     required ChitModel chit,
-    required List<ChitPaymentsModel> chitPayments,
+    required List<DateTime> chitDates,
+    required List<ChitPaymentModel> chitPayments,
   }) = $ChitDetailWithDatesAndPayments;
 }
