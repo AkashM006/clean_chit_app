@@ -5,5 +5,6 @@
 4. Chit create page ( DONE )
 5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( DONE )
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( IN PROGRESS )
+    a. Test Chit payment addition, chit payment list
 7. Now that details are present show them in the details page
 8. Implement chit edit page

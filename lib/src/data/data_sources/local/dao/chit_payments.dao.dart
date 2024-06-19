@@ -22,13 +22,14 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
         final chitPayment = row.readTable(chitPayments);
         final chit = row.readTable(chits);
 
-        return ChitPaymentWithChitNameAndIdModel(
-          paymentDate: chitPayment.paymentDate,
-          paidAmount: chitPayment.paidAmount,
-          receivedAmount: chitPayment.receivedAmount,
-          chit: ChitNameAndId(id: chit.id, name: chit.name),
-          paymentType: chitPayment.paymentType,
-        );
+        // return ChitPaymentWithChitNameAndIdModel(
+        //   paymentDate: chitPayment.paymentDate,
+        //   paidAmount: chitPayment.paidAmount,
+        //   receivedAmount: chitPayment.receivedAmount,
+        //   chit: ChitNameAndId(id: chit.id, name: chit.name),
+        //   paymentType: chitPayment.paymentType,
+        // );
+        return chitPaymentsWithChitToModel(chitPayment, chit);
       }).toList();
     });
   }
@@ -49,13 +50,14 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> addPayments(
-      ChitPaymentWithChitNameAndIdModel chitPayment) async {
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChit,
+  ) async {
     await into(chitPayments).insert(ChitPaymentsCompanion(
-      paidAmount: Value(chitPayment.paidAmount),
-      receivedAmount: Value(chitPayment.receivedAmount),
-      paymentDate: Value(chitPayment.paymentDate),
-      belongsTo: Value(chitPayment.chit.id),
-      paymentType: Value(chitPayment.paymentType),
+      paidAmount: Value(chitPaymentWithChit.chitPayment.paidAmount),
+      receivedAmount: Value(chitPaymentWithChit.chitPayment.receivedAmount),
+      paymentDate: Value(chitPaymentWithChit.chitPayment.paymentDate),
+      belongsTo: Value(chitPaymentWithChit.chit.id),
+      paymentType: Value(chitPaymentWithChit.chitPayment.paymentType),
     ));
   }
 }

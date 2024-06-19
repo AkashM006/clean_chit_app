@@ -29,7 +29,7 @@ class ChitPaymentsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: chitPayments.length,
       itemBuilder: (context, index) => ChitPaymentsItem(
-        chitPayment: chitPayments[index],
+        chitPaymentWithChit: chitPayments[index],
       ),
       separatorBuilder: (context, index) => const Divider(),
     );

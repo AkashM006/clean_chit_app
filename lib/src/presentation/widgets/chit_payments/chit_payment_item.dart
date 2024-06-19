@@ -4,10 +4,10 @@ import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/material.dart';
 
 class ChitPaymentsItem extends StatelessWidget {
-  final ChitPaymentWithChitNameAndIdModel chitPayment;
+  final ChitPaymentWithChitNameAndIdModel chitPaymentWithChit;
   const ChitPaymentsItem({
     super.key,
-    required this.chitPayment,
+    required this.chitPaymentWithChit,
   });
 
   @override
@@ -22,13 +22,13 @@ class ChitPaymentsItem extends StatelessWidget {
 
     final redColor = Theme.of(context).colorScheme.error;
 
-    final paidAmount = chitPayment.paidAmount == 0
+    final paidAmount = chitPaymentWithChit.chitPayment.paidAmount == 0
         ? ''
-        : getFormattedCurrency(chitPayment.paidAmount);
+        : getFormattedCurrency(chitPaymentWithChit.chitPayment.paidAmount);
 
-    final receivedAmount = chitPayment.receivedAmount == 0
+    final receivedAmount = chitPaymentWithChit.chitPayment.receivedAmount == 0
         ? ''
-        : getFormattedCurrency(chitPayment.receivedAmount);
+        : getFormattedCurrency(chitPaymentWithChit.chitPayment.receivedAmount);
 
     final List<Widget> amountWidgets = [];
 
@@ -55,14 +55,14 @@ class ChitPaymentsItem extends StatelessWidget {
     }
 
     return ListTile(
-      title: Text(chitPayment.chit.name),
+      title: Text(chitPaymentWithChit.chit.name),
       subtitle: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              getFormattedDate(chitPayment.paymentDate),
+              getFormattedDate(chitPaymentWithChit.chitPayment.paymentDate),
               textAlign: TextAlign.start,
             ),
           ),
