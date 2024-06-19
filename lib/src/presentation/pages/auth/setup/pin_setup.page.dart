@@ -75,7 +75,6 @@ class PinSetupPageState extends ConsumerState<PinSetupPage> {
       step = 1;
     });
     context.pop(pin);
-    // Navigator.pop(context, pin);
   }
 
   @override

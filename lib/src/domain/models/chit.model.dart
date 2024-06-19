@@ -1,3 +1,4 @@
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,7 +21,6 @@ class ChitModel with _$ChitModel {
     required DateTime startDate,
     required DateTime endDate,
     DateTime? createdAt,
-    @Default([]) List<DateTime> dates,
   }) = _ChitModel;
 
   static ChitModel get placeholder => ChitModel(
@@ -33,24 +33,21 @@ class ChitModel with _$ChitModel {
         startDate: DateTime.now(),
         endDate: DateTime.now(),
         frequencyType: FrequencyType.monthly,
-        dates: [],
         createdAt: DateTime.now(),
       );
 
   static bool equals(ChitModel a, ChitModel b) {
     final areDetailsEqual = a.amount == b.amount &&
         a.commissionPercentage == b.commissionPercentage &&
-        compareDates(a.endDate, b.endDate) &&
         a.fManAuctionNumber == b.fManAuctionNumber &&
         a.frequencyNumber == b.frequencyNumber &&
         a.frequencyType == b.frequencyType &&
         a.id == b.id &&
         a.name == b.name &&
         a.people == b.people &&
-        compareDates(a.startDate, b.startDate);
-    if (!areDetailsEqual) return false;
-
-    return listEquals(a.dates, b.dates);
+        compareDates(a.startDate, b.startDate) &&
+        compareDates(a.endDate, b.endDate);
+    return areDetailsEqual;
   }
 }
 
@@ -60,6 +57,23 @@ class ChitWithDates with _$ChitWithDates {
     required ChitModel chit,
     required List<DateTime> dates,
   }) = $ChitWithDates;
+
+  static bool equals(ChitWithDates aChit, ChitWithDates bChit) {
+    final a = aChit.chit;
+    final b = bChit.chit;
+    final areDetailsEqual = ChitModel.equals(a, b);
+    if (!areDetailsEqual) return false;
+
+    return listEquals(aChit.dates, bChit.dates);
+  }
+}
+
+@freezed
+class ChitWithPayments with _$ChitWithPayments {
+  const factory ChitWithPayments({
+    required ChitModel chit,
+    required List<ChitPaymentWithChitNameAndIdModel> payments,
+  }) = $ChitWithPayments;
 }
 
 @freezed
@@ -68,4 +82,13 @@ class ChitNameAndId with _$ChitNameAndId {
     required int id,
     required String name,
   }) = $ChitNameAndId;
+}
+
+@freezed
+class ChitDetailWithDatesAndPayments with _$ChitDetailWithDatesAndPayments {
+  const factory ChitDetailWithDatesAndPayments({
+    required ChitModel chit,
+    required List<DateTime> chitDates,
+    required List<ChitPaymentModel> chitPayments,
+  }) = $ChitDetailWithDatesAndPayments;
 }

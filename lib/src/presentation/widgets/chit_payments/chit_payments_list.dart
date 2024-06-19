@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChitPaymentsList extends ConsumerWidget {
-  final List<ChitPaymentsModel> chitPayments;
+  final List<ChitPaymentWithChitNameAndIdModel> chitPayments;
 
   const ChitPaymentsList({
     super.key,
@@ -29,7 +29,7 @@ class ChitPaymentsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: chitPayments.length,
       itemBuilder: (context, index) => ChitPaymentsItem(
-        chitPayment: chitPayments[index],
+        chitPaymentWithChit: chitPayments[index],
       ),
       separatorBuilder: (context, index) => const Divider(),
     );

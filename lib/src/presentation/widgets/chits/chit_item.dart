@@ -1,30 +1,30 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/presentation/widgets/chits/chit_bottom_sheet.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ChitItem extends ConsumerWidget {
-  final ChitModel chit;
+  final ChitWithDates chitWithDates;
 
   const ChitItem({
     super.key,
-    required this.chit,
+    required this.chitWithDates,
   });
-
-  void handleEdit(BuildContext context, WidgetRef ref) {
-    showChitBottomSheet(context, chit);
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void onViewMore() {
+      context.push(PAGES.chitDetail.path, extra: chitWithDates.chit.id);
+    }
+
     return ListTile(
-      title: Text(chit.name),
-      subtitle: Text('Amount: ${getFormattedCurrency(chit.amount)}'),
-      trailing: IconButton(
-        icon: const Icon(Icons.edit),
-        onPressed: () => handleEdit(context, ref),
-      ),
+      onTap: onViewMore,
+      title: Text(chitWithDates.chit.name),
+      subtitle:
+          Text('Amount: ${getFormattedCurrency(chitWithDates.chit.amount)}'),
+      trailing: const Icon(Icons.arrow_right),
     );
   }
 }

@@ -91,12 +91,14 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
       showErrorDialog();
       return;
     }
-    final chitPayment = ChitPaymentsModel(
-      paymentDate: _paymentDate,
-      paidAmount: _paidAmount,
-      receivedAmount: _receivedAmount,
+    final chitPayment = ChitPaymentWithChitNameAndIdModel(
+      chitPayment: ChitPaymentModel(
+        paymentDate: _paymentDate,
+        paidAmount: _paidAmount,
+        receivedAmount: _receivedAmount,
+        paymentType: _paymentType,
+      ),
       chit: _selectedChit!.copyWith(),
-      paymentType: _paymentType,
     );
 
     ref

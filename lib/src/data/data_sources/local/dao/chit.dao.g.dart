@@ -6,4 +6,5 @@ part of 'chit.dao.dart';
 mixin _$ChitDaoMixin on DatabaseAccessor<AppDatabase> {
   $ChitsTable get chits => attachedDatabase.chits;
   $ChitDatesTable get chitDates => attachedDatabase.chitDates;
+  $ChitPaymentsTable get chitPayments => attachedDatabase.chitPayments;
 }

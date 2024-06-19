@@ -15,42 +15,38 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ChitPaymentsModel {
+mixin _$ChitPaymentModel {
   int get id => throw _privateConstructorUsedError;
   DateTime get paymentDate => throw _privateConstructorUsedError;
   int get paidAmount => throw _privateConstructorUsedError;
   int get receivedAmount => throw _privateConstructorUsedError;
-  ChitNameAndId get chit => throw _privateConstructorUsedError;
   PaymentType get paymentType => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChitPaymentsModelCopyWith<ChitPaymentsModel> get copyWith =>
+  $ChitPaymentModelCopyWith<ChitPaymentModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChitPaymentsModelCopyWith<$Res> {
-  factory $ChitPaymentsModelCopyWith(
-          ChitPaymentsModel value, $Res Function(ChitPaymentsModel) then) =
-      _$ChitPaymentsModelCopyWithImpl<$Res, ChitPaymentsModel>;
+abstract class $ChitPaymentModelCopyWith<$Res> {
+  factory $ChitPaymentModelCopyWith(
+          ChitPaymentModel value, $Res Function(ChitPaymentModel) then) =
+      _$ChitPaymentModelCopyWithImpl<$Res, ChitPaymentModel>;
   @useResult
   $Res call(
       {int id,
       DateTime paymentDate,
       int paidAmount,
       int receivedAmount,
-      ChitNameAndId chit,
       PaymentType paymentType,
       DateTime? createdAt});
-
-  $ChitNameAndIdCopyWith<$Res> get chit;
 }
 
 /// @nodoc
-class _$ChitPaymentsModelCopyWithImpl<$Res, $Val extends ChitPaymentsModel>
-    implements $ChitPaymentsModelCopyWith<$Res> {
-  _$ChitPaymentsModelCopyWithImpl(this._value, this._then);
+class _$ChitPaymentModelCopyWithImpl<$Res, $Val extends ChitPaymentModel>
+    implements $ChitPaymentModelCopyWith<$Res> {
+  _$ChitPaymentModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -64,7 +60,6 @@ class _$ChitPaymentsModelCopyWithImpl<$Res, $Val extends ChitPaymentsModel>
     Object? paymentDate = null,
     Object? paidAmount = null,
     Object? receivedAmount = null,
-    Object? chit = null,
     Object? paymentType = null,
     Object? createdAt = freezed,
   }) {
@@ -85,10 +80,6 @@ class _$ChitPaymentsModelCopyWithImpl<$Res, $Val extends ChitPaymentsModel>
           ? _value.receivedAmount
           : receivedAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      chit: null == chit
-          ? _value.chit
-          : chit // ignore: cast_nullable_to_non_nullable
-              as ChitNameAndId,
       paymentType: null == paymentType
           ? _value.paymentType
           : paymentType // ignore: cast_nullable_to_non_nullable
@@ -99,22 +90,14 @@ class _$ChitPaymentsModelCopyWithImpl<$Res, $Val extends ChitPaymentsModel>
               as DateTime?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChitNameAndIdCopyWith<$Res> get chit {
-    return $ChitNameAndIdCopyWith<$Res>(_value.chit, (value) {
-      return _then(_value.copyWith(chit: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$ChitPaymentsModelImplCopyWith<$Res>
-    implements $ChitPaymentsModelCopyWith<$Res> {
-  factory _$$ChitPaymentsModelImplCopyWith(_$ChitPaymentsModelImpl value,
-          $Res Function(_$ChitPaymentsModelImpl) then) =
-      __$$ChitPaymentsModelImplCopyWithImpl<$Res>;
+abstract class _$$ChitPaymentModelImplCopyWith<$Res>
+    implements $ChitPaymentModelCopyWith<$Res> {
+  factory _$$ChitPaymentModelImplCopyWith(_$ChitPaymentModelImpl value,
+          $Res Function(_$ChitPaymentModelImpl) then) =
+      __$$ChitPaymentModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -122,20 +105,16 @@ abstract class _$$ChitPaymentsModelImplCopyWith<$Res>
       DateTime paymentDate,
       int paidAmount,
       int receivedAmount,
-      ChitNameAndId chit,
       PaymentType paymentType,
       DateTime? createdAt});
-
-  @override
-  $ChitNameAndIdCopyWith<$Res> get chit;
 }
 
 /// @nodoc
-class __$$ChitPaymentsModelImplCopyWithImpl<$Res>
-    extends _$ChitPaymentsModelCopyWithImpl<$Res, _$ChitPaymentsModelImpl>
-    implements _$$ChitPaymentsModelImplCopyWith<$Res> {
-  __$$ChitPaymentsModelImplCopyWithImpl(_$ChitPaymentsModelImpl _value,
-      $Res Function(_$ChitPaymentsModelImpl) _then)
+class __$$ChitPaymentModelImplCopyWithImpl<$Res>
+    extends _$ChitPaymentModelCopyWithImpl<$Res, _$ChitPaymentModelImpl>
+    implements _$$ChitPaymentModelImplCopyWith<$Res> {
+  __$$ChitPaymentModelImplCopyWithImpl(_$ChitPaymentModelImpl _value,
+      $Res Function(_$ChitPaymentModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -145,11 +124,10 @@ class __$$ChitPaymentsModelImplCopyWithImpl<$Res>
     Object? paymentDate = null,
     Object? paidAmount = null,
     Object? receivedAmount = null,
-    Object? chit = null,
     Object? paymentType = null,
     Object? createdAt = freezed,
   }) {
-    return _then(_$ChitPaymentsModelImpl(
+    return _then(_$ChitPaymentModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -166,10 +144,6 @@ class __$$ChitPaymentsModelImplCopyWithImpl<$Res>
           ? _value.receivedAmount
           : receivedAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      chit: null == chit
-          ? _value.chit
-          : chit // ignore: cast_nullable_to_non_nullable
-              as ChitNameAndId,
       paymentType: null == paymentType
           ? _value.paymentType
           : paymentType // ignore: cast_nullable_to_non_nullable
@@ -184,13 +158,12 @@ class __$$ChitPaymentsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChitPaymentsModelImpl implements _ChitPaymentsModel {
-  const _$ChitPaymentsModelImpl(
+class _$ChitPaymentModelImpl implements _ChitPaymentModel {
+  const _$ChitPaymentModelImpl(
       {this.id = -1,
       required this.paymentDate,
       required this.paidAmount,
       required this.receivedAmount,
-      required this.chit,
       required this.paymentType,
       this.createdAt = null});
 
@@ -204,8 +177,6 @@ class _$ChitPaymentsModelImpl implements _ChitPaymentsModel {
   @override
   final int receivedAmount;
   @override
-  final ChitNameAndId chit;
-  @override
   final PaymentType paymentType;
   @override
   @JsonKey()
@@ -213,14 +184,14 @@ class _$ChitPaymentsModelImpl implements _ChitPaymentsModel {
 
   @override
   String toString() {
-    return 'ChitPaymentsModel(id: $id, paymentDate: $paymentDate, paidAmount: $paidAmount, receivedAmount: $receivedAmount, chit: $chit, paymentType: $paymentType, createdAt: $createdAt)';
+    return 'ChitPaymentModel(id: $id, paymentDate: $paymentDate, paidAmount: $paidAmount, receivedAmount: $receivedAmount, paymentType: $paymentType, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChitPaymentsModelImpl &&
+            other is _$ChitPaymentModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.paymentDate, paymentDate) ||
                 other.paymentDate == paymentDate) &&
@@ -228,7 +199,6 @@ class _$ChitPaymentsModelImpl implements _ChitPaymentsModel {
                 other.paidAmount == paidAmount) &&
             (identical(other.receivedAmount, receivedAmount) ||
                 other.receivedAmount == receivedAmount) &&
-            (identical(other.chit, chit) || other.chit == chit) &&
             (identical(other.paymentType, paymentType) ||
                 other.paymentType == paymentType) &&
             (identical(other.createdAt, createdAt) ||
@@ -237,25 +207,24 @@ class _$ChitPaymentsModelImpl implements _ChitPaymentsModel {
 
   @override
   int get hashCode => Object.hash(runtimeType, id, paymentDate, paidAmount,
-      receivedAmount, chit, paymentType, createdAt);
+      receivedAmount, paymentType, createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChitPaymentsModelImplCopyWith<_$ChitPaymentsModelImpl> get copyWith =>
-      __$$ChitPaymentsModelImplCopyWithImpl<_$ChitPaymentsModelImpl>(
+  _$$ChitPaymentModelImplCopyWith<_$ChitPaymentModelImpl> get copyWith =>
+      __$$ChitPaymentModelImplCopyWithImpl<_$ChitPaymentModelImpl>(
           this, _$identity);
 }
 
-abstract class _ChitPaymentsModel implements ChitPaymentsModel {
-  const factory _ChitPaymentsModel(
+abstract class _ChitPaymentModel implements ChitPaymentModel {
+  const factory _ChitPaymentModel(
       {final int id,
       required final DateTime paymentDate,
       required final int paidAmount,
       required final int receivedAmount,
-      required final ChitNameAndId chit,
       required final PaymentType paymentType,
-      final DateTime? createdAt}) = _$ChitPaymentsModelImpl;
+      final DateTime? createdAt}) = _$ChitPaymentModelImpl;
 
   @override
   int get id;
@@ -266,13 +235,218 @@ abstract class _ChitPaymentsModel implements ChitPaymentsModel {
   @override
   int get receivedAmount;
   @override
-  ChitNameAndId get chit;
-  @override
   PaymentType get paymentType;
   @override
   DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$ChitPaymentsModelImplCopyWith<_$ChitPaymentsModelImpl> get copyWith =>
+  _$$ChitPaymentModelImplCopyWith<_$ChitPaymentModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ChitPaymentWithChitNameAndIdModel {
+// @Default(-1) int id,
+// required DateTime paymentDate,
+// required int paidAmount,
+// required int receivedAmount,
+// required PaymentType paymentType,
+  ChitPaymentModel get chitPayment => throw _privateConstructorUsedError;
+  ChitNameAndId get chit => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ChitPaymentWithChitNameAndIdModelCopyWith<ChitPaymentWithChitNameAndIdModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChitPaymentWithChitNameAndIdModelCopyWith<$Res> {
+  factory $ChitPaymentWithChitNameAndIdModelCopyWith(
+          ChitPaymentWithChitNameAndIdModel value,
+          $Res Function(ChitPaymentWithChitNameAndIdModel) then) =
+      _$ChitPaymentWithChitNameAndIdModelCopyWithImpl<$Res,
+          ChitPaymentWithChitNameAndIdModel>;
+  @useResult
+  $Res call(
+      {ChitPaymentModel chitPayment, ChitNameAndId chit, DateTime? createdAt});
+
+  $ChitPaymentModelCopyWith<$Res> get chitPayment;
+  $ChitNameAndIdCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class _$ChitPaymentWithChitNameAndIdModelCopyWithImpl<$Res,
+        $Val extends ChitPaymentWithChitNameAndIdModel>
+    implements $ChitPaymentWithChitNameAndIdModelCopyWith<$Res> {
+  _$ChitPaymentWithChitNameAndIdModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chitPayment = null,
+    Object? chit = null,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      chitPayment: null == chitPayment
+          ? _value.chitPayment
+          : chitPayment // ignore: cast_nullable_to_non_nullable
+              as ChitPaymentModel,
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitNameAndId,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChitPaymentModelCopyWith<$Res> get chitPayment {
+    return $ChitPaymentModelCopyWith<$Res>(_value.chitPayment, (value) {
+      return _then(_value.copyWith(chitPayment: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChitNameAndIdCopyWith<$Res> get chit {
+    return $ChitNameAndIdCopyWith<$Res>(_value.chit, (value) {
+      return _then(_value.copyWith(chit: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ChitPaymentWithChitNameAndIdModelImplCopyWith<$Res>
+    implements $ChitPaymentWithChitNameAndIdModelCopyWith<$Res> {
+  factory _$$ChitPaymentWithChitNameAndIdModelImplCopyWith(
+          _$ChitPaymentWithChitNameAndIdModelImpl value,
+          $Res Function(_$ChitPaymentWithChitNameAndIdModelImpl) then) =
+      __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {ChitPaymentModel chitPayment, ChitNameAndId chit, DateTime? createdAt});
+
+  @override
+  $ChitPaymentModelCopyWith<$Res> get chitPayment;
+  @override
+  $ChitNameAndIdCopyWith<$Res> get chit;
+}
+
+/// @nodoc
+class __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl<$Res>
+    extends _$ChitPaymentWithChitNameAndIdModelCopyWithImpl<$Res,
+        _$ChitPaymentWithChitNameAndIdModelImpl>
+    implements _$$ChitPaymentWithChitNameAndIdModelImplCopyWith<$Res> {
+  __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl(
+      _$ChitPaymentWithChitNameAndIdModelImpl _value,
+      $Res Function(_$ChitPaymentWithChitNameAndIdModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chitPayment = null,
+    Object? chit = null,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_$ChitPaymentWithChitNameAndIdModelImpl(
+      chitPayment: null == chitPayment
+          ? _value.chitPayment
+          : chitPayment // ignore: cast_nullable_to_non_nullable
+              as ChitPaymentModel,
+      chit: null == chit
+          ? _value.chit
+          : chit // ignore: cast_nullable_to_non_nullable
+              as ChitNameAndId,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChitPaymentWithChitNameAndIdModelImpl
+    implements _ChitPaymentWithChitNameAndIdModel {
+  const _$ChitPaymentWithChitNameAndIdModelImpl(
+      {required this.chitPayment, required this.chit, this.createdAt = null});
+
+// @Default(-1) int id,
+// required DateTime paymentDate,
+// required int paidAmount,
+// required int receivedAmount,
+// required PaymentType paymentType,
+  @override
+  final ChitPaymentModel chitPayment;
+  @override
+  final ChitNameAndId chit;
+  @override
+  @JsonKey()
+  final DateTime? createdAt;
+
+  @override
+  String toString() {
+    return 'ChitPaymentWithChitNameAndIdModel(chitPayment: $chitPayment, chit: $chit, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChitPaymentWithChitNameAndIdModelImpl &&
+            (identical(other.chitPayment, chitPayment) ||
+                other.chitPayment == chitPayment) &&
+            (identical(other.chit, chit) || other.chit == chit) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, chitPayment, chit, createdAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChitPaymentWithChitNameAndIdModelImplCopyWith<
+          _$ChitPaymentWithChitNameAndIdModelImpl>
+      get copyWith => __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl<
+          _$ChitPaymentWithChitNameAndIdModelImpl>(this, _$identity);
+}
+
+abstract class _ChitPaymentWithChitNameAndIdModel
+    implements ChitPaymentWithChitNameAndIdModel {
+  const factory _ChitPaymentWithChitNameAndIdModel(
+      {required final ChitPaymentModel chitPayment,
+      required final ChitNameAndId chit,
+      final DateTime? createdAt}) = _$ChitPaymentWithChitNameAndIdModelImpl;
+
+  @override // @Default(-1) int id,
+// required DateTime paymentDate,
+// required int paidAmount,
+// required int receivedAmount,
+// required PaymentType paymentType,
+  ChitPaymentModel get chitPayment;
+  @override
+  ChitNameAndId get chit;
+  @override
+  DateTime? get createdAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$ChitPaymentWithChitNameAndIdModelImplCopyWith<
+          _$ChitPaymentWithChitNameAndIdModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

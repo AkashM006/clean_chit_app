@@ -12,7 +12,7 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
     with _$ChitPaymentsDaoMixin {
   ChitPaymentsDao(super.db);
 
-  Stream<List<ChitPaymentsModel>> watchChitPayments() {
+  Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
     final query = select(chitPayments).join([
       leftOuterJoin(chits, chitPayments.belongsTo.equalsExp(chits.id)),
     ]);
@@ -22,13 +22,14 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
         final chitPayment = row.readTable(chitPayments);
         final chit = row.readTable(chits);
 
-        return ChitPaymentsModel(
-          paymentDate: chitPayment.paymentDate,
-          paidAmount: chitPayment.paidAmount,
-          receivedAmount: chitPayment.receivedAmount,
-          chit: ChitNameAndId(id: chit.id, name: chit.name),
-          paymentType: chitPayment.paymentType,
-        );
+        // return ChitPaymentWithChitNameAndIdModel(
+        //   paymentDate: chitPayment.paymentDate,
+        //   paidAmount: chitPayment.paidAmount,
+        //   receivedAmount: chitPayment.receivedAmount,
+        //   chit: ChitNameAndId(id: chit.id, name: chit.name),
+        //   paymentType: chitPayment.paymentType,
+        // );
+        return chitPaymentsWithChitToModel(chitPayment, chit);
       }).toList();
     });
   }
@@ -48,13 +49,15 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
     return results;
   }
 
-  Future<void> addPayments(ChitPaymentsModel chitPayment) async {
+  Future<void> addPayments(
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChit,
+  ) async {
     await into(chitPayments).insert(ChitPaymentsCompanion(
-      paidAmount: Value(chitPayment.paidAmount),
-      receivedAmount: Value(chitPayment.receivedAmount),
-      paymentDate: Value(chitPayment.paymentDate),
-      belongsTo: Value(chitPayment.chit.id),
-      paymentType: Value(chitPayment.paymentType),
+      paidAmount: Value(chitPaymentWithChit.chitPayment.paidAmount),
+      receivedAmount: Value(chitPaymentWithChit.chitPayment.receivedAmount),
+      paymentDate: Value(chitPaymentWithChit.chitPayment.paymentDate),
+      belongsTo: Value(chitPaymentWithChit.chit.id),
+      paymentType: Value(chitPaymentWithChit.chitPayment.paymentType),
     ));
   }
 }

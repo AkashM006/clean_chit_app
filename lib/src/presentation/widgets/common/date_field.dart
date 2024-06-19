@@ -4,12 +4,12 @@ import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:chit_app_clean/src/utils/widgets/bordered_input_decoration.dart';
 import 'package:flutter/material.dart';
 
-class ChitDate extends StatefulWidget {
+class DateField extends StatefulWidget {
   final DateTime initialDate;
   final String label;
   final void Function(DateTime newDate) onDateChanged;
 
-  const ChitDate({
+  const DateField({
     super.key,
     required this.initialDate,
     required this.label,
@@ -17,10 +17,10 @@ class ChitDate extends StatefulWidget {
   });
 
   @override
-  State<ChitDate> createState() => _ChitDateState();
+  State<DateField> createState() => _DateFieldState();
 }
 
-class _ChitDateState extends State<ChitDate> {
+class _DateFieldState extends State<DateField> {
   final TextEditingController _controller = TextEditingController();
 
   late DateTime _currentDate;
@@ -58,34 +58,17 @@ class _ChitDateState extends State<ChitDate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: TextField(
-              controller: _controller,
-              decoration: BorderedInputDecoration(
-                labelWidget: Text(widget.label),
-                suffixIconWidget: IconButton(
-                  onPressed: _handleSelectDate,
-                  icon: const Icon(Icons.date_range),
-                ),
-              ),
-              readOnly: true,
-            ),
+      margin: EdgeInsets.symmetric(vertical: SizeConfig.safeBlockVertical * 2),
+      child: TextField(
+        controller: _controller,
+        decoration: BorderedInputDecoration(
+          labelWidget: Text(widget.label),
+          suffixIconWidget: IconButton(
+            onPressed: _handleSelectDate,
+            icon: const Icon(Icons.date_range),
           ),
-          SizedBox(
-            width: SizeConfig.safeBlockHorizontal * 2,
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              getWeekDay(_currentDate),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+          helperTextString: getWeekDay(_currentDate),
+        ),
       ),
     );
   }
