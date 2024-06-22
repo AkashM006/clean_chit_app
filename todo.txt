@@ -6,5 +6,9 @@
 5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( DONE )
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( DONE )
     a. Test Chit payment addition, chit payment list ( DONE )
-7. Now that details are present show them in the details page
+7. Now that details are present show them in the details page ( IN PROGRESS )
 8. Implement chit edit page
+9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar
+
+Bugs:
+1. End date is not filled correctly
