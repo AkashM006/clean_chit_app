@@ -1,4 +1,3 @@
-import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ChitTabBar extends StatelessWidget {
@@ -6,22 +5,15 @@ class ChitTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
+    return const SliverAppBar(
       toolbarHeight: 0,
       bottom: TabBar(
         tabs: [
-          Container(
-            margin: EdgeInsets.only(
-              bottom: SizeConfig.blockSizeVertical * 2,
-            ),
-            child: const Text("Chit Dates"),
+          Tab(
+            child: Text("Dates"),
           ),
-          Container(
-            margin: EdgeInsets.only(
-              bottom: SizeConfig.blockSizeVertical * 2,
-            ),
-            child: const Text("Chit Payments"),
+          Tab(
+            child: Text("Payments"),
           ),
         ],
       ),

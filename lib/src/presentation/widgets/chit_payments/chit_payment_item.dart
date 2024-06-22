@@ -1,3 +1,4 @@
+import 'package:chit_app_clean/src/config/theme.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
@@ -16,9 +17,7 @@ class ChitPaymentsItem extends StatelessWidget {
       // todo: Handle view more
     }
 
-    final greenColor = Theme.of(context).brightness == Brightness.dark
-        ? Colors.green[200]
-        : Colors.green[800];
+    final greenColor = getSuccessColor(context);
 
     final redColor = Theme.of(context).colorScheme.error;
 

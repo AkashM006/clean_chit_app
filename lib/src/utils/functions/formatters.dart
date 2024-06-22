@@ -10,6 +10,12 @@ final multiplePeriodsRegex = RegExp(r'\.');
 
 final commaRegex = RegExp(',');
 
+bool isDatePastNow(DateTime date) {
+  final now = DateTime.now();
+
+  return now.isAfter(date);
+}
+
 String getFormattedDate(DateTime date) {
   return _dateFormatter.format(date);
 }
