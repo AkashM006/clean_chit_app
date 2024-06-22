@@ -246,11 +246,6 @@ abstract class _ChitPaymentModel implements ChitPaymentModel {
 
 /// @nodoc
 mixin _$ChitPaymentWithChitNameAndIdModel {
-// @Default(-1) int id,
-// required DateTime paymentDate,
-// required int paidAmount,
-// required int receivedAmount,
-// required PaymentType paymentType,
   ChitPaymentModel get chitPayment => throw _privateConstructorUsedError;
   ChitNameAndId get chit => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -385,11 +380,6 @@ class _$ChitPaymentWithChitNameAndIdModelImpl
   const _$ChitPaymentWithChitNameAndIdModelImpl(
       {required this.chitPayment, required this.chit, this.createdAt = null});
 
-// @Default(-1) int id,
-// required DateTime paymentDate,
-// required int paidAmount,
-// required int receivedAmount,
-// required PaymentType paymentType,
   @override
   final ChitPaymentModel chitPayment;
   @override
@@ -434,11 +424,7 @@ abstract class _ChitPaymentWithChitNameAndIdModel
       required final ChitNameAndId chit,
       final DateTime? createdAt}) = _$ChitPaymentWithChitNameAndIdModelImpl;
 
-  @override // @Default(-1) int id,
-// required DateTime paymentDate,
-// required int paidAmount,
-// required int receivedAmount,
-// required PaymentType paymentType,
+  @override
   ChitPaymentModel get chitPayment;
   @override
   ChitNameAndId get chit;

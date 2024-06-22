@@ -10,6 +10,10 @@ class Responsive extends StatelessWidget {
     required this.tablet,
   });
 
+  static double get mobileBreakPoint {
+    return 650;
+  }
+
   // This isMobile, isTablet, isDesktop helep us later
   static bool isMobile(BuildContext context) =>
       MediaQuery.of(context).size.width < 650;
@@ -27,6 +31,22 @@ class Responsive extends StatelessWidget {
         }
         return mobile;
       },
+    );
+  }
+}
+
+class MobileConstrained extends StatelessWidget {
+  final Widget child;
+  const MobileConstrained({
+    super.key,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: Responsive.mobileBreakPoint),
+      child: child,
     );
   }
 }

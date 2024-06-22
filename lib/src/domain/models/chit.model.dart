@@ -1,11 +1,23 @@
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
+import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chit.model.freezed.dart';
 
 enum FrequencyType { weekly, monthly }
+
+extension FrequencyTypeExtension on FrequencyType {
+  String get name {
+    switch (this) {
+      case FrequencyType.weekly:
+        return 'Weekly';
+      case FrequencyType.monthly:
+        return 'Monthly';
+    }
+  }
+}
 
 @freezed
 class ChitModel with _$ChitModel {
@@ -48,6 +60,22 @@ class ChitModel with _$ChitModel {
         compareDates(a.startDate, b.startDate) &&
         compareDates(a.endDate, b.endDate);
     return areDetailsEqual;
+  }
+
+  static Map<String, String> asMap(ChitModel chit) {
+    return {
+      "Name": chit.name,
+      "Amount": chit.amount.toString(),
+      "People": chit.people.toString(),
+      "Comission Percentage": "${chit.commissionPercentage.toString()} %",
+      "Frequency Number": chit.frequencyNumber.toString(),
+      "Frequency Type": chit.frequencyType.name,
+      "Foreman Auction Number": chit.fManAuctionNumber == 0
+          ? "Nil"
+          : chit.fManAuctionNumber.toString(),
+      "Start Date": getFormattedDate(chit.startDate),
+      "End Date": getFormattedDate(chit.endDate),
+    };
   }
 }
 

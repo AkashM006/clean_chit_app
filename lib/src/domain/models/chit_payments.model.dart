@@ -24,11 +24,6 @@ class ChitPaymentModel with _$ChitPaymentModel {
 class ChitPaymentWithChitNameAndIdModel
     with _$ChitPaymentWithChitNameAndIdModel {
   const factory ChitPaymentWithChitNameAndIdModel({
-    // @Default(-1) int id,
-    // required DateTime paymentDate,
-    // required int paidAmount,
-    // required int receivedAmount,
-    // required PaymentType paymentType,
     required ChitPaymentModel chitPayment,
     required ChitNameAndId chit,
     @Default(null) DateTime? createdAt,

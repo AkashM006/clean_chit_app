@@ -16,3 +16,9 @@ final appDarkTheme = ThemeData(
   ),
   useMaterial3: true,
 );
+
+Color? getSuccessColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? Colors.green[200]
+      : Colors.green[800];
+}

@@ -1,34 +1,33 @@
+import 'package:chit_app_clean/src/config/theme.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/material.dart';
 
-class ChitPaymentsItem extends StatelessWidget {
-  final ChitPaymentWithChitNameAndIdModel chitPaymentWithChit;
-  const ChitPaymentsItem({
+class ChitPaymentItem extends StatelessWidget {
+  final ChitPaymentModel chitPayment;
+  final String title;
+  final void Function()? onTap;
+  const ChitPaymentItem({
     super.key,
-    required this.chitPaymentWithChit,
+    required this.chitPayment,
+    required this.title,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    void onViewMore() {
-      // todo: Handle view more
-    }
-
-    final greenColor = Theme.of(context).brightness == Brightness.dark
-        ? Colors.green[200]
-        : Colors.green[800];
+    final greenColor = getSuccessColor(context);
 
     final redColor = Theme.of(context).colorScheme.error;
 
-    final paidAmount = chitPaymentWithChit.chitPayment.paidAmount == 0
+    final paidAmount = chitPayment.paidAmount == 0
         ? ''
-        : getFormattedCurrency(chitPaymentWithChit.chitPayment.paidAmount);
+        : getFormattedCurrency(chitPayment.paidAmount);
 
-    final receivedAmount = chitPaymentWithChit.chitPayment.receivedAmount == 0
+    final receivedAmount = chitPayment.receivedAmount == 0
         ? ''
-        : getFormattedCurrency(chitPaymentWithChit.chitPayment.receivedAmount);
+        : getFormattedCurrency(chitPayment.receivedAmount);
 
     final List<Widget> amountWidgets = [];
 
@@ -55,16 +54,12 @@ class ChitPaymentsItem extends StatelessWidget {
     }
 
     return ListTile(
-      title: Text(chitPaymentWithChit.chit.name),
+      title: Text(title),
       subtitle: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              getFormattedDate(chitPaymentWithChit.chitPayment.paymentDate),
-              textAlign: TextAlign.start,
-            ),
+          Text(
+            getFormattedDate(chitPayment.paymentDate),
           ),
           Row(
             children: [
@@ -78,8 +73,8 @@ class ChitPaymentsItem extends StatelessWidget {
           ),
         ],
       ),
-      onTap: onViewMore,
-      trailing: const Icon(Icons.arrow_right),
+      onTap: onTap,
+      trailing: onTap == null ? null : const Icon(Icons.arrow_right),
     );
   }
 }

@@ -10,6 +10,18 @@ final multiplePeriodsRegex = RegExp(r'\.');
 
 final commaRegex = RegExp(',');
 
+String capitalize(String s) {
+  if (s.isEmpty) return s;
+
+  return s[0].toUpperCase() + s.substring(1);
+}
+
+bool isDatePastNow(DateTime date) {
+  final now = DateTime.now();
+
+  return now.isAfter(date);
+}
+
 String getFormattedDate(DateTime date) {
   return _dateFormatter.format(date);
 }
