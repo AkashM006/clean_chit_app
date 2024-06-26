@@ -1,3 +1,4 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_date_item.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/chit_payment_item.dart';
@@ -5,14 +6,17 @@ import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:chit_app_clean/src/utils/widgets/responsive.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChitTabView extends StatelessWidget {
   final List<DateTime> dates;
   final List<ChitPaymentModel> chitPayments;
+  final int chitId;
   const ChitTabView({
     super.key,
     required this.dates,
     required this.chitPayments,
+    required this.chitId,
   });
 
   @override
@@ -22,7 +26,13 @@ class ChitTabView extends StatelessWidget {
     }
 
     void onCreatePaymentClicked() {
-      // todo: redirect to the create payment, change that page such that we are able to select the chit from here
+      Map<String, dynamic> queryParameters = {
+        "chitId": chitId.toString(),
+      };
+      context.pushNamed(
+        PAGES.chitpaymentscreate.name,
+        queryParameters: queryParameters,
+      );
     }
 
     final dateWidgets = dates

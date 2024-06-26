@@ -15,10 +15,21 @@ class ChitPaymentsForm extends ConsumerStatefulWidget {
   final List<ChitNameAndId> chitNamesAndIds;
   final bool isFormEdit;
 
+  final DateTime? paymentDate;
+  final PaymentType? paymentType;
+  final int? chitId;
+  final int? paidAmount;
+  final int? receivedAmount;
+
   const ChitPaymentsForm({
     super.key,
     required this.chitNamesAndIds,
     this.isFormEdit = false,
+    this.paymentDate,
+    this.paymentType,
+    this.chitId,
+    this.paidAmount,
+    this.receivedAmount,
   });
 
   @override
@@ -30,19 +41,17 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
 
   final TextEditingController _dateController = TextEditingController();
 
-  DateTime _paymentDate = DateTime.now();
-  ChitNameAndId? _selectedChit;
-  int _paidAmount = 0;
-  int _receivedAmount = 0;
-  PaymentType _paymentType = PaymentType.payment;
+  late DateTime _paymentDate;
+  late ChitNameAndId? _selectedChit;
+  late int _paidAmount;
+  late int _receivedAmount;
+  late PaymentType _paymentType;
 
   bool isLoading = false;
 
   void _setDate(DateTime date) {
-    setState(() {
-      _paymentDate = date;
-      _dateController.text = getFormattedDate(date);
-    });
+    _paymentDate = date;
+    _dateController.text = getFormattedDate(date);
   }
 
   void _pickDate() async {
@@ -56,13 +65,19 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
 
     if (pickedDate == null) return;
 
-    _setDate(pickedDate);
+    setState(() {
+      _setDate(pickedDate);
+    });
   }
 
   void initializer() {
-    if (!widget.isFormEdit) {
-      _setDate(_paymentDate);
-    }
+    _setDate(widget.paymentDate ?? DateTime.now());
+    _selectedChit = widget.chitId != null
+        ? widget.chitNamesAndIds.firstWhere((chit) => chit.id == widget.chitId)
+        : null;
+    _paidAmount = widget.paidAmount ?? 0;
+    _receivedAmount = widget.receivedAmount ?? 0;
+    _paymentType = widget.paymentType ?? PaymentType.payment;
   }
 
   void showErrorDialog() {
@@ -85,6 +100,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   }
 
   void onFormSubmit() {
+    // todo: If form is editing then change handle that call respectively
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
     if (_paidAmount == 0 && _receivedAmount == 0) {
@@ -163,7 +179,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                 TextField(
                   decoration: BorderedInputDecoration(
                     labelWidget:
-                        const RequiredInputLabel(label: "Starting Date"),
+                        const RequiredInputLabel(label: "Payment Date"),
                     helperTextString: getWeekDay(_paymentDate),
                     suffixIconWidget: IconButton(
                       onPressed: _pickDate,

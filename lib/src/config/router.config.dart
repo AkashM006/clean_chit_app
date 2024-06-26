@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/app.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments_create.page.dart';
@@ -6,6 +7,7 @@ import 'package:chit_app_clean/src/presentation/pages/chits/chit_detail.page.dar
 import 'package:chit_app_clean/src/presentation/pages/chits/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chits_create.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/home.page.dart';
+import 'package:chit_app_clean/src/utils/functions/transformers.dart';
 import 'package:chit_app_clean/src/utils/widgets/auth_checker.middleware.dart';
 import 'package:chit_app_clean/src/utils/widgets/background_listener.wrapper.dart';
 import 'package:go_router/go_router.dart';
@@ -110,11 +112,35 @@ extension AppRoutesExtension on PAGES {
               child: const ChitPaymentsPage(),
             );
       case PAGES.chitpaymentscreate:
-        return (context, routerState) => AuthCheckerMiddleware(
-              shouldBeLoggedIn: true,
-              path: path,
-              child: const ChitPaymentsCreatePage(),
-            );
+        return (context, routerState) {
+          final paymentDate = routerState.extra as DateTime?;
+          final paymentTypeIndex =
+              routerState.uri.queryParameters['paymentType']; // pass the index
+          final paymentType = paymentTypeIndex != null
+              ? PaymentType.values[int.parse(paymentTypeIndex)]
+              : null;
+          final chitId =
+              transformToInt(routerState.uri.queryParameters['chitId']);
+          final paidAmount =
+              transformToInt(routerState.uri.queryParameters['paidAmount']);
+          final receivedAmount =
+              transformToInt(routerState.uri.queryParameters['receivedAmount']);
+          final isEdit =
+              transformToBool(routerState.uri.queryParameters['isEdit']);
+
+          return AuthCheckerMiddleware(
+            shouldBeLoggedIn: true,
+            path: path,
+            child: ChitPaymentsCreatePage(
+              chitId: chitId,
+              paidAmount: paidAmount,
+              paymentDate: paymentDate,
+              paymentType: paymentType,
+              receivedAmount: receivedAmount,
+              isEdit: isEdit,
+            ),
+          );
+        };
       case PAGES.chitDetail:
         return (context, routerState) => AuthCheckerMiddleware(
               shouldBeLoggedIn: true,

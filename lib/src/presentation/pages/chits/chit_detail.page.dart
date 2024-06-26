@@ -37,6 +37,7 @@ class ChitDetailPage extends ConsumerWidget {
               body: ChitTabView(
                 dates: data.chitDates,
                 chitPayments: data.chitPayments,
+                chitId: data.chit.id,
               ),
             ),
           ),
