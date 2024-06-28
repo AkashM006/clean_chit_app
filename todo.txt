@@ -1,3 +1,4 @@
+Todos:
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
     ( DONE )
 2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart ) ( DONE )
@@ -9,9 +10,10 @@
 7. Now that details are present show them in the details page ( DONE )
 8. Implement chit edit page
 9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar
+10. Implement chit payment detail page and all CRUD operations for it
 
 Bugs:
 1. End date is not filled correctly
 
 Current task:
-* Do all the todos left in the code
+Todo No. 10

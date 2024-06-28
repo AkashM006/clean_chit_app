@@ -4,6 +4,7 @@ import 'package:chit_app_clean/src/utils/classes/data_state.dart';
 
 abstract class ChitPaymentsRepository {
   Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments();
+  Stream<ChitPaymentWithChitNameAndIdModel> watchChitPayment(int chitPaymentId);
   Future<List<ChitNameAndId>> getChitNamesAndIds();
   Future<DataState<void>> createChitPayments(
       ChitPaymentWithChitNameAndIdModel chitPayment);

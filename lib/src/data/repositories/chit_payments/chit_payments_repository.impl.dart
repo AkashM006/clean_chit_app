@@ -32,14 +32,32 @@ class ChitPaymentsRepositoryImplementation extends BaseDbRepository
   Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
     return _appDatabase.chitPaymentsDao.watchChitPayments();
   }
+
+  @override
+  Stream<ChitPaymentWithChitNameAndIdModel> watchChitPayment(
+    int chitPaymentId,
+  ) {
+    return _appDatabase.chitPaymentsDao.watchChitPayment(chitPaymentId);
+  }
 }
 
 @riverpod
 Stream<List<ChitPaymentWithChitNameAndIdModel>> chitPayments(
-    ChitPaymentsRef ref) {
+  ChitPaymentsRef ref,
+) {
   final chitPaymentsRepository = locator<ChitPaymentsRepository>();
 
   return chitPaymentsRepository.watchChitPayments();
+}
+
+@riverpod
+Stream<ChitPaymentWithChitNameAndIdModel> chitPayment(
+  ChitPaymentRef ref,
+  int chitPaymentId,
+) {
+  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
+
+  return chitPaymentsRepository.watchChitPayment(chitPaymentId);
 }
 
 @riverpod

@@ -1,6 +1,7 @@
 import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payment_detail.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments_create.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chit_detail.page.dart';
@@ -22,6 +23,7 @@ enum PAGES {
   chitpayments,
   chitpaymentscreate,
   chitDetail,
+  chitPaymentDetail,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -43,6 +45,8 @@ extension AppRoutesExtension on PAGES {
         return '/chit-payments-create';
       case PAGES.chitDetail:
         return '/chit-detail';
+      case PAGES.chitPaymentDetail:
+        return '/chit-payment-detail';
     }
   }
 
@@ -64,6 +68,8 @@ extension AppRoutesExtension on PAGES {
         return 'Create Chit Payment';
       case PAGES.chitDetail:
         return 'Chit Detail';
+      case PAGES.chitPaymentDetail:
+        return 'Chit Payment Detail';
     }
   }
 
@@ -147,6 +153,14 @@ extension AppRoutesExtension on PAGES {
               path: path,
               child: ChitDetailPage(
                 chitId: routerState.extra as int,
+              ),
+            );
+      case PAGES.chitPaymentDetail:
+        return (context, routerState) => AuthCheckerMiddleware(
+              shouldBeLoggedIn: true,
+              path: path,
+              child: ChitPaymentDetailPage(
+                chitPaymentId: routerState.extra as int,
               ),
             );
     }

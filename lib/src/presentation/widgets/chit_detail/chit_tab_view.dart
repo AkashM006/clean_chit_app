@@ -22,7 +22,7 @@ class ChitTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onPaymentClicked(int chitPaymentId) {
-      // todo: redirect the user to chit payment screen
+      context.push(PAGES.chitPaymentDetail.path, extra: chitPaymentId);
     }
 
     void onCreatePaymentClicked() {

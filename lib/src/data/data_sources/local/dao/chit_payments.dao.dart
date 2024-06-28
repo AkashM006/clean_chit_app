@@ -22,16 +22,29 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
         final chitPayment = row.readTable(chitPayments);
         final chit = row.readTable(chits);
 
-        // return ChitPaymentWithChitNameAndIdModel(
-        //   paymentDate: chitPayment.paymentDate,
-        //   paidAmount: chitPayment.paidAmount,
-        //   receivedAmount: chitPayment.receivedAmount,
-        //   chit: ChitNameAndId(id: chit.id, name: chit.name),
-        //   paymentType: chitPayment.paymentType,
-        // );
         return chitPaymentsWithChitToModel(chitPayment, chit);
       }).toList();
     });
+  }
+
+  Stream<ChitPaymentWithChitNameAndIdModel> watchChitPayment(
+    int chitPaymentId,
+  ) {
+    final query = select(chitPayments).join([
+      leftOuterJoin(chits, chitPayments.belongsTo.equalsExp(chits.id)),
+    ])
+      ..where(chitPayments.id.equals(chitPaymentId));
+
+    return query.watch().map(
+      (rows) {
+        final row = rows.first;
+
+        final chitPayment = row.readTable(chitPayments);
+        final chit = row.readTable(chits);
+
+        return chitPaymentsWithChitToModel(chitPayment, chit);
+      },
+    );
   }
 
   Future<List<ChitNameAndId>> getChitNamesAndIds() async {

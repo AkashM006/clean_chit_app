@@ -1,7 +1,9 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/chit_payment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ChitPaymentsList extends ConsumerWidget {
   final List<ChitPaymentWithChitNameAndIdModel> chitPayments;
@@ -14,7 +16,7 @@ class ChitPaymentsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onTap(int chitPaymentId) {
-      // todo: redirect the user
+      context.push(PAGES.chitPaymentDetail.path, extra: chitPaymentId);
     }
 
     if (chitPayments.isEmpty) {

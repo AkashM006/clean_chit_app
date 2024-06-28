@@ -42,8 +42,14 @@ class ChitDetailPage extends ConsumerWidget {
             ),
           ),
         ),
-        error: (error, stackTrace) => CustomErrorWidget(error.toString()),
-        loading: () => const CustomLoaderWidget(),
+        error: (error, stackTrace) => Scaffold(
+          body: CustomErrorWidget(
+            error.toString(),
+          ),
+        ),
+        loading: () => const Scaffold(
+          body: CustomLoaderWidget(),
+        ),
       ),
     );
   }
