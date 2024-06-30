@@ -8,12 +8,13 @@ Todos:
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( DONE )
     a. Test Chit payment addition, chit payment list ( DONE )
 7. Now that details are present show them in the details page ( DONE )
-8. Implement chit edit page
+8. Implement CRUD for chit 
 9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar
-10. Implement chit payment detail page and all CRUD operations for it
+10. Implement chit payment detail page ( DONE )
+11. Implement CRUD for chit payment
 
 Bugs:
 1. End date is not filled correctly
 
 Current task:
-Todo No. 10
+Todo No. 8

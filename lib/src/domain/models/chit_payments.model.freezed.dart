@@ -158,14 +158,15 @@ class __$$ChitPaymentModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChitPaymentModelImpl implements _ChitPaymentModel {
+class _$ChitPaymentModelImpl extends _ChitPaymentModel {
   const _$ChitPaymentModelImpl(
       {this.id = -1,
       required this.paymentDate,
       required this.paidAmount,
       required this.receivedAmount,
       required this.paymentType,
-      this.createdAt = null});
+      this.createdAt = null})
+      : super._();
 
   @override
   @JsonKey()
@@ -217,7 +218,7 @@ class _$ChitPaymentModelImpl implements _ChitPaymentModel {
           this, _$identity);
 }
 
-abstract class _ChitPaymentModel implements ChitPaymentModel {
+abstract class _ChitPaymentModel extends ChitPaymentModel {
   const factory _ChitPaymentModel(
       {final int id,
       required final DateTime paymentDate,
@@ -225,6 +226,7 @@ abstract class _ChitPaymentModel implements ChitPaymentModel {
       required final int receivedAmount,
       required final PaymentType paymentType,
       final DateTime? createdAt}) = _$ChitPaymentModelImpl;
+  const _ChitPaymentModel._() : super._();
 
   @override
   int get id;

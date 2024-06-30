@@ -66,24 +66,32 @@ class ChitTabView extends StatelessWidget {
             ),
           ),
           if (paymentWidgets.isEmpty)
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "You have not made any payments for this chit yet",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontStyle: FontStyle.italic,
-                        ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.safeBlockVertical * 5,
+              ),
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You have not made any payments for this chit yet",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontStyle: FontStyle.italic,
+                            ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.safeBlockVertical * 1,
+                      ),
+                      TextButton(
+                        onPressed: onCreatePaymentClicked,
+                        child: const Text("Create a Payment for this chit"),
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    height: SizeConfig.safeBlockVertical * 1,
-                  ),
-                  TextButton(
-                    onPressed: onCreatePaymentClicked,
-                    child: const Text("Create a Payment for this chit"),
-                  )
-                ],
+                ),
               ),
             ),
           if (paymentWidgets.isNotEmpty)

@@ -11,24 +11,29 @@ class DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: SizeConfig.safeBlockVertical * 0.5,
-        ),
-        Text(
-          description,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.safeBlockVertical * 1.25,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: SizeConfig.safeBlockVertical * 0.5,
+          ),
+          Text(
+            description,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
+      ),
     );
   }
 }

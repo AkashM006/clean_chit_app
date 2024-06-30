@@ -19,7 +19,9 @@ class ChitDetailBody extends StatelessWidget {
     final layout = Column(
       children: [
         Container(
-          padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 2),
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.safeBlockHorizontal * 4,
+          ),
           constraints: BoxConstraints(maxWidth: Responsive.mobileBreakPoint),
           child: Column(
             crossAxisAlignment:
