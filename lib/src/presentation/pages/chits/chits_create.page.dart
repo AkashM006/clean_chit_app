@@ -99,6 +99,11 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   }
 
   void chitCreateHandler() {
+    currentChitWithDates = currentChitWithDates.copyWith(
+      chit: currentChitWithDates.chit.copyWith(
+        endDate: currentChitWithDates.dates.last,
+      ),
+    );
     ref.read(chitControllerProvider.notifier).createChit(currentChitWithDates);
   }
 

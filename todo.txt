@@ -14,7 +14,7 @@ Todos:
 11. Implement CRUD for chit payment
 
 Bugs:
-1. End date is not filled correctly
+1. End date is not filled correctly ( FIXED )
 
 Current task:
 Todo No. 8
