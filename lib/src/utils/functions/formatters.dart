@@ -34,6 +34,10 @@ String getFormattedCurrency(int amount) {
   return currencyFormatter.format(amount);
 }
 
+String displayFormattedCurrency(int amount) {
+  return '\u20B9 ${getFormattedCurrency(amount)}';
+}
+
 String undoFormatting(String value) {
   return value.replaceAll(',', '');
 }

@@ -16,7 +16,7 @@ class ChitDetailBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
 
-    final narrowLayout = Column(
+    final layout = Column(
       children: [
         Container(
           padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 2),
@@ -58,9 +58,9 @@ class ChitDetailBody extends StatelessWidget {
     );
 
     return Responsive(
-      mobile: narrowLayout,
+      mobile: layout,
       tablet: Center(
-        child: narrowLayout,
+        child: layout,
       ),
     );
   }
