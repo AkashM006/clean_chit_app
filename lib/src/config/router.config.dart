@@ -3,7 +3,7 @@ import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payment_detail.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';
-import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments_create.page.dart';
+import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payment_create.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chit_detail.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chits.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chits/chits_create.page.dart';
@@ -19,9 +19,9 @@ enum PAGES {
   home,
   pinsetup,
   chits,
-  chitscreate,
+  chitcreate,
   chitpayments,
-  chitpaymentscreate,
+  chitpaymentcreate,
   chitDetail,
   chitPaymentDetail,
 }
@@ -37,11 +37,11 @@ extension AppRoutesExtension on PAGES {
         return '/pin-setup';
       case PAGES.chits:
         return '/chits';
-      case PAGES.chitscreate:
+      case PAGES.chitcreate:
         return '/chits-create';
       case PAGES.chitpayments:
         return '/chit-payments';
-      case PAGES.chitpaymentscreate:
+      case PAGES.chitpaymentcreate:
         return '/chit-payments-create';
       case PAGES.chitDetail:
         return '/chit-detail';
@@ -60,11 +60,11 @@ extension AppRoutesExtension on PAGES {
         return "Setup Pin";
       case PAGES.chits:
         return 'Chits';
-      case PAGES.chitscreate:
+      case PAGES.chitcreate:
         return 'Create Chit';
       case PAGES.chitpayments:
         return 'Chit Payment';
-      case PAGES.chitpaymentscreate:
+      case PAGES.chitpaymentcreate:
         return 'Create Chit Payment';
       case PAGES.chitDetail:
         return 'Chit Detail';
@@ -105,7 +105,7 @@ extension AppRoutesExtension on PAGES {
               shouldBeLoggedIn: true,
               child: const ChitPage(),
             );
-      case PAGES.chitscreate:
+      case PAGES.chitcreate:
         return (context, routerState) => AuthCheckerMiddleware(
               path: path,
               shouldBeLoggedIn: true,
@@ -117,7 +117,7 @@ extension AppRoutesExtension on PAGES {
               shouldBeLoggedIn: true,
               child: const ChitPaymentsPage(),
             );
-      case PAGES.chitpaymentscreate:
+      case PAGES.chitpaymentcreate:
         return (context, routerState) {
           final paymentDate = routerState.extra as DateTime?;
           final paymentTypeIndex =
@@ -137,7 +137,7 @@ extension AppRoutesExtension on PAGES {
           return AuthCheckerMiddleware(
             shouldBeLoggedIn: true,
             path: path,
-            child: ChitPaymentsCreatePage(
+            child: ChitPaymentCreatePage(
               chitId: chitId,
               paidAmount: paidAmount,
               paymentDate: paymentDate,

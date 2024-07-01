@@ -30,7 +30,7 @@ class ChitTabView extends StatelessWidget {
         "chitId": chitId.toString(),
       };
       context.pushNamed(
-        PAGES.chitpaymentscreate.name,
+        PAGES.chitpaymentcreate.name,
         queryParameters: queryParameters,
       );
     }

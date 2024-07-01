@@ -15,7 +15,7 @@ class ChitPaymentsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onChitPaymentCreate() {
-      context.push(PAGES.chitpaymentscreate.path);
+      context.push(PAGES.chitpaymentcreate.path);
     }
 
     final chitPayments = ref.watch(chitPaymentsProvider);

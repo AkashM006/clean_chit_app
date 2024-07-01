@@ -26,6 +26,8 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       }
     }
 
+    void onEdit() {}
+
     ref.listen(
       chitControllerProvider,
       (previous, next) {
@@ -55,6 +57,13 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
 
     return AppBar(
       actions: [
+        IconButton(
+          onPressed: onEdit,
+          icon: Icon(
+            Icons.edit,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
         IconButton(
           onPressed: isLoading ? null : onDelete,
           icon: Icon(

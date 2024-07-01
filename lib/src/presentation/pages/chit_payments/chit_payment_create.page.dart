@@ -7,14 +7,14 @@ import 'package:chit_app_clean/src/utils/widgets/custom_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChitPaymentsCreatePage extends ConsumerWidget {
+class ChitPaymentCreatePage extends ConsumerWidget {
   final DateTime? paymentDate;
   final PaymentType? paymentType;
   final int? chitId;
   final int? paidAmount;
   final int? receivedAmount;
   final bool? isEdit;
-  const ChitPaymentsCreatePage({
+  const ChitPaymentCreatePage({
     super.key,
     this.paymentDate,
     this.paymentType,
