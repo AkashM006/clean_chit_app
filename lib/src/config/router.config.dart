@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/app.dart';
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payment_detail.page.dart';
@@ -106,11 +107,20 @@ extension AppRoutesExtension on PAGES {
               child: const ChitPage(),
             );
       case PAGES.chitcreate:
-        return (context, routerState) => AuthCheckerMiddleware(
-              path: path,
-              shouldBeLoggedIn: true,
-              child: const ChitsCreatePage(),
-            );
+        return (context, routerState) {
+          final chitWithDates = routerState.extra as ChitWithDates?;
+          final isEditing = transformToBool(
+            routerState.uri.queryParameters['isEdit'],
+          );
+          return AuthCheckerMiddleware(
+            path: path,
+            shouldBeLoggedIn: true,
+            child: ChitsCreatePage(
+              editingChit: chitWithDates,
+              isEdit: isEditing,
+            ),
+          );
+        };
       case PAGES.chitpayments:
         return (context, routerState) => AuthCheckerMiddleware(
               path: path,

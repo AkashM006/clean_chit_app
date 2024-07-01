@@ -27,6 +27,8 @@ class ChitDetailPage extends ConsumerWidget {
           child: Scaffold(
             appBar: ChitDetailAppbar(
               chitId: data.chit.id,
+              chit: data.chit,
+              chitDates: data.chitDates,
             ),
             body: NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) => [

@@ -1,13 +1,20 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_delete_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
   final int chitId;
+  final ChitModel chit;
+  final List<DateTime> chitDates;
   const ChitDetailAppbar({
     super.key,
     required this.chitId,
+    required this.chit,
+    required this.chitDates,
   });
 
   @override
@@ -26,7 +33,15 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       }
     }
 
-    void onEdit() {}
+    void onEdit() {
+      context.pushNamed(
+        PAGES.chitcreate.name,
+        queryParameters: {
+          'isEdit': "true",
+        },
+        extra: ChitWithDates(chit: chit, dates: chitDates),
+      );
+    }
 
     ref.listen(
       chitControllerProvider,

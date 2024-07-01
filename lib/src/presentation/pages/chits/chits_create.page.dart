@@ -11,8 +11,12 @@ const pageAnimationDuration = Duration(milliseconds: 400);
 const pageAnimattionCurve = Curves.easeInOut;
 
 class ChitsCreatePage extends ConsumerStatefulWidget {
+  final ChitWithDates? editingChit;
+  final bool? isEdit;
   const ChitsCreatePage({
     super.key,
+    this.editingChit,
+    this.isEdit,
   });
 
   @override
