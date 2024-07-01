@@ -3,8 +3,7 @@ import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_delete_
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChitDetailAppbar extends ConsumerStatefulWidget
-    implements PreferredSizeWidget {
+class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
   final int chitId;
   const ChitDetailAppbar({
     super.key,
@@ -12,17 +11,10 @@ class ChitDetailAppbar extends ConsumerStatefulWidget
   });
 
   @override
-  ConsumerState<ChitDetailAppbar> createState() => _ChitDetailAppBarState();
-
-  @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _ChitDetailAppBarState extends ConsumerState<ChitDetailAppbar> {
-  bool isLoading = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     void onDelete() async {
       final shouldDelete = await showDialog<bool?>(
         context: context,
@@ -30,23 +22,14 @@ class _ChitDetailAppBarState extends ConsumerState<ChitDetailAppbar> {
       );
 
       if (shouldDelete != null && shouldDelete) {
-        ref.read(chitControllerProvider.notifier).deleteChit(widget.chitId);
+        ref.read(chitControllerProvider.notifier).deleteChit(chitId);
       }
     }
 
     ref.listen(
       chitControllerProvider,
       (previous, next) {
-        if (next.deleteChit.isLoading) {
-          setState(() {
-            isLoading = true;
-          });
-          return;
-        }
-
-        setState(() {
-          isLoading = false;
-        });
+        if (next.deleteChit.isLoading) return;
 
         final message = next.deleteChit.isFailure
             ? next.deleteChit.message
@@ -67,6 +50,8 @@ class _ChitDetailAppBarState extends ConsumerState<ChitDetailAppbar> {
         }
       },
     );
+
+    final isLoading = ref.read(chitControllerProvider).deleteChit.isLoading;
 
     return AppBar(
       actions: [
