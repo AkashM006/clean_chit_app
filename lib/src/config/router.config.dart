@@ -23,8 +23,8 @@ enum PAGES {
   chitcreate,
   chitpayments,
   chitpaymentcreate,
-  chitDetail,
-  chitPaymentDetail,
+  chitdetail,
+  chitpaymentdetail,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -44,9 +44,9 @@ extension AppRoutesExtension on PAGES {
         return '/chit-payments';
       case PAGES.chitpaymentcreate:
         return '/chit-payments-create';
-      case PAGES.chitDetail:
+      case PAGES.chitdetail:
         return '/chit-detail';
-      case PAGES.chitPaymentDetail:
+      case PAGES.chitpaymentdetail:
         return '/chit-payment-detail';
     }
   }
@@ -67,9 +67,9 @@ extension AppRoutesExtension on PAGES {
         return 'Chit Payment';
       case PAGES.chitpaymentcreate:
         return 'Create Chit Payment';
-      case PAGES.chitDetail:
+      case PAGES.chitdetail:
         return 'Chit Detail';
-      case PAGES.chitPaymentDetail:
+      case PAGES.chitpaymentdetail:
         return 'Chit Payment Detail';
     }
   }
@@ -157,7 +157,7 @@ extension AppRoutesExtension on PAGES {
             ),
           );
         };
-      case PAGES.chitDetail:
+      case PAGES.chitdetail:
         return (context, routerState) => AuthCheckerMiddleware(
               shouldBeLoggedIn: true,
               path: path,
@@ -165,7 +165,7 @@ extension AppRoutesExtension on PAGES {
                 chitId: routerState.extra as int,
               ),
             );
-      case PAGES.chitPaymentDetail:
+      case PAGES.chitpaymentdetail:
         return (context, routerState) => AuthCheckerMiddleware(
               shouldBeLoggedIn: true,
               path: path,

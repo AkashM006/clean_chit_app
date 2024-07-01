@@ -16,7 +16,7 @@ class ChitItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onViewMore() {
-      context.push(PAGES.chitDetail.path, extra: chitWithDates.chit.id);
+      context.push(PAGES.chitdetail.path, extra: chitWithDates.chit.id);
     }
 
     return ListTile(

@@ -16,7 +16,7 @@ class ChitPaymentList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onTap(int chitPaymentId) {
-      context.push(PAGES.chitPaymentDetail.path, extra: chitPaymentId);
+      context.push(PAGES.chitpaymentdetail.path, extra: chitPaymentId);
     }
 
     if (chitPayments.isEmpty) {
