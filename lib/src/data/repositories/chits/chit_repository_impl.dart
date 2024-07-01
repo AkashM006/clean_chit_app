@@ -33,6 +33,11 @@ class ChitRepositoryImplementation extends BaseDbRepository
   Future<DataState<void>> editChit(ChitWithDates newChit) {
     return safeExecute(() => _appDatabase.chitDao.editChit(newChit));
   }
+
+  @override
+  Future<DataState<void>> deleteChit(int chitId) {
+    return safeExecute(() => _appDatabase.chitDao.deleteChit(chitId));
+  }
 }
 
 @riverpod

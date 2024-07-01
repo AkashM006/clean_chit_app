@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChitControllerState {
   ControllerState<dynamic> get createChit => throw _privateConstructorUsedError;
   ControllerState<dynamic> get editChit => throw _privateConstructorUsedError;
+  ControllerState<dynamic> get deleteChit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChitControllerStateCopyWith<ChitControllerState> get copyWith =>
@@ -31,10 +32,13 @@ abstract class $ChitControllerStateCopyWith<$Res> {
       _$ChitControllerStateCopyWithImpl<$Res, ChitControllerState>;
   @useResult
   $Res call(
-      {ControllerState<dynamic> createChit, ControllerState<dynamic> editChit});
+      {ControllerState<dynamic> createChit,
+      ControllerState<dynamic> editChit,
+      ControllerState<dynamic> deleteChit});
 
   $ControllerStateCopyWith<dynamic, $Res> get createChit;
   $ControllerStateCopyWith<dynamic, $Res> get editChit;
+  $ControllerStateCopyWith<dynamic, $Res> get deleteChit;
 }
 
 /// @nodoc
@@ -52,6 +56,7 @@ class _$ChitControllerStateCopyWithImpl<$Res, $Val extends ChitControllerState>
   $Res call({
     Object? createChit = null,
     Object? editChit = null,
+    Object? deleteChit = null,
   }) {
     return _then(_value.copyWith(
       createChit: null == createChit
@@ -61,6 +66,10 @@ class _$ChitControllerStateCopyWithImpl<$Res, $Val extends ChitControllerState>
       editChit: null == editChit
           ? _value.editChit
           : editChit // ignore: cast_nullable_to_non_nullable
+              as ControllerState<dynamic>,
+      deleteChit: null == deleteChit
+          ? _value.deleteChit
+          : deleteChit // ignore: cast_nullable_to_non_nullable
               as ControllerState<dynamic>,
     ) as $Val);
   }
@@ -80,6 +89,14 @@ class _$ChitControllerStateCopyWithImpl<$Res, $Val extends ChitControllerState>
       return _then(_value.copyWith(editChit: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ControllerStateCopyWith<dynamic, $Res> get deleteChit {
+    return $ControllerStateCopyWith<dynamic, $Res>(_value.deleteChit, (value) {
+      return _then(_value.copyWith(deleteChit: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -91,12 +108,16 @@ abstract class _$$$ChitControllerStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ControllerState<dynamic> createChit, ControllerState<dynamic> editChit});
+      {ControllerState<dynamic> createChit,
+      ControllerState<dynamic> editChit,
+      ControllerState<dynamic> deleteChit});
 
   @override
   $ControllerStateCopyWith<dynamic, $Res> get createChit;
   @override
   $ControllerStateCopyWith<dynamic, $Res> get editChit;
+  @override
+  $ControllerStateCopyWith<dynamic, $Res> get deleteChit;
 }
 
 /// @nodoc
@@ -112,6 +133,7 @@ class __$$$ChitControllerStateImplCopyWithImpl<$Res>
   $Res call({
     Object? createChit = null,
     Object? editChit = null,
+    Object? deleteChit = null,
   }) {
     return _then(_$$ChitControllerStateImpl(
       createChit: null == createChit
@@ -122,6 +144,10 @@ class __$$$ChitControllerStateImplCopyWithImpl<$Res>
           ? _value.editChit
           : editChit // ignore: cast_nullable_to_non_nullable
               as ControllerState<dynamic>,
+      deleteChit: null == deleteChit
+          ? _value.deleteChit
+          : deleteChit // ignore: cast_nullable_to_non_nullable
+              as ControllerState<dynamic>,
     ));
   }
 }
@@ -131,7 +157,8 @@ class __$$$ChitControllerStateImplCopyWithImpl<$Res>
 class _$$ChitControllerStateImpl implements $ChitControllerState {
   const _$$ChitControllerStateImpl(
       {this.createChit = const ControllerState(),
-      this.editChit = const ControllerState()});
+      this.editChit = const ControllerState(),
+      this.deleteChit = const ControllerState()});
 
   @override
   @JsonKey()
@@ -139,10 +166,13 @@ class _$$ChitControllerStateImpl implements $ChitControllerState {
   @override
   @JsonKey()
   final ControllerState<dynamic> editChit;
+  @override
+  @JsonKey()
+  final ControllerState<dynamic> deleteChit;
 
   @override
   String toString() {
-    return 'ChitControllerState(createChit: $createChit, editChit: $editChit)';
+    return 'ChitControllerState(createChit: $createChit, editChit: $editChit, deleteChit: $deleteChit)';
   }
 
   @override
@@ -153,11 +183,14 @@ class _$$ChitControllerStateImpl implements $ChitControllerState {
             (identical(other.createChit, createChit) ||
                 other.createChit == createChit) &&
             (identical(other.editChit, editChit) ||
-                other.editChit == editChit));
+                other.editChit == editChit) &&
+            (identical(other.deleteChit, deleteChit) ||
+                other.deleteChit == deleteChit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, createChit, editChit);
+  int get hashCode =>
+      Object.hash(runtimeType, createChit, editChit, deleteChit);
 
   @JsonKey(ignore: true)
   @override
@@ -171,12 +204,15 @@ class _$$ChitControllerStateImpl implements $ChitControllerState {
 abstract class $ChitControllerState implements ChitControllerState {
   const factory $ChitControllerState(
       {final ControllerState<dynamic> createChit,
-      final ControllerState<dynamic> editChit}) = _$$ChitControllerStateImpl;
+      final ControllerState<dynamic> editChit,
+      final ControllerState<dynamic> deleteChit}) = _$$ChitControllerStateImpl;
 
   @override
   ControllerState<dynamic> get createChit;
   @override
   ControllerState<dynamic> get editChit;
+  @override
+  ControllerState<dynamic> get deleteChit;
   @override
   @JsonKey(ignore: true)
   _$$$ChitControllerStateImplCopyWith<_$$ChitControllerStateImpl>

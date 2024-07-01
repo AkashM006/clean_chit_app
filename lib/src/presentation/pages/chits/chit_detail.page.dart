@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/data/repositories/chits/chit_repository_impl.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_detail_appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_detail_body.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_tab_bar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_tab_view.dart';
@@ -24,7 +25,9 @@ class ChitDetailPage extends ConsumerWidget {
         data: (data) => DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: AppBar(),
+            appBar: ChitDetailAppbar(
+              chitId: data.chit.id,
+            ),
             body: NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 SliverToBoxAdapter(

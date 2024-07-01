@@ -13,6 +13,7 @@ class ChitControllerState with _$ChitControllerState {
   const factory ChitControllerState({
     @Default(ControllerState()) ControllerState createChit,
     @Default(ControllerState()) ControllerState editChit,
+    @Default(ControllerState()) ControllerState deleteChit,
   }) = $ChitControllerState;
 }
 
@@ -56,6 +57,23 @@ class ChitController extends _$ChitController {
       ),
       (error) => state.copyWith(
         editChit: state.editChit.setFailure(
+          error.toString(),
+        ),
+      ),
+    );
+  }
+
+  void deleteChit(int chitId) async {
+    state = state.copyWith(deleteChit: state.deleteChit.setLoading());
+
+    final result = await _chitRepository.deleteChit(chitId);
+
+    state = result.fold(
+      (data) => state.copyWith(
+        deleteChit: state.deleteChit.setSuccess(null),
+      ),
+      (error) => state.copyWith(
+        deleteChit: state.deleteChit.setFailure(
           error.toString(),
         ),
       ),
