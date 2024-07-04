@@ -2,6 +2,7 @@ import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_delete_dialog.dart';
+import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -74,17 +75,11 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: onEdit,
-          icon: Icon(
-            Icons.edit,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          icon: const EditAppbarIcon(),
         ),
         IconButton(
           onPressed: isLoading ? null : onDelete,
-          icon: Icon(
-            Icons.delete_forever_outlined,
-            color: Theme.of(context).colorScheme.error,
-          ),
+          icon: const DeleteAppBarIcon(),
         ),
       ],
     );

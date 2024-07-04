@@ -9,11 +9,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'chit_payments_repository.impl.g.dart';
 
-class ChitPaymentsRepositoryImplementation extends BaseDbRepository
-    implements ChitPaymentsRepository {
+class ChitPaymentRepositoryImplementation extends BaseDbRepository
+    implements ChitPaymentRepository {
   final AppDatabase _appDatabase;
 
-  const ChitPaymentsRepositoryImplementation(this._appDatabase);
+  const ChitPaymentRepositoryImplementation(this._appDatabase);
 
   @override
   Future<List<ChitNameAndId>> getChitNamesAndIds() {
@@ -45,7 +45,7 @@ class ChitPaymentsRepositoryImplementation extends BaseDbRepository
 Stream<List<ChitPaymentWithChitNameAndIdModel>> chitPayments(
   ChitPaymentsRef ref,
 ) {
-  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
+  final chitPaymentsRepository = locator<ChitPaymentRepository>();
 
   return chitPaymentsRepository.watchChitPayments();
 }
@@ -55,14 +55,14 @@ Stream<ChitPaymentWithChitNameAndIdModel> chitPayment(
   ChitPaymentRef ref,
   int chitPaymentId,
 ) {
-  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
+  final chitPaymentsRepository = locator<ChitPaymentRepository>();
 
   return chitPaymentsRepository.watchChitPayment(chitPaymentId);
 }
 
 @riverpod
 Future<List<ChitNameAndId>> chitNamesAndIds(ChitNamesAndIdsRef ref) {
-  final chitPaymentsRepository = locator<ChitPaymentsRepository>();
+  final chitPaymentsRepository = locator<ChitPaymentRepository>();
 
   return chitPaymentsRepository.getChitNamesAndIds();
 }

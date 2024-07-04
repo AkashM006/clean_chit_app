@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'chit_payments.controller.dart';
+part of 'chit_payment.controller.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,22 +15,21 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ChitPaymentsControllerState {
+mixin _$ChitPaymentControllerState {
   ControllerState<dynamic> get createChitPayment =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChitPaymentsControllerStateCopyWith<ChitPaymentsControllerState>
+  $ChitPaymentControllerStateCopyWith<ChitPaymentControllerState>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChitPaymentsControllerStateCopyWith<$Res> {
-  factory $ChitPaymentsControllerStateCopyWith(
-          ChitPaymentsControllerState value,
-          $Res Function(ChitPaymentsControllerState) then) =
-      _$ChitPaymentsControllerStateCopyWithImpl<$Res,
-          ChitPaymentsControllerState>;
+abstract class $ChitPaymentControllerStateCopyWith<$Res> {
+  factory $ChitPaymentControllerStateCopyWith(ChitPaymentControllerState value,
+          $Res Function(ChitPaymentControllerState) then) =
+      _$ChitPaymentControllerStateCopyWithImpl<$Res,
+          ChitPaymentControllerState>;
   @useResult
   $Res call({ControllerState<dynamic> createChitPayment});
 
@@ -38,10 +37,10 @@ abstract class $ChitPaymentsControllerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChitPaymentsControllerStateCopyWithImpl<$Res,
-        $Val extends ChitPaymentsControllerState>
-    implements $ChitPaymentsControllerStateCopyWith<$Res> {
-  _$ChitPaymentsControllerStateCopyWithImpl(this._value, this._then);
+class _$ChitPaymentControllerStateCopyWithImpl<$Res,
+        $Val extends ChitPaymentControllerState>
+    implements $ChitPaymentControllerStateCopyWith<$Res> {
+  _$ChitPaymentControllerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -72,12 +71,12 @@ class _$ChitPaymentsControllerStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$$ChitPaymentsControllerStateImplCopyWith<$Res>
-    implements $ChitPaymentsControllerStateCopyWith<$Res> {
-  factory _$$$ChitPaymentsControllerStateImplCopyWith(
-          _$$ChitPaymentsControllerStateImpl value,
-          $Res Function(_$$ChitPaymentsControllerStateImpl) then) =
-      __$$$ChitPaymentsControllerStateImplCopyWithImpl<$Res>;
+abstract class _$$$ChitPaymentControllerStateImplCopyWith<$Res>
+    implements $ChitPaymentControllerStateCopyWith<$Res> {
+  factory _$$$ChitPaymentControllerStateImplCopyWith(
+          _$$ChitPaymentControllerStateImpl value,
+          $Res Function(_$$ChitPaymentControllerStateImpl) then) =
+      __$$$ChitPaymentControllerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({ControllerState<dynamic> createChitPayment});
@@ -87,13 +86,13 @@ abstract class _$$$ChitPaymentsControllerStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$$ChitPaymentsControllerStateImplCopyWithImpl<$Res>
-    extends _$ChitPaymentsControllerStateCopyWithImpl<$Res,
-        _$$ChitPaymentsControllerStateImpl>
-    implements _$$$ChitPaymentsControllerStateImplCopyWith<$Res> {
-  __$$$ChitPaymentsControllerStateImplCopyWithImpl(
-      _$$ChitPaymentsControllerStateImpl _value,
-      $Res Function(_$$ChitPaymentsControllerStateImpl) _then)
+class __$$$ChitPaymentControllerStateImplCopyWithImpl<$Res>
+    extends _$ChitPaymentControllerStateCopyWithImpl<$Res,
+        _$$ChitPaymentControllerStateImpl>
+    implements _$$$ChitPaymentControllerStateImplCopyWith<$Res> {
+  __$$$ChitPaymentControllerStateImplCopyWithImpl(
+      _$$ChitPaymentControllerStateImpl _value,
+      $Res Function(_$$ChitPaymentControllerStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +100,7 @@ class __$$$ChitPaymentsControllerStateImplCopyWithImpl<$Res>
   $Res call({
     Object? createChitPayment = null,
   }) {
-    return _then(_$$ChitPaymentsControllerStateImpl(
+    return _then(_$$ChitPaymentControllerStateImpl(
       createChitPayment: null == createChitPayment
           ? _value.createChitPayment
           : createChitPayment // ignore: cast_nullable_to_non_nullable
@@ -112,9 +111,8 @@ class __$$$ChitPaymentsControllerStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$ChitPaymentsControllerStateImpl
-    implements $ChitPaymentsControllerState {
-  const _$$ChitPaymentsControllerStateImpl(
+class _$$ChitPaymentControllerStateImpl implements $ChitPaymentControllerState {
+  const _$$ChitPaymentControllerStateImpl(
       {this.createChitPayment = const ControllerState()});
 
   @override
@@ -123,14 +121,14 @@ class _$$ChitPaymentsControllerStateImpl
 
   @override
   String toString() {
-    return 'ChitPaymentsControllerState(createChitPayment: $createChitPayment)';
+    return 'ChitPaymentControllerState(createChitPayment: $createChitPayment)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$$ChitPaymentsControllerStateImpl &&
+            other is _$$ChitPaymentControllerStateImpl &&
             (identical(other.createChitPayment, createChitPayment) ||
                 other.createChitPayment == createChitPayment));
   }
@@ -141,23 +139,21 @@ class _$$ChitPaymentsControllerStateImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$$ChitPaymentsControllerStateImplCopyWith<
-          _$$ChitPaymentsControllerStateImpl>
-      get copyWith => __$$$ChitPaymentsControllerStateImplCopyWithImpl<
-          _$$ChitPaymentsControllerStateImpl>(this, _$identity);
+  _$$$ChitPaymentControllerStateImplCopyWith<_$$ChitPaymentControllerStateImpl>
+      get copyWith => __$$$ChitPaymentControllerStateImplCopyWithImpl<
+          _$$ChitPaymentControllerStateImpl>(this, _$identity);
 }
 
-abstract class $ChitPaymentsControllerState
-    implements ChitPaymentsControllerState {
-  const factory $ChitPaymentsControllerState(
+abstract class $ChitPaymentControllerState
+    implements ChitPaymentControllerState {
+  const factory $ChitPaymentControllerState(
           {final ControllerState<dynamic> createChitPayment}) =
-      _$$ChitPaymentsControllerStateImpl;
+      _$$ChitPaymentControllerStateImpl;
 
   @override
   ControllerState<dynamic> get createChitPayment;
   @override
   @JsonKey(ignore: true)
-  _$$$ChitPaymentsControllerStateImplCopyWith<
-          _$$ChitPaymentsControllerStateImpl>
+  _$$$ChitPaymentControllerStateImplCopyWith<_$$ChitPaymentControllerStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

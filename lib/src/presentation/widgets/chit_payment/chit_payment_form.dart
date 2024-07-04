@@ -1,6 +1,6 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
-import 'package:chit_app_clean/src/presentation/controllers/chit_payments/chit_payments.controller.dart';
+import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/classes/validators.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
@@ -118,7 +118,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
     );
 
     ref
-        .read(chitPaymentsControllerProvider.notifier)
+        .read(chitPaymentControllerProvider.notifier)
         .createChitPayment(chitPayment);
   }
 
@@ -137,10 +137,10 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   @override
   Widget build(BuildContext context) {
     final isCreateChitLoading =
-        ref.watch(chitPaymentsControllerProvider).createChitPayment.isLoading;
+        ref.watch(chitPaymentControllerProvider).createChitPayment.isLoading;
 
     ref.listen(
-      chitPaymentsControllerProvider,
+      chitPaymentControllerProvider,
       (previous, next) {
         String message = "";
         if (next.createChitPayment.isFailure) {

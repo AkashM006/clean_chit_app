@@ -5,23 +5,23 @@ import 'package:chit_app_clean/src/utils/classes/controller_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'chit_payments.controller.g.dart';
-part 'chit_payments.controller.freezed.dart';
+part 'chit_payment.controller.g.dart';
+part 'chit_payment.controller.freezed.dart';
 
 @freezed
-class ChitPaymentsControllerState with _$ChitPaymentsControllerState {
-  const factory ChitPaymentsControllerState({
+class ChitPaymentControllerState with _$ChitPaymentControllerState {
+  const factory ChitPaymentControllerState({
     @Default(ControllerState()) ControllerState createChitPayment,
-  }) = $ChitPaymentsControllerState;
+  }) = $ChitPaymentControllerState;
 }
 
 @riverpod
-class ChitPaymentsController extends _$ChitPaymentsController {
-  final _chitPaymentsRepository = locator<ChitPaymentsRepository>();
+class ChitPaymentController extends _$ChitPaymentController {
+  final _chitPaymentRepository = locator<ChitPaymentRepository>();
 
   @override
-  ChitPaymentsControllerState build() {
-    return const ChitPaymentsControllerState();
+  ChitPaymentControllerState build() {
+    return const ChitPaymentControllerState();
   }
 
   void createChitPayment(ChitPaymentWithChitNameAndIdModel chitPayment) async {
@@ -29,8 +29,7 @@ class ChitPaymentsController extends _$ChitPaymentsController {
       createChitPayment: state.createChitPayment.setLoading(),
     );
 
-    final result =
-        await _chitPaymentsRepository.createChitPayments(chitPayment);
+    final result = await _chitPaymentRepository.createChitPayments(chitPayment);
 
     state = result.fold(
       (data) => state.copyWith(

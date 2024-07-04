@@ -20,7 +20,7 @@ void setup() {
     ChitRepositoryImplementation(appDatabase),
   );
 
-  locator.registerSingleton<ChitPaymentsRepository>(
-    ChitPaymentsRepositoryImplementation(appDatabase),
+  locator.registerSingleton<ChitPaymentRepository>(
+    ChitPaymentRepositoryImplementation(appDatabase),
   );
 }

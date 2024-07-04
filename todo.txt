@@ -8,7 +8,7 @@ Todos:
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( DONE )
     a. Test Chit payment addition, chit payment list ( DONE )
 7. Now that details are present show them in the details page ( DONE )
-8. Implement CRUD for chit 
+8. Implement CRUD for chit  ( DONE )
 9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar
 10. Implement chit payment detail page ( DONE )
 11. Implement CRUD for chit payment
@@ -18,7 +18,8 @@ Bugs:
 2. In a page there should be only one ref.listen. If the page goes to other pages handle that accordingly
 
 Current task:
-Todo No. 8
+Todo No. 11
+Bug No. 2
 
 Current Task Break-down:
 1. Fill the initial values properly ( Form values and dates ) ( DONE )
