@@ -79,4 +79,8 @@ class ChitController extends _$ChitController {
       ),
     );
   }
+
+  void reset() {
+    state = const ChitControllerState();
+  }
 }

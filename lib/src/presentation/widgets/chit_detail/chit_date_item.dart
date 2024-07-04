@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/config/theme.config.dart';
+import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +19,14 @@ class ChitDateItem extends StatelessWidget {
     final subtitleColor = isChitOver
         ? getSuccessColor(context)
         : Theme.of(context).colorScheme.error;
+    final weekDay = getWeekDay(date);
 
     return ListTile(
       title: Text(getFormattedDate(date)),
-      subtitle: Row(
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(weekDay),
           Text(
             subtitleText,
             style: Theme.of(context)

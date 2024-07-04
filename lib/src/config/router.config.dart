@@ -116,8 +116,8 @@ extension AppRoutesExtension on PAGES {
             path: path,
             shouldBeLoggedIn: true,
             child: ChitsCreatePage(
-              editingChit: chitWithDates,
-              isEdit: isEditing,
+              chitWithDates: chitWithDates,
+              isEdit: isEditing ?? false,
             ),
           );
         };

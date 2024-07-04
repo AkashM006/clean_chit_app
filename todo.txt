@@ -15,6 +15,13 @@ Todos:
 
 Bugs:
 1. End date is not filled correctly ( FIXED )
+2. In a page there should be only one ref.listen. If the page goes to other pages handle that accordingly
 
 Current task:
 Todo No. 8
+
+Current Task Break-down:
+1. Fill the initial values properly ( Form values and dates ) ( DONE )
+2. Capture the editied values ( Form values and dates ) ( DONE )
+3. Call the appropriate controller method ( edit or create )
+4. Verify

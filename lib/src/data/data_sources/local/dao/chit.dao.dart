@@ -116,7 +116,9 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
         (batch) => batch.insertAll(
           chitDates,
           chitDateListToCompanionsList(
-              chitWithDates.dates, chitWithDates.chit.id),
+            chitWithDates.dates,
+            chitWithDates.chit.id,
+          ),
         ),
       );
     });

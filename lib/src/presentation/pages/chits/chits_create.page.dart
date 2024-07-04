@@ -1,5 +1,6 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controller.dart';
+import 'package:chit_app_clean/src/presentation/pages/chits/chit_no_edit_dialog.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_dates_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_detail_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
@@ -11,12 +12,12 @@ const pageAnimationDuration = Duration(milliseconds: 400);
 const pageAnimattionCurve = Curves.easeInOut;
 
 class ChitsCreatePage extends ConsumerStatefulWidget {
-  final ChitWithDates? editingChit;
-  final bool? isEdit;
+  final ChitWithDates? chitWithDates;
+  final bool isEdit;
   const ChitsCreatePage({
     super.key,
-    this.editingChit,
-    this.isEdit,
+    this.chitWithDates,
+    this.isEdit = false,
   });
 
   @override
@@ -25,16 +26,22 @@ class ChitsCreatePage extends ConsumerStatefulWidget {
 
 class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   int step = 1;
-  bool isLoading = false;
+  bool hasEdited = false;
 
-  ChitWithDates currentChitWithDates = ChitWithDates(
-    chit: ChitModel.placeholder,
-    dates: [],
-  );
+  late ChitWithDates currentChitWithDates;
+
+  void initialize() {
+    currentChitWithDates = widget.chitWithDates ??
+        ChitWithDates(
+          chit: ChitModel.placeholder,
+          dates: [],
+        );
+  }
 
   @override
   void initState() {
     super.initState();
+    initialize();
   }
 
   @override
@@ -72,21 +79,30 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
 
   void submitHandler(ChitModel newChit) {
     final currentChit = currentChitWithDates.chit;
-    var newChitWithDates =
-        ChitWithDates(chit: newChit, dates: currentChitWithDates.dates);
+    ChitWithDates newChitWithDates = ChitWithDates(
+      chit: newChit.copyWith(id: currentChit.id, endDate: currentChit.endDate),
+      dates: currentChitWithDates.dates,
+    );
+    final newChitWithChanges = newChitWithDates.chit;
 
-    if (newChit.people != currentChit.people ||
-        newChit.frequencyNumber != currentChit.frequencyNumber ||
-        newChit.frequencyType != currentChit.frequencyType ||
-        newChit.startDate != currentChit.startDate) {
+    if (newChitWithChanges.people != currentChit.people ||
+        newChitWithChanges.frequencyNumber != currentChit.frequencyNumber ||
+        newChitWithChanges.frequencyType != currentChit.frequencyType ||
+        newChitWithChanges.startDate != currentChit.startDate) {
       final scheduledDates = getScheduledDates(
-        newChit.startDate,
-        newChit.frequencyType,
-        newChit.frequencyNumber,
-        newChit.people,
+        newChitWithChanges.startDate,
+        newChitWithChanges.frequencyType,
+        newChitWithChanges.frequencyNumber,
+        newChitWithChanges.people,
       );
       newChitWithDates = newChitWithDates.copyWith(dates: scheduledDates);
     }
+
+    if (!newChitWithChanges.equals(currentChitWithDates.chit) &&
+        widget.isEdit) {
+      hasEdited = true;
+    }
+
     setState(() {
       currentChitWithDates = newChitWithDates;
     });
@@ -99,15 +115,31 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
     newDates[index] = date;
     setState(() {
       currentChitWithDates = currentChitWithDates.copyWith(dates: newDates);
+      if (widget.isEdit) {
+        hasEdited = true;
+      }
     });
   }
 
-  void chitCreateHandler() {
+  void chitSubmitHandler() {
     currentChitWithDates = currentChitWithDates.copyWith(
       chit: currentChitWithDates.chit.copyWith(
         endDate: currentChitWithDates.dates.last,
       ),
     );
+
+    if (widget.isEdit) {
+      if (!hasEdited) {
+        showDialog(
+          context: context,
+          builder: (context) => const ChitNoEditDialog(),
+        );
+        return;
+      }
+      ref.read(chitControllerProvider.notifier).editChit(currentChitWithDates);
+      return;
+    }
+
     ref.read(chitControllerProvider.notifier).createChit(currentChitWithDates);
   }
 
@@ -115,17 +147,12 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
   Widget build(BuildContext context) {
     ref.listen(
       chitControllerProvider,
-      (previous, next) {
+      (prev, next) {
+        if (widget.isEdit) return;
+
         if (next.createChit.isLoading) {
-          setState(() {
-            isLoading = true;
-          });
           return;
         }
-
-        setState(() {
-          isLoading = false;
-        });
 
         final message = next.createChit.isFailure
             ? "Something went wrong when trying to create a chit. Please try again later!"
@@ -145,23 +172,31 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
       },
     );
 
+    final isLoading = ref.watch(chitControllerProvider).createChit.isLoading;
+
     return PopScope(
       canPop: step == 1,
       onPopInvoked: _backHandler,
       child: Scaffold(
-        appBar: const CustomAppBar(title: 'Create Chit'),
+        appBar: CustomAppBar(
+          title: widget.isEdit
+              ? "Edit Chit - ${widget.chitWithDates?.chit.name ?? ""}"
+              : "Create Chit",
+        ),
         body: AnimatedContainer(
           duration: pageAnimationDuration,
           child: AnimatedCrossFade(
             firstChild: ChitDetailForm(
               onSubmitHandler: submitHandler,
+              chit: widget.chitWithDates?.chit,
             ),
             secondChild: ChitDatesForm(
               dates: currentChitWithDates.dates.map((date) => date).toList(),
               onDateChanged: handleChitDateChange,
-              onSubmit: chitCreateHandler,
+              onSubmit: chitSubmitHandler,
               onBack: _pageGoBack,
               isLoading: isLoading,
+              isEdit: widget.isEdit,
             ),
             crossFadeState: step == 1
                 ? CrossFadeState.showFirst

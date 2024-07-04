@@ -11,9 +11,11 @@ final now = DateTime.now();
 
 class ChitDetailForm extends ConsumerStatefulWidget {
   final void Function(ChitModel newChit) onSubmitHandler;
+  final ChitModel? chit;
   const ChitDetailForm({
     super.key,
     required this.onSubmitHandler,
+    this.chit,
   });
 
   @override
@@ -23,27 +25,42 @@ class ChitDetailForm extends ConsumerStatefulWidget {
 class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String _name = "";
-  int _amount = 0;
-  int _people = 0;
-  double _commissionPercentage = 0.0;
-  FrequencyType _frequencyType = FrequencyType.monthly;
-  int _frequencyNumber = 0;
-  int _fManAuctionNumber = 0;
+  late String _name;
+  late int _amount;
+  late int _people;
+  late double _commissionPercentage;
+  late FrequencyType _frequencyType;
+  late int _frequencyNumber;
+  late int _fManAuctionNumber;
 
-  DateTime _startDate = DateTime.now();
+  late DateTime _startDate = DateTime.now();
 
   late TextEditingController _dateController;
   late TextEditingController _timeController;
+
+  void initialize() {
+    _name = widget.chit?.name ?? "";
+    _amount = widget.chit?.amount ?? 0;
+    _people = widget.chit?.people ?? 0;
+    _commissionPercentage = widget.chit?.commissionPercentage ?? 0.0;
+    _frequencyType = widget.chit?.frequencyType ?? FrequencyType.monthly;
+    _frequencyNumber = widget.chit?.frequencyNumber ?? 0;
+    _fManAuctionNumber = widget.chit?.fManAuctionNumber ?? 0;
+
+    if (widget.chit?.startDate != null) {
+      final date = widget.chit!.startDate;
+      _startDate = date;
+    }
+    final date = widget.chit?.startDate ?? DateTime.now();
+    _setFormattedDate(date);
+    _setFormattedTime(TimeOfDay(hour: date.hour, minute: date.minute));
+  }
 
   @override
   void initState() {
     _dateController = TextEditingController();
     _timeController = TextEditingController();
-    final now = DateTime.now();
-    _setFormattedDate(now);
-    _setFormattedTime(TimeOfDay(hour: now.hour, minute: now.minute));
-
+    initialize();
     super.initState();
   }
 
@@ -139,6 +156,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                   ),
                   onSaved: (newValue) => _name = newValue!,
                   textCapitalization: TextCapitalization.sentences,
+                  initialValue: _name,
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
@@ -158,6 +176,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                   ),
                   onSaved: (newValue) =>
                       _amount = int.parse(undoFormatting(newValue!)),
+                  initialValue: getFormattedCurrency(_amount),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
@@ -176,6 +195,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                   ),
                   onSaved: (newValue) =>
                       _people = int.parse(undoFormatting(newValue!)),
+                  initialValue: getFormattedCurrency(_people),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
@@ -198,6 +218,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                         ),
                         onSaved: (newValue) => _frequencyNumber =
                             int.parse(undoFormatting(newValue!)),
+                        initialValue: getFormattedCurrency(_frequencyNumber),
                       ),
                     ),
                     SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
@@ -245,6 +266,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                   ),
                   onSaved: (newValue) => _commissionPercentage =
                       double.parse(undoFormatting(newValue!)),
+                  initialValue: _commissionPercentage.toString(),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
@@ -265,6 +287,7 @@ class _ChitDetailFormState extends ConsumerState<ChitDetailForm> {
                       newValue != null && newValue.isNotEmpty
                           ? int.parse(undoFormatting(newValue))
                           : 0,
+                  initialValue: _fManAuctionNumber.toString(),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,

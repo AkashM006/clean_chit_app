@@ -222,7 +222,7 @@ class __$$ChitModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
+class _$ChitModelImpl extends _ChitModel with DiagnosticableTreeMixin {
   const _$ChitModelImpl(
       {this.id = -1,
       required this.name,
@@ -234,7 +234,8 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
       required this.fManAuctionNumber,
       required this.startDate,
       required this.endDate,
-      this.createdAt});
+      this.createdAt})
+      : super._();
 
   @override
   @JsonKey()
@@ -329,7 +330,7 @@ class _$ChitModelImpl with DiagnosticableTreeMixin implements _ChitModel {
       __$$ChitModelImplCopyWithImpl<_$ChitModelImpl>(this, _$identity);
 }
 
-abstract class _ChitModel implements ChitModel {
+abstract class _ChitModel extends ChitModel {
   const factory _ChitModel(
       {final int id,
       required final String name,
@@ -342,6 +343,7 @@ abstract class _ChitModel implements ChitModel {
       required final DateTime startDate,
       required final DateTime endDate,
       final DateTime? createdAt}) = _$ChitModelImpl;
+  const _ChitModel._() : super._();
 
   @override
   int get id;
