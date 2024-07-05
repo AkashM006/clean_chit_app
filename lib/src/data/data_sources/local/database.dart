@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:chit_app_clean/src/data/data_sources/local/dao/chit.dao.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/dao/chit_dates.dao.dart';
-import 'package:chit_app_clean/src/data/data_sources/local/dao/chit_payments.dao.dart';
+import 'package:chit_app_clean/src/data/data_sources/local/dao/chit_payment.dao.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/dao/user_settings.dao.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
@@ -23,15 +23,15 @@ part 'database.g.dart';
 @DriftDatabase(
   tables: [
     Chits,
-    ChitDates,
     ChitPayments,
+    ChitDates,
     UserSettings,
   ],
   daos: [
     ChitDao,
+    ChitPaymentDao,
     ChitDatesDao,
     UserSettingsDao,
-    ChitPaymentsDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {

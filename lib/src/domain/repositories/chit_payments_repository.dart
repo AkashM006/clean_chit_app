@@ -6,6 +6,8 @@ abstract class ChitPaymentRepository {
   Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments();
   Stream<ChitPaymentWithChitNameAndIdModel> watchChitPayment(int chitPaymentId);
   Future<List<ChitNameAndId>> getChitNamesAndIds();
-  Future<DataState<void>> createChitPayments(
-      ChitPaymentWithChitNameAndIdModel chitPayment);
+  Future<DataState<void>> createChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPayment,
+  );
+  Future<DataState<void>> deleteChitPayment(int chitPaymentId);
 }

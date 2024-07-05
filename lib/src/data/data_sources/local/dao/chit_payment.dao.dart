@@ -3,14 +3,15 @@ import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.da
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_payments.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/utils/classes/errors.dart';
 import 'package:drift/drift.dart';
 
-part 'chit_payments.dao.g.dart';
+part 'chit_payment.dao.g.dart';
 
 @DriftAccessor(tables: [Chits, ChitPayments])
-class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
-    with _$ChitPaymentsDaoMixin {
-  ChitPaymentsDao(super.db);
+class ChitPaymentDao extends DatabaseAccessor<AppDatabase>
+    with _$ChitPaymentDaoMixin {
+  ChitPaymentDao(super.db);
 
   Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
     final query = select(chitPayments).join([
@@ -72,5 +73,18 @@ class ChitPaymentsDao extends DatabaseAccessor<AppDatabase>
       belongsTo: Value(chitPaymentWithChit.chit.id),
       paymentType: Value(chitPaymentWithChit.chitPayment.paymentType),
     ));
+  }
+
+  Future<void> deletePayment(int chitPaymentId) async {
+    final result = await (delete(chitPayments)
+          ..where((row) => row.id.equals(chitPaymentId)))
+        .go();
+
+    if (result == 0) {
+      throw const AppError(
+        message:
+            "Something went wrong when trying to delete the chit payment. Please try again later!",
+      );
+    }
   }
 }

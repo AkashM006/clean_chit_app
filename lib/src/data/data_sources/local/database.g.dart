@@ -543,216 +543,6 @@ class ChitsCompanion extends UpdateCompanion<Chit> {
   }
 }
 
-class $ChitDatesTable extends ChitDates
-    with TableInfo<$ChitDatesTable, ChitDate> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ChitDatesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _belongsToMeta =
-      const VerificationMeta('belongsTo');
-  @override
-  late final GeneratedColumn<int> belongsTo = GeneratedColumn<int>(
-      'belongs_to', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES chits (id) ON DELETE CASCADE'));
-  static const VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
-      'date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, belongsTo, date];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'chit_dates';
-  @override
-  VerificationContext validateIntegrity(Insertable<ChitDate> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('belongs_to')) {
-      context.handle(_belongsToMeta,
-          belongsTo.isAcceptableOrUnknown(data['belongs_to']!, _belongsToMeta));
-    } else if (isInserting) {
-      context.missing(_belongsToMeta);
-    }
-    if (data.containsKey('date')) {
-      context.handle(
-          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
-    } else if (isInserting) {
-      context.missing(_dateMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ChitDate map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ChitDate(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      belongsTo: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}belongs_to'])!,
-      date: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
-    );
-  }
-
-  @override
-  $ChitDatesTable createAlias(String alias) {
-    return $ChitDatesTable(attachedDatabase, alias);
-  }
-}
-
-class ChitDate extends DataClass implements Insertable<ChitDate> {
-  final int id;
-  final int belongsTo;
-  final DateTime date;
-  const ChitDate(
-      {required this.id, required this.belongsTo, required this.date});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['belongs_to'] = Variable<int>(belongsTo);
-    map['date'] = Variable<DateTime>(date);
-    return map;
-  }
-
-  ChitDatesCompanion toCompanion(bool nullToAbsent) {
-    return ChitDatesCompanion(
-      id: Value(id),
-      belongsTo: Value(belongsTo),
-      date: Value(date),
-    );
-  }
-
-  factory ChitDate.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ChitDate(
-      id: serializer.fromJson<int>(json['id']),
-      belongsTo: serializer.fromJson<int>(json['belongsTo']),
-      date: serializer.fromJson<DateTime>(json['date']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'belongsTo': serializer.toJson<int>(belongsTo),
-      'date': serializer.toJson<DateTime>(date),
-    };
-  }
-
-  ChitDate copyWith({int? id, int? belongsTo, DateTime? date}) => ChitDate(
-        id: id ?? this.id,
-        belongsTo: belongsTo ?? this.belongsTo,
-        date: date ?? this.date,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('ChitDate(')
-          ..write('id: $id, ')
-          ..write('belongsTo: $belongsTo, ')
-          ..write('date: $date')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, belongsTo, date);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ChitDate &&
-          other.id == this.id &&
-          other.belongsTo == this.belongsTo &&
-          other.date == this.date);
-}
-
-class ChitDatesCompanion extends UpdateCompanion<ChitDate> {
-  final Value<int> id;
-  final Value<int> belongsTo;
-  final Value<DateTime> date;
-  const ChitDatesCompanion({
-    this.id = const Value.absent(),
-    this.belongsTo = const Value.absent(),
-    this.date = const Value.absent(),
-  });
-  ChitDatesCompanion.insert({
-    this.id = const Value.absent(),
-    required int belongsTo,
-    required DateTime date,
-  })  : belongsTo = Value(belongsTo),
-        date = Value(date);
-  static Insertable<ChitDate> custom({
-    Expression<int>? id,
-    Expression<int>? belongsTo,
-    Expression<DateTime>? date,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (belongsTo != null) 'belongs_to': belongsTo,
-      if (date != null) 'date': date,
-    });
-  }
-
-  ChitDatesCompanion copyWith(
-      {Value<int>? id, Value<int>? belongsTo, Value<DateTime>? date}) {
-    return ChitDatesCompanion(
-      id: id ?? this.id,
-      belongsTo: belongsTo ?? this.belongsTo,
-      date: date ?? this.date,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (belongsTo.present) {
-      map['belongs_to'] = Variable<int>(belongsTo.value);
-    }
-    if (date.present) {
-      map['date'] = Variable<DateTime>(date.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ChitDatesCompanion(')
-          ..write('id: $id, ')
-          ..write('belongsTo: $belongsTo, ')
-          ..write('date: $date')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ChitPaymentsTable extends ChitPayments
     with TableInfo<$ChitPaymentsTable, ChitPayment> {
   @override
@@ -1136,6 +926,216 @@ class ChitPaymentsCompanion extends UpdateCompanion<ChitPayment> {
   }
 }
 
+class $ChitDatesTable extends ChitDates
+    with TableInfo<$ChitDatesTable, ChitDate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChitDatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _belongsToMeta =
+      const VerificationMeta('belongsTo');
+  @override
+  late final GeneratedColumn<int> belongsTo = GeneratedColumn<int>(
+      'belongs_to', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES chits (id) ON DELETE CASCADE'));
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, belongsTo, date];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'chit_dates';
+  @override
+  VerificationContext validateIntegrity(Insertable<ChitDate> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('belongs_to')) {
+      context.handle(_belongsToMeta,
+          belongsTo.isAcceptableOrUnknown(data['belongs_to']!, _belongsToMeta));
+    } else if (isInserting) {
+      context.missing(_belongsToMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ChitDate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChitDate(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      belongsTo: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}belongs_to'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+    );
+  }
+
+  @override
+  $ChitDatesTable createAlias(String alias) {
+    return $ChitDatesTable(attachedDatabase, alias);
+  }
+}
+
+class ChitDate extends DataClass implements Insertable<ChitDate> {
+  final int id;
+  final int belongsTo;
+  final DateTime date;
+  const ChitDate(
+      {required this.id, required this.belongsTo, required this.date});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['belongs_to'] = Variable<int>(belongsTo);
+    map['date'] = Variable<DateTime>(date);
+    return map;
+  }
+
+  ChitDatesCompanion toCompanion(bool nullToAbsent) {
+    return ChitDatesCompanion(
+      id: Value(id),
+      belongsTo: Value(belongsTo),
+      date: Value(date),
+    );
+  }
+
+  factory ChitDate.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChitDate(
+      id: serializer.fromJson<int>(json['id']),
+      belongsTo: serializer.fromJson<int>(json['belongsTo']),
+      date: serializer.fromJson<DateTime>(json['date']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'belongsTo': serializer.toJson<int>(belongsTo),
+      'date': serializer.toJson<DateTime>(date),
+    };
+  }
+
+  ChitDate copyWith({int? id, int? belongsTo, DateTime? date}) => ChitDate(
+        id: id ?? this.id,
+        belongsTo: belongsTo ?? this.belongsTo,
+        date: date ?? this.date,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ChitDate(')
+          ..write('id: $id, ')
+          ..write('belongsTo: $belongsTo, ')
+          ..write('date: $date')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, belongsTo, date);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChitDate &&
+          other.id == this.id &&
+          other.belongsTo == this.belongsTo &&
+          other.date == this.date);
+}
+
+class ChitDatesCompanion extends UpdateCompanion<ChitDate> {
+  final Value<int> id;
+  final Value<int> belongsTo;
+  final Value<DateTime> date;
+  const ChitDatesCompanion({
+    this.id = const Value.absent(),
+    this.belongsTo = const Value.absent(),
+    this.date = const Value.absent(),
+  });
+  ChitDatesCompanion.insert({
+    this.id = const Value.absent(),
+    required int belongsTo,
+    required DateTime date,
+  })  : belongsTo = Value(belongsTo),
+        date = Value(date);
+  static Insertable<ChitDate> custom({
+    Expression<int>? id,
+    Expression<int>? belongsTo,
+    Expression<DateTime>? date,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (belongsTo != null) 'belongs_to': belongsTo,
+      if (date != null) 'date': date,
+    });
+  }
+
+  ChitDatesCompanion copyWith(
+      {Value<int>? id, Value<int>? belongsTo, Value<DateTime>? date}) {
+    return ChitDatesCompanion(
+      id: id ?? this.id,
+      belongsTo: belongsTo ?? this.belongsTo,
+      date: date ?? this.date,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (belongsTo.present) {
+      map['belongs_to'] = Variable<int>(belongsTo.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChitDatesCompanion(')
+          ..write('id: $id, ')
+          ..write('belongsTo: $belongsTo, ')
+          ..write('date: $date')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $UserSettingsTable extends UserSettings
     with TableInfo<$UserSettingsTable, UserSetting> {
   @override
@@ -1313,21 +1313,21 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
   late final $ChitsTable chits = $ChitsTable(this);
-  late final $ChitDatesTable chitDates = $ChitDatesTable(this);
   late final $ChitPaymentsTable chitPayments = $ChitPaymentsTable(this);
+  late final $ChitDatesTable chitDates = $ChitDatesTable(this);
   late final $UserSettingsTable userSettings = $UserSettingsTable(this);
   late final ChitDao chitDao = ChitDao(this as AppDatabase);
+  late final ChitPaymentDao chitPaymentDao =
+      ChitPaymentDao(this as AppDatabase);
   late final ChitDatesDao chitDatesDao = ChitDatesDao(this as AppDatabase);
   late final UserSettingsDao userSettingsDao =
       UserSettingsDao(this as AppDatabase);
-  late final ChitPaymentsDao chitPaymentsDao =
-      ChitPaymentsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [chits, chitDates, chitPayments, userSettings];
+      [chits, chitPayments, chitDates, userSettings];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
@@ -1335,14 +1335,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
             on: TableUpdateQuery.onTableName('chits',
                 limitUpdateKind: UpdateKind.delete),
             result: [
-              TableUpdate('chit_dates', kind: UpdateKind.delete),
+              TableUpdate('chit_payments', kind: UpdateKind.delete),
             ],
           ),
           WritePropagation(
             on: TableUpdateQuery.onTableName('chits',
                 limitUpdateKind: UpdateKind.delete),
             result: [
-              TableUpdate('chit_payments', kind: UpdateKind.delete),
+              TableUpdate('chit_dates', kind: UpdateKind.delete),
             ],
           ),
         ],
@@ -1521,19 +1521,6 @@ class $$ChitsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ComposableFilter chitDatesRefs(
-      ComposableFilter Function($$ChitDatesTableFilterComposer f) f) {
-    final $$ChitDatesTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.chitDates,
-        getReferencedColumn: (t) => t.belongsTo,
-        builder: (joinBuilder, parentComposers) =>
-            $$ChitDatesTableFilterComposer(ComposerState(
-                $state.db, $state.db.chitDates, joinBuilder, parentComposers)));
-    return f(composer);
-  }
-
   ComposableFilter chitPaymentsRefs(
       ComposableFilter Function($$ChitPaymentsTableFilterComposer f) f) {
     final $$ChitPaymentsTableFilterComposer composer = $state.composerBuilder(
@@ -1544,6 +1531,19 @@ class $$ChitsTableFilterComposer
         builder: (joinBuilder, parentComposers) =>
             $$ChitPaymentsTableFilterComposer(ComposerState($state.db,
                 $state.db.chitPayments, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter chitDatesRefs(
+      ComposableFilter Function($$ChitDatesTableFilterComposer f) f) {
+    final $$ChitDatesTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.chitDates,
+        getReferencedColumn: (t) => t.belongsTo,
+        builder: (joinBuilder, parentComposers) =>
+            $$ChitDatesTableFilterComposer(ComposerState(
+                $state.db, $state.db.chitDates, joinBuilder, parentComposers)));
     return f(composer);
   }
 }
@@ -1605,123 +1605,6 @@ class $$ChitsTableOrderingComposer
       column: $state.table.createdAt,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-typedef $$ChitDatesTableInsertCompanionBuilder = ChitDatesCompanion Function({
-  Value<int> id,
-  required int belongsTo,
-  required DateTime date,
-});
-typedef $$ChitDatesTableUpdateCompanionBuilder = ChitDatesCompanion Function({
-  Value<int> id,
-  Value<int> belongsTo,
-  Value<DateTime> date,
-});
-
-class $$ChitDatesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ChitDatesTable,
-    ChitDate,
-    $$ChitDatesTableFilterComposer,
-    $$ChitDatesTableOrderingComposer,
-    $$ChitDatesTableProcessedTableManager,
-    $$ChitDatesTableInsertCompanionBuilder,
-    $$ChitDatesTableUpdateCompanionBuilder> {
-  $$ChitDatesTableTableManager(_$AppDatabase db, $ChitDatesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ChitDatesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ChitDatesTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ChitDatesTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            Value<int> belongsTo = const Value.absent(),
-            Value<DateTime> date = const Value.absent(),
-          }) =>
-              ChitDatesCompanion(
-            id: id,
-            belongsTo: belongsTo,
-            date: date,
-          ),
-          getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            required int belongsTo,
-            required DateTime date,
-          }) =>
-              ChitDatesCompanion.insert(
-            id: id,
-            belongsTo: belongsTo,
-            date: date,
-          ),
-        ));
-}
-
-class $$ChitDatesTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $ChitDatesTable,
-    ChitDate,
-    $$ChitDatesTableFilterComposer,
-    $$ChitDatesTableOrderingComposer,
-    $$ChitDatesTableProcessedTableManager,
-    $$ChitDatesTableInsertCompanionBuilder,
-    $$ChitDatesTableUpdateCompanionBuilder> {
-  $$ChitDatesTableProcessedTableManager(super.$state);
-}
-
-class $$ChitDatesTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ChitDatesTable> {
-  $$ChitDatesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get date => $state.composableBuilder(
-      column: $state.table.date,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  $$ChitsTableFilterComposer get belongsTo {
-    final $$ChitsTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.belongsTo,
-        referencedTable: $state.db.chits,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$ChitsTableFilterComposer(
-            ComposerState(
-                $state.db, $state.db.chits, joinBuilder, parentComposers)));
-    return composer;
-  }
-}
-
-class $$ChitDatesTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ChitDatesTable> {
-  $$ChitDatesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get date => $state.composableBuilder(
-      column: $state.table.date,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  $$ChitsTableOrderingComposer get belongsTo {
-    final $$ChitsTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.belongsTo,
-        referencedTable: $state.db.chits,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$ChitsTableOrderingComposer(
-            ComposerState(
-                $state.db, $state.db.chits, joinBuilder, parentComposers)));
-    return composer;
-  }
 }
 
 typedef $$ChitPaymentsTableInsertCompanionBuilder = ChitPaymentsCompanion
@@ -1909,6 +1792,123 @@ class $$ChitPaymentsTableOrderingComposer
   }
 }
 
+typedef $$ChitDatesTableInsertCompanionBuilder = ChitDatesCompanion Function({
+  Value<int> id,
+  required int belongsTo,
+  required DateTime date,
+});
+typedef $$ChitDatesTableUpdateCompanionBuilder = ChitDatesCompanion Function({
+  Value<int> id,
+  Value<int> belongsTo,
+  Value<DateTime> date,
+});
+
+class $$ChitDatesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ChitDatesTable,
+    ChitDate,
+    $$ChitDatesTableFilterComposer,
+    $$ChitDatesTableOrderingComposer,
+    $$ChitDatesTableProcessedTableManager,
+    $$ChitDatesTableInsertCompanionBuilder,
+    $$ChitDatesTableUpdateCompanionBuilder> {
+  $$ChitDatesTableTableManager(_$AppDatabase db, $ChitDatesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ChitDatesTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ChitDatesTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$ChitDatesTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<int> belongsTo = const Value.absent(),
+            Value<DateTime> date = const Value.absent(),
+          }) =>
+              ChitDatesCompanion(
+            id: id,
+            belongsTo: belongsTo,
+            date: date,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required int belongsTo,
+            required DateTime date,
+          }) =>
+              ChitDatesCompanion.insert(
+            id: id,
+            belongsTo: belongsTo,
+            date: date,
+          ),
+        ));
+}
+
+class $$ChitDatesTableProcessedTableManager extends ProcessedTableManager<
+    _$AppDatabase,
+    $ChitDatesTable,
+    ChitDate,
+    $$ChitDatesTableFilterComposer,
+    $$ChitDatesTableOrderingComposer,
+    $$ChitDatesTableProcessedTableManager,
+    $$ChitDatesTableInsertCompanionBuilder,
+    $$ChitDatesTableUpdateCompanionBuilder> {
+  $$ChitDatesTableProcessedTableManager(super.$state);
+}
+
+class $$ChitDatesTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ChitDatesTable> {
+  $$ChitDatesTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get date => $state.composableBuilder(
+      column: $state.table.date,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ChitsTableFilterComposer get belongsTo {
+    final $$ChitsTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.belongsTo,
+        referencedTable: $state.db.chits,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$ChitsTableFilterComposer(
+            ComposerState(
+                $state.db, $state.db.chits, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$ChitDatesTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ChitDatesTable> {
+  $$ChitDatesTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get date => $state.composableBuilder(
+      column: $state.table.date,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ChitsTableOrderingComposer get belongsTo {
+    final $$ChitsTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.belongsTo,
+        referencedTable: $state.db.chits,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$ChitsTableOrderingComposer(
+            ComposerState(
+                $state.db, $state.db.chits, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 typedef $$UserSettingsTableInsertCompanionBuilder = UserSettingsCompanion
     Function({
   Value<int> id,
@@ -2003,10 +2003,10 @@ class _$AppDatabaseManager {
   _$AppDatabaseManager(this._db);
   $$ChitsTableTableManager get chits =>
       $$ChitsTableTableManager(_db, _db.chits);
-  $$ChitDatesTableTableManager get chitDates =>
-      $$ChitDatesTableTableManager(_db, _db.chitDates);
   $$ChitPaymentsTableTableManager get chitPayments =>
       $$ChitPaymentsTableTableManager(_db, _db.chitPayments);
+  $$ChitDatesTableTableManager get chitDates =>
+      $$ChitDatesTableTableManager(_db, _db.chitDates);
   $$UserSettingsTableTableManager get userSettings =>
       $$UserSettingsTableTableManager(_db, _db.userSettings);
 }

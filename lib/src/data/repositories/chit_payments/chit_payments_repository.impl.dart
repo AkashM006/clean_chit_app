@@ -17,27 +17,34 @@ class ChitPaymentRepositoryImplementation extends BaseDbRepository
 
   @override
   Future<List<ChitNameAndId>> getChitNamesAndIds() {
-    return _appDatabase.chitPaymentsDao.getChitNamesAndIds();
+    return _appDatabase.chitPaymentDao.getChitNamesAndIds();
   }
 
   @override
-  Future<DataState<void>> createChitPayments(
+  Future<DataState<void>> createChitPayment(
       ChitPaymentWithChitNameAndIdModel chitPayment) {
     return safeExecute(
-      () => _appDatabase.chitPaymentsDao.addPayments(chitPayment),
+      () => _appDatabase.chitPaymentDao.addPayments(chitPayment),
     );
   }
 
   @override
   Stream<List<ChitPaymentWithChitNameAndIdModel>> watchChitPayments() {
-    return _appDatabase.chitPaymentsDao.watchChitPayments();
+    return _appDatabase.chitPaymentDao.watchChitPayments();
   }
 
   @override
   Stream<ChitPaymentWithChitNameAndIdModel> watchChitPayment(
     int chitPaymentId,
   ) {
-    return _appDatabase.chitPaymentsDao.watchChitPayment(chitPaymentId);
+    return _appDatabase.chitPaymentDao.watchChitPayment(chitPaymentId);
+  }
+
+  @override
+  Future<DataState<void>> deleteChitPayment(int chitPaymentId) {
+    return safeExecute(
+      () => _appDatabase.chitPaymentDao.deletePayment(chitPaymentId),
+    );
   }
 }
 
