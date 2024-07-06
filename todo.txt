@@ -16,6 +16,7 @@ Todos:
 Bugs:
 1. End date is not filled correctly ( FIXED )
 2. In a page there should be only one ref.listen. If the page goes to other pages handle that accordingly
+3. In PIN setup page, go to confirm pin and press back to replicate the issue
 
 Current task:
 Todo No. 11

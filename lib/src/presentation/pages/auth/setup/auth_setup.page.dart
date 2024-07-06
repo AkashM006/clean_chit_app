@@ -1,5 +1,6 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/user_settings.model.dart';
+import 'package:chit_app_clean/src/presentation/actionHandlers/user_settings_action_handler.dart';
 import 'package:chit_app_clean/src/presentation/controllers/user_settings/user_settings.controller.dart';
 import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
 import 'package:chit_app_clean/src/presentation/widgets/auth/radio_list_tile_button.dart';
@@ -27,11 +28,14 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
 
   void nextHandler() async {
     if (selectedLoginType == LoginType.deviceLock) {
-      ref.read(userSettingsControllerProvider.notifier).updateUserSettings(
+      await ref
+          .read(userSettingsControllerProvider.notifier)
+          .updateUserSettings(
             const UserSettingsModel(
               loginType: LoginType.deviceLock,
             ),
           );
+      if (mounted) handleUpdateAction(context, ref, selectedLoginType);
       return;
     }
 
@@ -44,6 +48,7 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
             userPin: pin,
           ),
         );
+    if (mounted) handleUpdateAction(context, ref, selectedLoginType);
     ref.read(authStateProvider.notifier).login();
   }
 
@@ -96,20 +101,6 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
               selectedLoginType == LoginType.customPin ? "Setup" : "Proceed",
             ),
     );
-
-    // listeners
-    ref.listen(userSettingsControllerProvider, (previous, next) {
-      if (next.updateUserSettings.isFailure &&
-          selectedLoginType == LoginType.deviceLock) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              next.updateUserSettings.message,
-            ),
-          ),
-        );
-      }
-    });
 
     return Scaffold(
       body: SafeArea(
