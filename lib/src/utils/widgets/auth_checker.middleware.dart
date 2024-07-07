@@ -61,7 +61,7 @@ class _AuthCheckerMiddlewareState extends ConsumerState<AuthCheckerMiddleware> {
       canPop: canPop,
       onPopInvoked: (didPop) {
         if (didPop) return;
-        if (!isLoggedIn && !widget.shouldBeLoggedIn) {
+        if (isLoggedIn != widget.shouldBeLoggedIn) {
           setState(() {
             canPop = true;
           });

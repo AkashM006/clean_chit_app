@@ -21,6 +21,7 @@ Bugs:
 Current task:
 Todo No. 11
 Bug No. 2
+Bug No. 3 ( DONE )
 
 Current Task Break-down:
 1. Fill the initial values properly ( Form values and dates ) ( DONE )
