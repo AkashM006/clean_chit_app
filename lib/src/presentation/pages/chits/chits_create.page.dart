@@ -4,9 +4,11 @@ import 'package:chit_app_clean/src/presentation/pages/chits/chit_no_edit_dialog.
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_dates_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chits/create_chit/chit_detail_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 const pageAnimationDuration = Duration(milliseconds: 400);
 const pageAnimattionCurve = Curves.easeInOut;
@@ -121,7 +123,7 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
     });
   }
 
-  void chitSubmitHandler() {
+  void chitSubmitHandler() async {
     currentChitWithDates = currentChitWithDates.copyWith(
       chit: currentChitWithDates.chit.copyWith(
         endDate: currentChitWithDates.dates.last,
@@ -140,38 +142,26 @@ class _ChitsCreatePageState extends ConsumerState<ChitsCreatePage> {
       return;
     }
 
-    ref.read(chitControllerProvider.notifier).createChit(currentChitWithDates);
+    await ref
+        .read(chitControllerProvider.notifier)
+        .createChit(currentChitWithDates);
+
+    final chitControllerState = ref.read(chitControllerProvider).createChit;
+
+    if (mounted) {
+      actionHandler(
+        chitControllerState,
+        context,
+        finalCallback: () {
+          _pageGoBack();
+          context.pop();
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(
-      chitControllerProvider,
-      (prev, next) {
-        if (widget.isEdit) return;
-
-        if (next.createChit.isLoading) {
-          return;
-        }
-
-        final message = next.createChit.isFailure
-            ? "Something went wrong when trying to create a chit. Please try again later!"
-            : "Successfully created your chit!";
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
-        );
-        WidgetsBinding.instance.addPostFrameCallback(
-          (timeStamp) {
-            _pageGoBack();
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
-
     final isLoading = ref.watch(chitControllerProvider).createChit.isLoading;
 
     return PopScope(

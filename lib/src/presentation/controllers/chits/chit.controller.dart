@@ -26,7 +26,7 @@ class ChitController extends _$ChitController {
     return const ChitControllerState();
   }
 
-  void createChit(ChitWithDates newChit) async {
+  Future<void> createChit(ChitWithDates newChit) async {
     state = state.copyWith(
       createChit: state.createChit.setLoading(),
     );
@@ -34,7 +34,8 @@ class ChitController extends _$ChitController {
 
     state = result.fold(
       (data) => state.copyWith(
-        createChit: state.createChit.setSuccess(null),
+        createChit:
+            state.createChit.setSuccess("Successfully created your chit!"),
       ),
       (error) => state.copyWith(
         createChit: state.createChit.setFailure(
@@ -63,14 +64,15 @@ class ChitController extends _$ChitController {
     );
   }
 
-  void deleteChit(int chitId) async {
+  Future<void> deleteChit(int chitId) async {
     state = state.copyWith(deleteChit: state.deleteChit.setLoading());
 
     final result = await _chitRepository.deleteChit(chitId);
 
     state = result.fold(
       (data) => state.copyWith(
-        deleteChit: state.deleteChit.setSuccess(null),
+        deleteChit:
+            state.deleteChit.setSuccess("Successfully deleted your chit"),
       ),
       (error) => state.copyWith(
         deleteChit: state.deleteChit.setFailure(

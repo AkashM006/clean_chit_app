@@ -3,6 +3,7 @@ import 'package:chit_app_clean/src/domain/models/chit.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chits/chit.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_delete_dialog.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,8 +30,20 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
         builder: (context) => const ChitDeleteDialog(),
       );
 
-      if (shouldDelete != null && shouldDelete) {
-        ref.read(chitControllerProvider.notifier).deleteChit(chitId);
+      if (shouldDelete == null || !shouldDelete) return;
+
+      await ref.read(chitControllerProvider.notifier).deleteChit(chitId);
+
+      if (context.mounted) {
+        final controllerState = ref.read(chitControllerProvider).deleteChit;
+        // todo: debug this
+        actionHandler(
+          controllerState,
+          context,
+          successCallback: () {
+            context.pop();
+          },
+        );
       }
     }
 
@@ -44,30 +57,30 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       );
     }
 
-    ref.listen(
-      chitControllerProvider,
-      (previous, next) {
-        if (next.deleteChit.isLoading) return;
+    // ref.listen(
+    //   chitControllerProvider,
+    //   (previous, next) {
+    //     if (next.deleteChit.isLoading) return;
 
-        final message = next.deleteChit.isFailure
-            ? next.deleteChit.message
-            : "Deleted your chit successfully";
+    //     final message = next.deleteChit.isFailure
+    //         ? next.deleteChit.message
+    //         : "Deleted your chit successfully";
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
-        );
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text(message),
+    //       ),
+    //     );
 
-        if (next.deleteChit.isSuccess) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (timeStamp) {
-              Navigator.of(context).pop();
-            },
-          );
-        }
-      },
-    );
+    //     if (next.deleteChit.isSuccess) {
+    //       WidgetsBinding.instance.addPostFrameCallback(
+    //         (timeStamp) {
+    //           Navigator.of(context).pop();
+    //         },
+    //       );
+    //     }
+    //   },
+    // );
 
     final isLoading = ref.read(chitControllerProvider).deleteChit.isLoading;
 
