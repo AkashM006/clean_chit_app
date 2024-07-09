@@ -36,7 +36,6 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
 
       if (context.mounted) {
         final controllerState = ref.read(chitControllerProvider).deleteChit;
-        // todo: debug this
         actionHandler(
           controllerState,
           context,
@@ -57,32 +56,7 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       );
     }
 
-    // ref.listen(
-    //   chitControllerProvider,
-    //   (previous, next) {
-    //     if (next.deleteChit.isLoading) return;
-
-    //     final message = next.deleteChit.isFailure
-    //         ? next.deleteChit.message
-    //         : "Deleted your chit successfully";
-
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text(message),
-    //       ),
-    //     );
-
-    //     if (next.deleteChit.isSuccess) {
-    //       WidgetsBinding.instance.addPostFrameCallback(
-    //         (timeStamp) {
-    //           Navigator.of(context).pop();
-    //         },
-    //       );
-    //     }
-    //   },
-    // );
-
-    final isLoading = ref.read(chitControllerProvider).deleteChit.isLoading;
+    final isLoading = ref.watch(chitControllerProvider).deleteChit.isLoading;
 
     return AppBar(
       actions: [

@@ -10,8 +10,6 @@ void actionHandler(
 }) {
   final message = controllerState.message;
 
-  print("Status: ${controllerState.status}");
-
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(message),

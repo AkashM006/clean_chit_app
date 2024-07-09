@@ -54,7 +54,7 @@ class ChitController extends _$ChitController {
 
     state = result.fold(
       (data) => state.copyWith(
-        editChit: state.editChit.setSuccess(null),
+        editChit: state.editChit.setSuccess("Succesfully edited your chit"),
       ),
       (error) => state.copyWith(
         editChit: state.editChit.setFailure(

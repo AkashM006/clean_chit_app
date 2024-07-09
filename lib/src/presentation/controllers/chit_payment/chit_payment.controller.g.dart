@@ -7,7 +7,7 @@ part of 'chit_payment.controller.dart';
 // **************************************************************************
 
 String _$chitPaymentControllerHash() =>
-    r'0245e81731c134a06af88076e76ffe3d8e200dbe';
+    r'45e1a4f4b96d9ef79313f1f24e280b7c57181cdf';
 
 /// See also [ChitPaymentController].
 @ProviderFor(ChitPaymentController)

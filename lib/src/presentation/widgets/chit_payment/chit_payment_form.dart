@@ -3,6 +3,7 @@ import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/classes/validators.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:chit_app_clean/src/utils/widgets/bordered_input_decoration.dart';
@@ -99,7 +100,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
     );
   }
 
-  void onFormSubmit() {
+  void onFormSubmit() async {
     // todo: If form is editing then change handle that call respectively
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
@@ -117,9 +118,21 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
       chit: _selectedChit!.copyWith(),
     );
 
-    ref
+    await ref
         .read(chitPaymentControllerProvider.notifier)
         .createChitPayment(chitPayment);
+
+    if (mounted) {
+      final controllerState =
+          ref.read(chitPaymentControllerProvider).createChitPayment;
+      actionHandler(
+        controllerState,
+        context,
+        successCallback: () {
+          context.pop();
+        },
+      );
+    }
   }
 
   @override
@@ -136,30 +149,30 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
 
   @override
   Widget build(BuildContext context) {
-    final isCreateChitLoading =
+    // ref.listen(
+    //   chitPaymentControllerProvider,
+    //   (previous, next) {
+    //     String message = "";
+    //     if (next.createChitPayment.isFailure) {
+    //       message =
+    //           "Something went wrong when trying to create a new payment. Please try again later";
+    //     } else if (next.createChitPayment.isSuccess) {
+    //       message = "Successfully created your payment";
+    //       context.pop();
+    //     }
+
+    //     if (message.isNotEmpty) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(
+    //           content: Text(message),
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
+
+    final isLoading =
         ref.watch(chitPaymentControllerProvider).createChitPayment.isLoading;
-
-    ref.listen(
-      chitPaymentControllerProvider,
-      (previous, next) {
-        String message = "";
-        if (next.createChitPayment.isFailure) {
-          message =
-              "Something went wrong when trying to create a new payment. Please try again later";
-        } else if (next.createChitPayment.isSuccess) {
-          message = "Successfully created your payment";
-          context.pop();
-        }
-
-        if (message.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-            ),
-          );
-        }
-      },
-    );
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
@@ -182,14 +195,14 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                         const RequiredInputLabel(label: "Payment Date"),
                     helperTextString: getWeekDay(_paymentDate),
                     suffixIconWidget: IconButton(
-                      onPressed: _pickDate,
+                      onPressed: isLoading ? null : _pickDate,
                       icon: Icon(
                         Icons.date_range,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
-                  onTap: _pickDate,
+                  onTap: isLoading ? null : _pickDate,
                   readOnly: true,
                   controller: _dateController,
                 ),
@@ -211,10 +224,12 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                       child: Text("Payment"),
                     ),
                   ],
-                  onChanged: (value) {
-                    if (value == null) return;
-                    _paymentType = value;
-                  },
+                  onChanged: isLoading
+                      ? null
+                      : (value) {
+                          if (value == null) return;
+                          _paymentType = value;
+                        },
                   validator: (value) {
                     if (value == null) return "Please select payment type";
                     return null;
@@ -240,12 +255,14 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {
-                    if (value == null) return;
-                    setState(() {
-                      _selectedChit = value;
-                    });
-                  },
+                  onChanged: isLoading
+                      ? null
+                      : (value) {
+                          if (value == null) return;
+                          setState(() {
+                            _selectedChit = value;
+                          });
+                        },
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 5,
@@ -293,8 +310,8 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: FilledButton(
-                    onPressed: isCreateChitLoading ? null : onFormSubmit,
-                    child: isCreateChitLoading
+                    onPressed: isLoading ? null : onFormSubmit,
+                    child: isLoading
                         ? _buildLoader()
                         : Text(widget.isFormEdit ? "Edit" : "Submit"),
                   ),

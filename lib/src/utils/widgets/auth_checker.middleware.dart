@@ -39,7 +39,7 @@ class _AuthCheckerMiddlewareState extends ConsumerState<AuthCheckerMiddleware> {
         GoRouter.of(context).routeInformationProvider.value.uri.path;
 
     final isLoggedIn = ref.watch(authStateProvider);
-
+    // DO NOT REMOVE THIS `ref.listen`
     ref.listen(
       authStateProvider,
       (previous, next) {

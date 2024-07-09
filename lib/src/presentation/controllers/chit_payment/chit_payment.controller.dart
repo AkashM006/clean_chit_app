@@ -25,7 +25,9 @@ class ChitPaymentController extends _$ChitPaymentController {
     return const ChitPaymentControllerState();
   }
 
-  void createChitPayment(ChitPaymentWithChitNameAndIdModel chitPayment) async {
+  Future<void> createChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPayment,
+  ) async {
     state = state.copyWith(
       createChitPayment: state.createChitPayment.setLoading(),
     );
@@ -34,7 +36,8 @@ class ChitPaymentController extends _$ChitPaymentController {
 
     state = result.fold(
       (data) => state.copyWith(
-        createChitPayment: state.createChitPayment.setSuccess(null),
+        createChitPayment: state.createChitPayment
+            .setSuccess("Succesfully created your payment"),
       ),
       (error) => state.copyWith(
         createChitPayment: state.createChitPayment.setFailure(error.toString()),
