@@ -2,7 +2,7 @@ Todos:
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
     ( DONE )
 2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart ) ( DONE )
-3. Implement delete in chits
+3. Implement delete in chits ( DONE )
 4. Chit create page ( DONE )
 5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( DONE )
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( DONE )
@@ -17,14 +17,9 @@ Bugs:
 1. End date is not filled correctly ( DONE )
 2. In a page there should be only one ref.listen. If the page goes to other pages handle that accordingly ( DONE )
 3. In PIN setup page, go to confirm pin and press back to replicate the issue ( DONE )
+4. Error when deleting chits and visiting chit payments
 
 Current task:
 Todo No. 11
-Bug No. 2 ( DONE )
-Bug No. 3 ( DONE )
 
 Current Task Break-down:
-1. Fill the initial values properly ( Form values and dates ) ( DONE )
-2. Capture the editied values ( Form values and dates ) ( DONE )
-3. Call the appropriate controller method ( edit or create ) ( DONE )
-4. Verify ( DONE )

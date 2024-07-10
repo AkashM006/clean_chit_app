@@ -45,7 +45,7 @@ class ChitPaymentController extends _$ChitPaymentController {
     );
   }
 
-  void deleteChitPayment(int chitPaymentId) async {
+  Future<void> deleteChitPayment(int chitPaymentId) async {
     state = state.copyWith(
       deleteChitPayment: state.deleteChitPayment.setLoading(),
     );
@@ -55,7 +55,9 @@ class ChitPaymentController extends _$ChitPaymentController {
 
     state = result.fold(
       (data) => state.copyWith(
-        deleteChitPayment: state.deleteChitPayment.setSuccess(null),
+        deleteChitPayment: state.deleteChitPayment.setSuccess(
+          "Successfully deleted your chit payment",
+        ),
       ),
       (error) => state.copyWith(
         deleteChitPayment: state.deleteChitPayment.setFailure(error.toString()),

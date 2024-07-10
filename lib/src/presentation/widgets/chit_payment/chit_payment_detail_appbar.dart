@@ -1,7 +1,9 @@
 import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ChitPaymentDetailAppBar extends ConsumerWidget
     implements PreferredSizeWidget {
@@ -16,10 +18,22 @@ class ChitPaymentDetailAppBar extends ConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void onDelete() {
-      ref
+    void onDelete() async {
+      await ref
           .read(chitPaymentControllerProvider.notifier)
           .deleteChitPayment(chitPaymentId);
+
+      if (context.mounted) {
+        final controllerState =
+            ref.read(chitPaymentControllerProvider).deleteChitPayment;
+        actionHandler(
+          controllerState,
+          context,
+          successCallback: () {
+            context.pop();
+          },
+        );
+      }
     }
 
     void onEdit() {}
