@@ -114,6 +114,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
         paidAmount: _paidAmount,
         receivedAmount: _receivedAmount,
         paymentType: _paymentType,
+        createdAt: DateTime.now(),
       ),
       chit: _selectedChit!.copyWith(),
     );

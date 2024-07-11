@@ -24,7 +24,7 @@ class ChitPaymentRepositoryImplementation extends BaseDbRepository
   Future<DataState<void>> createChitPayment(
       ChitPaymentWithChitNameAndIdModel chitPayment) {
     return safeExecute(
-      () => _appDatabase.chitPaymentDao.addPayments(chitPayment),
+      () => _appDatabase.chitPaymentDao.insertPayment(chitPayment),
     );
   }
 

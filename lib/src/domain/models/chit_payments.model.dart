@@ -19,7 +19,7 @@ class ChitPaymentModel with _$ChitPaymentModel {
     required int paidAmount,
     required int receivedAmount,
     required PaymentType paymentType,
-    @Default(null) DateTime? createdAt,
+    required DateTime createdAt,
   }) = _ChitPaymentModel;
 
   Map<String, String> asMap() {

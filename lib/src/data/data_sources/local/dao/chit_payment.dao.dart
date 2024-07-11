@@ -77,7 +77,7 @@ class ChitPaymentDao extends DatabaseAccessor<AppDatabase>
     return results;
   }
 
-  Future<void> addPayments(
+  Future<void> insertPayment(
     ChitPaymentWithChitNameAndIdModel chitPaymentWithChit,
   ) async {
     await into(chitPayments).insert(ChitPaymentsCompanion(
@@ -87,6 +87,13 @@ class ChitPaymentDao extends DatabaseAccessor<AppDatabase>
       belongsTo: Value(chitPaymentWithChit.chit.id),
       paymentType: Value(chitPaymentWithChit.chitPayment.paymentType),
     ));
+  }
+
+  Future<void> editChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel,
+  ) async {
+    await update(chitPayments)
+        .replace(modelToChitPayment(chitPaymentWithChitNameAndIdModel));
   }
 
   Future<void> deletePayment(int chitPaymentId) async {
