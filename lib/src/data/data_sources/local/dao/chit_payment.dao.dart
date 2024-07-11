@@ -19,11 +19,25 @@ class ChitPaymentDao extends DatabaseAccessor<AppDatabase>
     ]);
 
     return query.watch().map((rows) {
-      return rows.map((row) {
-        final chitPayment = row.readTable(chitPayments);
-        final chit = row.readTable(chits);
+      final Map<int, Chit> grouped = {};
 
-        return chitPaymentsWithChitToModel(chitPayment, chit);
+      for (final row in rows) {
+        final payment = row.readTable(chitPayments);
+        final chit = row.readTableOrNull(chits);
+
+        if (chit != null) grouped[payment.id] = chit;
+      }
+
+      return grouped.entries.map((entry) {
+        final chitPaymentResult = rows
+            .firstWhere((row) => row.readTable(chitPayments).id == entry.key)
+            .readTable(chitPayments);
+        final chit = chitToModel(entry.value);
+        final chitNameAndid = ChitNameAndId(id: chit.id, name: chit.name);
+        return ChitPaymentWithChitNameAndIdModel(
+          chitPayment: chitPaymentToModel(chitPaymentResult),
+          chit: chitNameAndid,
+        );
       }).toList();
     });
   }
