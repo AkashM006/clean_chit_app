@@ -377,9 +377,10 @@ class __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChitPaymentWithChitNameAndIdModelImpl
-    implements _ChitPaymentWithChitNameAndIdModel {
+    extends _ChitPaymentWithChitNameAndIdModel {
   const _$ChitPaymentWithChitNameAndIdModelImpl(
-      {required this.chitPayment, required this.chit, this.createdAt = null});
+      {required this.chitPayment, required this.chit, this.createdAt = null})
+      : super._();
 
   @override
   final ChitPaymentModel chitPayment;
@@ -419,11 +420,12 @@ class _$ChitPaymentWithChitNameAndIdModelImpl
 }
 
 abstract class _ChitPaymentWithChitNameAndIdModel
-    implements ChitPaymentWithChitNameAndIdModel {
+    extends ChitPaymentWithChitNameAndIdModel {
   const factory _ChitPaymentWithChitNameAndIdModel(
       {required final ChitPaymentModel chitPayment,
       required final ChitNameAndId chit,
       final DateTime? createdAt}) = _$ChitPaymentWithChitNameAndIdModelImpl;
+  const _ChitPaymentWithChitNameAndIdModel._() : super._();
 
   @override
   ChitPaymentModel get chitPayment;

@@ -1,3 +1,5 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
 import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
@@ -7,10 +9,10 @@ import 'package:go_router/go_router.dart';
 
 class ChitPaymentDetailAppBar extends ConsumerWidget
     implements PreferredSizeWidget {
-  final int chitPaymentId;
+  final ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel;
   const ChitPaymentDetailAppBar({
     super.key,
-    required this.chitPaymentId,
+    required this.chitPaymentWithChitNameAndIdModel,
   });
 
   @override
@@ -18,10 +20,12 @@ class ChitPaymentDetailAppBar extends ConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final chitPayment = chitPaymentWithChitNameAndIdModel.chitPayment;
+
     void onDelete() async {
       await ref
           .read(chitPaymentControllerProvider.notifier)
-          .deleteChitPayment(chitPaymentId);
+          .deleteChitPayment(chitPayment.id);
 
       if (context.mounted) {
         final controllerState =
@@ -36,7 +40,15 @@ class ChitPaymentDetailAppBar extends ConsumerWidget
       }
     }
 
-    void onEdit() {}
+    void onEdit() {
+      context.pushNamed(
+        PAGES.chitpaymentcreate.name,
+        queryParameters: {
+          "isEdit": "true",
+        },
+        extra: chitPaymentWithChitNameAndIdModel,
+      );
+    }
 
     final isLoading =
         ref.watch(chitPaymentControllerProvider).deleteChitPayment.isLoading;

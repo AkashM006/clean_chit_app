@@ -800,10 +800,9 @@ class __$$$ChitNameAndIdImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$ChitNameAndIdImpl
-    with DiagnosticableTreeMixin
-    implements $ChitNameAndId {
-  const _$$ChitNameAndIdImpl({required this.id, required this.name});
+class _$$ChitNameAndIdImpl extends $ChitNameAndId with DiagnosticableTreeMixin {
+  const _$$ChitNameAndIdImpl({required this.id, required this.name})
+      : super._();
 
   @override
   final int id;
@@ -844,10 +843,11 @@ class _$$ChitNameAndIdImpl
           this, _$identity);
 }
 
-abstract class $ChitNameAndId implements ChitNameAndId {
+abstract class $ChitNameAndId extends ChitNameAndId {
   const factory $ChitNameAndId(
       {required final int id,
       required final String name}) = _$$ChitNameAndIdImpl;
+  const $ChitNameAndId._() : super._();
 
   @override
   int get id;

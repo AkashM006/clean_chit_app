@@ -50,7 +50,7 @@ class ChitDetailAppbar extends ConsumerWidget implements PreferredSizeWidget {
       context.pushNamed(
         PAGES.chitcreate.name,
         queryParameters: {
-          'isEdit': "true",
+          "isEdit": "true",
         },
         extra: ChitWithDates(chit: chit, dates: chitDates),
       );

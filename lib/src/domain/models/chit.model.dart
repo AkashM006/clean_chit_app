@@ -108,10 +108,13 @@ class ChitWithPayments with _$ChitWithPayments {
 
 @freezed
 class ChitNameAndId with _$ChitNameAndId {
+  const ChitNameAndId._();
   const factory ChitNameAndId({
     required int id,
     required String name,
   }) = $ChitNameAndId;
+
+  bool equals(ChitNameAndId chit) => id == chit.id && name == chit.name;
 }
 
 @freezed

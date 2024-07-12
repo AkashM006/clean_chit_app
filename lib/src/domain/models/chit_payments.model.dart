@@ -30,14 +30,30 @@ class ChitPaymentModel with _$ChitPaymentModel {
       "Payment Type": capitalize(paymentType.name)
     };
   }
+
+  bool equals(ChitPaymentModel newChitPayment) =>
+      id == newChitPayment.id &&
+      paymentDate == newChitPayment.paymentDate &&
+      paidAmount == newChitPayment.paidAmount &&
+      receivedAmount == newChitPayment.receivedAmount &&
+      paymentType == newChitPayment.paymentType &&
+      createdAt == newChitPayment.createdAt;
 }
 
 @freezed
 class ChitPaymentWithChitNameAndIdModel
     with _$ChitPaymentWithChitNameAndIdModel {
+  const ChitPaymentWithChitNameAndIdModel._();
+
   const factory ChitPaymentWithChitNameAndIdModel({
     required ChitPaymentModel chitPayment,
     required ChitNameAndId chit,
     @Default(null) DateTime? createdAt,
   }) = _ChitPaymentWithChitNameAndIdModel;
+
+  bool equals(ChitPaymentWithChitNameAndIdModel? newChitPayment) {
+    if (newChitPayment == null) return false;
+    return chitPayment.equals(newChitPayment.chitPayment) &&
+        chit.equals(newChitPayment.chit);
+  }
 }

@@ -41,6 +41,16 @@ class ChitPaymentRepositoryImplementation extends BaseDbRepository
   }
 
   @override
+  Future<DataState<void>> editChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel,
+  ) {
+    return safeExecute(
+      () => _appDatabase.chitPaymentDao
+          .editChitPayment(chitPaymentWithChitNameAndIdModel),
+    );
+  }
+
+  @override
   Future<DataState<void>> deleteChitPayment(int chitPaymentId) {
     return safeExecute(
       () => _appDatabase.chitPaymentDao.deletePayment(chitPaymentId),

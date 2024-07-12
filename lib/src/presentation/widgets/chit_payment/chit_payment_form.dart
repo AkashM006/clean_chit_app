@@ -21,6 +21,7 @@ class ChitPaymentsForm extends ConsumerStatefulWidget {
   final int? chitId;
   final int? paidAmount;
   final int? receivedAmount;
+  final ChitPaymentWithChitNameAndIdModel? chitPaymentWithChitNameAndIdModel;
 
   const ChitPaymentsForm({
     super.key,
@@ -31,6 +32,7 @@ class ChitPaymentsForm extends ConsumerStatefulWidget {
     this.chitId,
     this.paidAmount,
     this.receivedAmount,
+    this.chitPaymentWithChitNameAndIdModel,
   });
 
   @override
@@ -47,8 +49,6 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   late int _paidAmount;
   late int _receivedAmount;
   late PaymentType _paymentType;
-
-  bool isLoading = false;
 
   void _setDate(DateTime date) {
     _paymentDate = date;
@@ -72,6 +72,20 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   }
 
   void initializer() {
+    if (widget.isFormEdit) {
+      final oldChitPaymentData =
+          widget.chitPaymentWithChitNameAndIdModel!.chitPayment;
+      final oldChitData = widget.chitPaymentWithChitNameAndIdModel!.chit;
+
+      _setDate(oldChitPaymentData.paymentDate);
+      _selectedChit = widget.chitNamesAndIds
+          .firstWhere((chit) => chit.id == oldChitData.id);
+      _paidAmount = oldChitPaymentData.paidAmount;
+      _receivedAmount = oldChitPaymentData.receivedAmount;
+      _paymentType = oldChitPaymentData.paymentType;
+      return;
+    }
+
     _setDate(widget.paymentDate ?? DateTime.now());
     _selectedChit = widget.chitId != null
         ? widget.chitNamesAndIds.firstWhere((chit) => chit.id == widget.chitId)
@@ -101,31 +115,49 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
   }
 
   void onFormSubmit() async {
-    // todo: If form is editing then change handle that call respectively
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
     if (_paidAmount == 0 && _receivedAmount == 0) {
       showErrorDialog();
       return;
     }
-    final chitPayment = ChitPaymentWithChitNameAndIdModel(
+
+    final newChitPayment = ChitPaymentWithChitNameAndIdModel(
       chitPayment: ChitPaymentModel(
+        id: widget.isFormEdit
+            ? widget.chitPaymentWithChitNameAndIdModel!.chitPayment.id
+            : -1,
         paymentDate: _paymentDate,
         paidAmount: _paidAmount,
         receivedAmount: _receivedAmount,
         paymentType: _paymentType,
-        createdAt: DateTime.now(),
+        createdAt: widget.isFormEdit
+            ? widget.chitPaymentWithChitNameAndIdModel!.chitPayment.createdAt
+            : DateTime.now(),
       ),
       chit: _selectedChit!.copyWith(),
     );
 
-    await ref
-        .read(chitPaymentControllerProvider.notifier)
-        .createChitPayment(chitPayment);
+    if (widget.isFormEdit) {
+      if (newChitPayment.equals(widget.chitPaymentWithChitNameAndIdModel)) {
+        context.pop();
+        return;
+      }
+
+      await ref
+          .read(chitPaymentControllerProvider.notifier)
+          .editChitPayment(newChitPayment);
+    } else {
+      await ref
+          .read(chitPaymentControllerProvider.notifier)
+          .createChitPayment(newChitPayment);
+    }
 
     if (mounted) {
-      final controllerState =
-          ref.read(chitPaymentControllerProvider).createChitPayment;
+      final controller = ref.read(chitPaymentControllerProvider);
+      final controllerState = widget.isFormEdit
+          ? controller.editChitPayment
+          : controller.createChitPayment;
       actionHandler(
         controllerState,
         context,
@@ -150,30 +182,9 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
 
   @override
   Widget build(BuildContext context) {
-    // ref.listen(
-    //   chitPaymentControllerProvider,
-    //   (previous, next) {
-    //     String message = "";
-    //     if (next.createChitPayment.isFailure) {
-    //       message =
-    //           "Something went wrong when trying to create a new payment. Please try again later";
-    //     } else if (next.createChitPayment.isSuccess) {
-    //       message = "Successfully created your payment";
-    //       context.pop();
-    //     }
-
-    //     if (message.isNotEmpty) {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(
-    //           content: Text(message),
-    //         ),
-    //       );
-    //     }
-    //   },
-    // );
-
     final isLoading =
-        ref.watch(chitPaymentControllerProvider).createChitPayment.isLoading;
+        ref.watch(chitPaymentControllerProvider).createChitPayment.isLoading ||
+            ref.watch(chitPaymentControllerProvider).editChitPayment.isLoading;
 
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
@@ -269,7 +280,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                   height: SizeConfig.safeBlockVertical * 5,
                 ),
                 TextFormField(
-                  initialValue: _paidAmount.toString(),
+                  initialValue: getFormattedCurrency(_paidAmount),
                   decoration: const BorderedInputDecoration(
                     labelWidget: RequiredInputLabel(label: "Paid Amount"),
                   ),
@@ -289,7 +300,7 @@ class _ChitPaymentsFormState extends ConsumerState<ChitPaymentsForm> {
                   height: SizeConfig.safeBlockVertical * 5,
                 ),
                 TextFormField(
-                  initialValue: _receivedAmount.toString(),
+                  initialValue: getFormattedCurrency(_receivedAmount),
                   decoration: const BorderedInputDecoration(
                     labelWidget: RequiredInputLabel(label: "Received Amount"),
                   ),

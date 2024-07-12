@@ -9,5 +9,8 @@ abstract class ChitPaymentRepository {
   Future<DataState<void>> createChitPayment(
     ChitPaymentWithChitNameAndIdModel chitPayment,
   );
+  Future<DataState<void>> editChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel,
+  );
   Future<DataState<void>> deleteChitPayment(int chitPaymentId);
 }

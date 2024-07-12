@@ -20,7 +20,9 @@ class ChitPaymentDetailPage extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: chitPayment.when(
-          data: (data) => ChitPaymentDetailAppBar(chitPaymentId: chitPaymentId),
+          data: (data) => ChitPaymentDetailAppBar(
+            chitPaymentWithChitNameAndIdModel: data,
+          ),
           error: (error, stackTrace) => AppBar(
             title: const Text("Error"),
           ),

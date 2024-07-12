@@ -129,7 +129,7 @@ extension AppRoutesExtension on PAGES {
             );
       case PAGES.chitpaymentcreate:
         return (context, routerState) {
-          final paymentDate = routerState.extra as DateTime?;
+          // NOTE: The values below are keep in case the user wants to create a chit and somethings want to be filled
           final paymentTypeIndex =
               routerState.uri.queryParameters['paymentType']; // pass the index
           final paymentType = paymentTypeIndex != null
@@ -144,6 +144,16 @@ extension AppRoutesExtension on PAGES {
           final isEdit =
               transformToBool(routerState.uri.queryParameters['isEdit']);
 
+          final isEditingMode = isEdit != null && isEdit;
+
+          final paymentDate =
+              isEditingMode ? null : routerState.extra as DateTime?;
+
+          // NOTE: This is used only when the user is editing a chit
+          final chitPaymentWithChitNameAndIdModel = isEditingMode
+              ? routerState.extra as ChitPaymentWithChitNameAndIdModel
+              : null;
+
           return AuthCheckerMiddleware(
             shouldBeLoggedIn: true,
             path: path,
@@ -154,6 +164,8 @@ extension AppRoutesExtension on PAGES {
               paymentType: paymentType,
               receivedAmount: receivedAmount,
               isEdit: isEdit,
+              chitPaymentWithChitNameAndIdModel:
+                  chitPaymentWithChitNameAndIdModel,
             ),
           );
         };

@@ -12,6 +12,7 @@ part 'chit_payment.controller.freezed.dart';
 class ChitPaymentControllerState with _$ChitPaymentControllerState {
   const factory ChitPaymentControllerState({
     @Default(ControllerState()) ControllerState createChitPayment,
+    @Default(ControllerState()) ControllerState editChitPayment,
     @Default(ControllerState()) ControllerState deleteChitPayment,
   }) = $ChitPaymentControllerState;
 }
@@ -41,6 +42,27 @@ class ChitPaymentController extends _$ChitPaymentController {
       ),
       (error) => state.copyWith(
         createChitPayment: state.createChitPayment.setFailure(error.toString()),
+      ),
+    );
+  }
+
+  Future<void> editChitPayment(
+    ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel,
+  ) async {
+    state = state.copyWith(
+      editChitPayment: state.editChitPayment.setLoading(),
+    );
+
+    final result = await _chitPaymentRepository
+        .editChitPayment(chitPaymentWithChitNameAndIdModel);
+
+    state = result.fold(
+      (data) => state.copyWith(
+        editChitPayment: state.editChitPayment
+            .setSuccess("Successfully edited your chit payment"),
+      ),
+      (error) => state.copyWith(
+        editChitPayment: state.editChitPayment.setFailure(error.toString()),
       ),
     );
   }

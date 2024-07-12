@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChitPaymentControllerState {
   ControllerState<dynamic> get createChitPayment =>
       throw _privateConstructorUsedError;
+  ControllerState<dynamic> get editChitPayment =>
+      throw _privateConstructorUsedError;
   ControllerState<dynamic> get deleteChitPayment =>
       throw _privateConstructorUsedError;
 
@@ -35,9 +37,11 @@ abstract class $ChitPaymentControllerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ControllerState<dynamic> createChitPayment,
+      ControllerState<dynamic> editChitPayment,
       ControllerState<dynamic> deleteChitPayment});
 
   $ControllerStateCopyWith<dynamic, $Res> get createChitPayment;
+  $ControllerStateCopyWith<dynamic, $Res> get editChitPayment;
   $ControllerStateCopyWith<dynamic, $Res> get deleteChitPayment;
 }
 
@@ -56,12 +60,17 @@ class _$ChitPaymentControllerStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? createChitPayment = null,
+    Object? editChitPayment = null,
     Object? deleteChitPayment = null,
   }) {
     return _then(_value.copyWith(
       createChitPayment: null == createChitPayment
           ? _value.createChitPayment
           : createChitPayment // ignore: cast_nullable_to_non_nullable
+              as ControllerState<dynamic>,
+      editChitPayment: null == editChitPayment
+          ? _value.editChitPayment
+          : editChitPayment // ignore: cast_nullable_to_non_nullable
               as ControllerState<dynamic>,
       deleteChitPayment: null == deleteChitPayment
           ? _value.deleteChitPayment
@@ -76,6 +85,15 @@ class _$ChitPaymentControllerStateCopyWithImpl<$Res,
     return $ControllerStateCopyWith<dynamic, $Res>(_value.createChitPayment,
         (value) {
       return _then(_value.copyWith(createChitPayment: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ControllerStateCopyWith<dynamic, $Res> get editChitPayment {
+    return $ControllerStateCopyWith<dynamic, $Res>(_value.editChitPayment,
+        (value) {
+      return _then(_value.copyWith(editChitPayment: value) as $Val);
     });
   }
 
@@ -100,10 +118,13 @@ abstract class _$$$ChitPaymentControllerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {ControllerState<dynamic> createChitPayment,
+      ControllerState<dynamic> editChitPayment,
       ControllerState<dynamic> deleteChitPayment});
 
   @override
   $ControllerStateCopyWith<dynamic, $Res> get createChitPayment;
+  @override
+  $ControllerStateCopyWith<dynamic, $Res> get editChitPayment;
   @override
   $ControllerStateCopyWith<dynamic, $Res> get deleteChitPayment;
 }
@@ -122,12 +143,17 @@ class __$$$ChitPaymentControllerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? createChitPayment = null,
+    Object? editChitPayment = null,
     Object? deleteChitPayment = null,
   }) {
     return _then(_$$ChitPaymentControllerStateImpl(
       createChitPayment: null == createChitPayment
           ? _value.createChitPayment
           : createChitPayment // ignore: cast_nullable_to_non_nullable
+              as ControllerState<dynamic>,
+      editChitPayment: null == editChitPayment
+          ? _value.editChitPayment
+          : editChitPayment // ignore: cast_nullable_to_non_nullable
               as ControllerState<dynamic>,
       deleteChitPayment: null == deleteChitPayment
           ? _value.deleteChitPayment
@@ -142,6 +168,7 @@ class __$$$ChitPaymentControllerStateImplCopyWithImpl<$Res>
 class _$$ChitPaymentControllerStateImpl implements $ChitPaymentControllerState {
   const _$$ChitPaymentControllerStateImpl(
       {this.createChitPayment = const ControllerState(),
+      this.editChitPayment = const ControllerState(),
       this.deleteChitPayment = const ControllerState()});
 
   @override
@@ -149,11 +176,14 @@ class _$$ChitPaymentControllerStateImpl implements $ChitPaymentControllerState {
   final ControllerState<dynamic> createChitPayment;
   @override
   @JsonKey()
+  final ControllerState<dynamic> editChitPayment;
+  @override
+  @JsonKey()
   final ControllerState<dynamic> deleteChitPayment;
 
   @override
   String toString() {
-    return 'ChitPaymentControllerState(createChitPayment: $createChitPayment, deleteChitPayment: $deleteChitPayment)';
+    return 'ChitPaymentControllerState(createChitPayment: $createChitPayment, editChitPayment: $editChitPayment, deleteChitPayment: $deleteChitPayment)';
   }
 
   @override
@@ -163,13 +193,15 @@ class _$$ChitPaymentControllerStateImpl implements $ChitPaymentControllerState {
             other is _$$ChitPaymentControllerStateImpl &&
             (identical(other.createChitPayment, createChitPayment) ||
                 other.createChitPayment == createChitPayment) &&
+            (identical(other.editChitPayment, editChitPayment) ||
+                other.editChitPayment == editChitPayment) &&
             (identical(other.deleteChitPayment, deleteChitPayment) ||
                 other.deleteChitPayment == deleteChitPayment));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, createChitPayment, deleteChitPayment);
+  int get hashCode => Object.hash(
+      runtimeType, createChitPayment, editChitPayment, deleteChitPayment);
 
   @JsonKey(ignore: true)
   @override
@@ -183,11 +215,14 @@ abstract class $ChitPaymentControllerState
     implements ChitPaymentControllerState {
   const factory $ChitPaymentControllerState(
           {final ControllerState<dynamic> createChitPayment,
+          final ControllerState<dynamic> editChitPayment,
           final ControllerState<dynamic> deleteChitPayment}) =
       _$$ChitPaymentControllerStateImpl;
 
   @override
   ControllerState<dynamic> get createChitPayment;
+  @override
+  ControllerState<dynamic> get editChitPayment;
   @override
   ControllerState<dynamic> get deleteChitPayment;
   @override

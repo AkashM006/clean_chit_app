@@ -14,6 +14,7 @@ class ChitPaymentCreatePage extends ConsumerWidget {
   final int? paidAmount;
   final int? receivedAmount;
   final bool? isEdit;
+  final ChitPaymentWithChitNameAndIdModel? chitPaymentWithChitNameAndIdModel;
   const ChitPaymentCreatePage({
     super.key,
     this.paymentDate,
@@ -22,6 +23,7 @@ class ChitPaymentCreatePage extends ConsumerWidget {
     this.paidAmount,
     this.receivedAmount,
     this.isEdit,
+    this.chitPaymentWithChitNameAndIdModel,
   });
 
   @override
@@ -29,25 +31,36 @@ class ChitPaymentCreatePage extends ConsumerWidget {
     final chitNamesAndIds = ref.watch(chitNamesAndIdsProvider);
 
     return Scaffold(
-        appBar: const CustomAppBar(title: "Add Chit Payment"),
-        body: switch (chitNamesAndIds) {
-          AsyncData(value: final chits) => chits.isEmpty
-              ? const Center(
-                  child: Text(
-                    "You have no chits. Add one to create a Chit Payment",
-                  ),
-                )
-              : ChitPaymentsForm(
-                  chitNamesAndIds: chits,
-                  chitId: chitId,
-                  paidAmount: paidAmount,
-                  receivedAmount: receivedAmount,
-                  isFormEdit: isEdit ?? false,
-                  paymentDate: paymentDate,
-                  paymentType: paymentType,
+      appBar: isEdit != null && isEdit!
+          ? CustomAppBar(
+              title: chitNamesAndIds.when(
+                data: (data) => "Edit Chit",
+                error: (error, stackTrace) => "Error",
+                loading: () => "Loading",
+              ),
+            )
+          : const CustomAppBar(title: "Add Chit Payment"),
+      body: chitNamesAndIds.when(
+        data: (data) => data.isEmpty
+            ? const Center(
+                child: Text(
+                  "You have no chits. Add one to create a Chit Payment",
                 ),
-          AsyncError(error: final error) => CustomErrorWidget(error.toString()),
-          _ => const CustomLoaderWidget(text: "Loading your Payments"),
-        });
+              )
+            : ChitPaymentsForm(
+                chitNamesAndIds: data,
+                chitId: chitId,
+                paidAmount: paidAmount,
+                receivedAmount: receivedAmount,
+                isFormEdit: isEdit ?? false,
+                paymentDate: paymentDate,
+                paymentType: paymentType,
+                chitPaymentWithChitNameAndIdModel:
+                    chitPaymentWithChitNameAndIdModel,
+              ),
+        error: (error, stackTrace) => CustomErrorWidget(error.toString()),
+        loading: () => const CustomLoaderWidget(text: "Loading your Payments"),
+      ),
+    );
   }
 }
