@@ -3,6 +3,7 @@ import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.da
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_payments.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
+import 'package:chit_app_clean/src/utils/classes/errors.dart';
 import 'package:drift/drift.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -115,9 +116,23 @@ class ChitDao extends DatabaseAccessor<AppDatabase> with _$ChitDaoMixin {
         (batch) => batch.insertAll(
           chitDates,
           chitDateListToCompanionsList(
-              chitWithDates.dates, chitWithDates.chit.id),
+            chitWithDates.dates,
+            chitWithDates.chit.id,
+          ),
         ),
       );
     });
+  }
+
+  Future<void> deleteChit(int chitId) async {
+    final result =
+        await (delete(chits)..where((row) => row.id.equals(chitId))).go();
+
+    if (result == 0) {
+      throw const AppError(
+        message:
+            "Something went wrong when trying to delete the chit. Please try again later!",
+      );
+    }
   }
 }

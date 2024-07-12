@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chit_dates.dao.dart';
+part of 'chit_date.dao.dart';
 
 // ignore_for_file: type=lint
 mixin _$ChitDatesDaoMixin on DatabaseAccessor<AppDatabase> {

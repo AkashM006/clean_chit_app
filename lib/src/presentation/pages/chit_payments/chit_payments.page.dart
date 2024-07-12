@@ -1,6 +1,6 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
-import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payments_repository.impl.dart';
-import 'package:chit_app_clean/src/presentation/widgets/chit_payments/chit_payments_list.dart';
+import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payment_repository.impl.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chit_payment/chit_payment_list.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/drawer.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';
@@ -15,7 +15,7 @@ class ChitPaymentsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onChitPaymentCreate() {
-      context.push(PAGES.chitpaymentscreate.path);
+      context.push(PAGES.chitpaymentcreate.path);
     }
 
     final chitPayments = ref.watch(chitPaymentsProvider);
@@ -28,7 +28,7 @@ class ChitPaymentsPage extends ConsumerWidget {
         child: const Icon(Icons.add),
       ),
       body: chitPayments.when(
-        data: (data) => ChitPaymentsList(chitPayments: data),
+        data: (data) => ChitPaymentList(chitPayments: data),
         error: (error, stackTrace) => CustomErrorWidget(error.toString()),
         loading: () => const CustomLoaderWidget(
           text: "Loading your chit Payments",

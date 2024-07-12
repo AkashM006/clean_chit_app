@@ -22,8 +22,6 @@ class BackgroundListenerWrapper extends ConsumerStatefulWidget {
 class _BackgroundListenerWrapperState
     extends ConsumerState<BackgroundListenerWrapper>
     with WidgetsBindingObserver {
-  // DateTime lastSeen = DateTime.now();
-
   @override
   void initState() {
     super.initState();

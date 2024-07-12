@@ -3,7 +3,7 @@
 import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:drift/drift.dart';
 
 class ChitPayments extends Table {
@@ -19,7 +19,9 @@ class ChitPayments extends Table {
 }
 
 ChitPaymentWithChitNameAndIdModel chitPaymentsWithChitToModel(
-    ChitPayment chitPayment, Chit chit) {
+  ChitPayment chitPayment,
+  Chit chit,
+) {
   return ChitPaymentWithChitNameAndIdModel(
     chit: ChitNameAndId(id: chit.id, name: chit.name),
     chitPayment: ChitPaymentModel(
@@ -28,6 +30,7 @@ ChitPaymentWithChitNameAndIdModel chitPaymentsWithChitToModel(
       paidAmount: chitPayment.paidAmount,
       receivedAmount: chitPayment.receivedAmount,
       paymentType: chitPayment.paymentType,
+      createdAt: chitPayment.createdAt,
     ),
   );
 }
@@ -39,5 +42,21 @@ ChitPaymentModel chitPaymentToModel(ChitPayment chitPayment) {
     paidAmount: chitPayment.paidAmount,
     receivedAmount: chitPayment.receivedAmount,
     paymentType: chitPayment.paymentType,
+    createdAt: chitPayment.createdAt,
+  );
+}
+
+ChitPayment modelToChitPayment(
+  ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel,
+) {
+  return ChitPayment(
+    id: chitPaymentWithChitNameAndIdModel.chitPayment.id,
+    belongsTo: chitPaymentWithChitNameAndIdModel.chit.id,
+    createdAt: chitPaymentWithChitNameAndIdModel.chitPayment.createdAt,
+    paidAmount: chitPaymentWithChitNameAndIdModel.chitPayment.paidAmount,
+    paymentDate: chitPaymentWithChitNameAndIdModel.chitPayment.paymentDate,
+    paymentType: chitPaymentWithChitNameAndIdModel.chitPayment.paymentType,
+    receivedAmount:
+        chitPaymentWithChitNameAndIdModel.chitPayment.receivedAmount,
   );
 }

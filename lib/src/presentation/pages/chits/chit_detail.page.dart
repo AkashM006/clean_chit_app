@@ -1,4 +1,5 @@
 import 'package:chit_app_clean/src/data/repositories/chits/chit_repository_impl.dart';
+import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_detail_appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_detail_body.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_tab_bar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_detail/chit_tab_view.dart';
@@ -24,7 +25,11 @@ class ChitDetailPage extends ConsumerWidget {
         data: (data) => DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: AppBar(),
+            appBar: ChitDetailAppbar(
+              chitId: data.chit.id,
+              chit: data.chit,
+              chitDates: data.chitDates,
+            ),
             body: NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 SliverToBoxAdapter(
@@ -32,17 +37,24 @@ class ChitDetailPage extends ConsumerWidget {
                     chit: data.chit,
                   ),
                 ),
-                const ChitTabBar()
+                const ChitTabBar(),
               ],
               body: ChitTabView(
                 dates: data.chitDates,
                 chitPayments: data.chitPayments,
+                chitId: data.chit.id,
               ),
             ),
           ),
         ),
-        error: (error, stackTrace) => CustomErrorWidget(error.toString()),
-        loading: () => const CustomLoaderWidget(),
+        error: (error, stackTrace) => Scaffold(
+          body: CustomErrorWidget(
+            error.toString(),
+          ),
+        ),
+        loading: () => const Scaffold(
+          body: CustomLoaderWidget(),
+        ),
       ),
     );
   }

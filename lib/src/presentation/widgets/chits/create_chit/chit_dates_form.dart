@@ -8,6 +8,7 @@ class ChitDatesForm extends StatelessWidget {
   final void Function(int index, DateTime date) onDateChanged;
   final void Function() onSubmit;
   final void Function() onBack;
+  final bool isEdit;
 
   const ChitDatesForm({
     super.key,
@@ -16,6 +17,7 @@ class ChitDatesForm extends StatelessWidget {
     required this.onSubmit,
     required this.onBack,
     required this.isLoading,
+    required this.isEdit,
   });
 
   @override
@@ -51,7 +53,7 @@ class ChitDatesForm extends StatelessWidget {
                 children: [
                   FilledButton(
                     onPressed: onSubmit,
-                    child: const Text("Create"),
+                    child: Text(isEdit ? "Edit" : "Create"),
                   ),
                   SizedBox(
                     width: SizeConfig.safeBlockHorizontal * 3,

@@ -1,17 +1,24 @@
+Todos:
 1. In chit payments page, fetch all the payments and show in a green/red +/- fashion in a list tile (with chit name, date and amount)
     ( DONE )
 2. Complete Chit details page ( Fetch a single chit, with all its dates and payments, start at chit.dao.dart ) ( DONE )
-3. Implement delete in chits
+3. Implement delete in chits ( DONE )
 4. Chit create page ( DONE )
 5. Refactor ChitModel class - remove dates is the ChitModel class, instead use ChitWithDates ( DONE )
 6. Refactor ChitPaymentsModel class - change the model with chit to use ChitPaymentsModel and ChitNameWithId ( DONE )
     a. Test Chit payment addition, chit payment list ( DONE )
 7. Now that details are present show them in the details page ( DONE )
-8. Implement chit edit page
-9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar
+8. Implement CRUD for chit  ( DONE )
+9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar ( OVER THINKING )
+10. Implement chit payment detail page ( DONE )
+11. Implement CRUD for chit payment ( DONE )
 
 Bugs:
-1. End date is not filled correctly
+1. End date is not filled correctly ( DONE )
+2. In a page there should be only one ref.listen. If the page goes to other pages handle that accordingly ( DONE )
+3. In PIN setup page, go to confirm pin and press back to replicate the issue ( DONE )
+4. Error when deleting chits and visiting chit payments ( DONE )
 
 Current task:
-* Do all the todos left in the code
+
+Current Task Break-down:

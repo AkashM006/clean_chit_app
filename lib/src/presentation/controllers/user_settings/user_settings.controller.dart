@@ -24,7 +24,7 @@ class UserSettingsController extends _$UserSettingsController {
     return const UserSettingsControllerState();
   }
 
-  void updateUserSettings(UserSettingsModel newUserSettings) async {
+  Future<void> updateUserSettings(UserSettingsModel newUserSettings) async {
     state = state.copyWith(
       updateUserSettings: state.updateUserSettings.setLoading(),
     );

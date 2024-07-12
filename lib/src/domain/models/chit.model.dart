@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/utils/functions/date.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';
 import 'package:flutter/foundation.dart';
@@ -21,6 +21,8 @@ extension FrequencyTypeExtension on FrequencyType {
 
 @freezed
 class ChitModel with _$ChitModel {
+  const ChitModel._();
+
   const factory ChitModel({
     @Default(-1) int id,
     required String name,
@@ -48,17 +50,17 @@ class ChitModel with _$ChitModel {
         createdAt: DateTime.now(),
       );
 
-  static bool equals(ChitModel a, ChitModel b) {
-    final areDetailsEqual = a.amount == b.amount &&
-        a.commissionPercentage == b.commissionPercentage &&
-        a.fManAuctionNumber == b.fManAuctionNumber &&
-        a.frequencyNumber == b.frequencyNumber &&
-        a.frequencyType == b.frequencyType &&
-        a.id == b.id &&
-        a.name == b.name &&
-        a.people == b.people &&
-        compareDates(a.startDate, b.startDate) &&
-        compareDates(a.endDate, b.endDate);
+  bool equals(ChitModel b) {
+    final areDetailsEqual = amount == b.amount &&
+        commissionPercentage == b.commissionPercentage &&
+        fManAuctionNumber == b.fManAuctionNumber &&
+        frequencyNumber == b.frequencyNumber &&
+        frequencyType == b.frequencyType &&
+        id == b.id &&
+        name == b.name &&
+        people == b.people &&
+        compareDates(startDate, b.startDate) &&
+        compareDates(endDate, b.endDate);
     return areDetailsEqual;
   }
 
@@ -89,7 +91,7 @@ class ChitWithDates with _$ChitWithDates {
   static bool equals(ChitWithDates aChit, ChitWithDates bChit) {
     final a = aChit.chit;
     final b = bChit.chit;
-    final areDetailsEqual = ChitModel.equals(a, b);
+    final areDetailsEqual = a.equals(b);
     if (!areDetailsEqual) return false;
 
     return listEquals(aChit.dates, bChit.dates);
@@ -106,10 +108,13 @@ class ChitWithPayments with _$ChitWithPayments {
 
 @freezed
 class ChitNameAndId with _$ChitNameAndId {
+  const ChitNameAndId._();
   const factory ChitNameAndId({
     required int id,
     required String name,
   }) = $ChitNameAndId;
+
+  bool equals(ChitNameAndId chit) => id == chit.id && name == chit.name;
 }
 
 @freezed

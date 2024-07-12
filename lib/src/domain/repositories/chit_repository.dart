@@ -6,4 +6,5 @@ abstract interface class ChitRepository {
   Stream<ChitDetailWithDatesAndPayments> watchChit(int id);
   Future<DataState<void>> createChit(ChitWithDates newChit);
   Future<DataState<void>> editChit(ChitWithDates newChit);
+  Future<DataState<void>> deleteChit(int chitId);
 }

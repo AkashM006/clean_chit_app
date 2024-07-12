@@ -61,6 +61,8 @@ class _DateFieldState extends State<DateField> {
       margin: EdgeInsets.symmetric(vertical: SizeConfig.safeBlockVertical * 2),
       child: TextField(
         controller: _controller,
+        readOnly: true,
+        onTap: _handleSelectDate,
         decoration: BorderedInputDecoration(
           labelWidget: Text(widget.label),
           suffixIconWidget: IconButton(

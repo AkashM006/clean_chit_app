@@ -1,0 +1,69 @@
+import 'package:chit_app_clean/src/config/router.config.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
+import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
+import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class ChitPaymentDetailAppBar extends ConsumerWidget
+    implements PreferredSizeWidget {
+  final ChitPaymentWithChitNameAndIdModel chitPaymentWithChitNameAndIdModel;
+  const ChitPaymentDetailAppBar({
+    super.key,
+    required this.chitPaymentWithChitNameAndIdModel,
+  });
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chitPayment = chitPaymentWithChitNameAndIdModel.chitPayment;
+
+    void onDelete() async {
+      await ref
+          .read(chitPaymentControllerProvider.notifier)
+          .deleteChitPayment(chitPayment.id);
+
+      if (context.mounted) {
+        final controllerState =
+            ref.read(chitPaymentControllerProvider).deleteChitPayment;
+        actionHandler(
+          controllerState,
+          context,
+          successCallback: () {
+            context.pop();
+          },
+        );
+      }
+    }
+
+    void onEdit() {
+      context.pushNamed(
+        PAGES.chitpaymentcreate.name,
+        queryParameters: {
+          "isEdit": "true",
+        },
+        extra: chitPaymentWithChitNameAndIdModel,
+      );
+    }
+
+    final isLoading =
+        ref.watch(chitPaymentControllerProvider).deleteChitPayment.isLoading;
+
+    return AppBar(
+      actions: [
+        IconButton(
+          onPressed: isLoading ? null : onEdit,
+          icon: const EditAppbarIcon(),
+        ),
+        IconButton(
+          onPressed: isLoading ? null : onDelete,
+          icon: const DeleteAppBarIcon(),
+        ),
+      ],
+    );
+  }
+}

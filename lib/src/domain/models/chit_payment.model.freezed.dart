@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'chit_payments.model.dart';
+part of 'chit_payment.model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -21,7 +21,7 @@ mixin _$ChitPaymentModel {
   int get paidAmount => throw _privateConstructorUsedError;
   int get receivedAmount => throw _privateConstructorUsedError;
   PaymentType get paymentType => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChitPaymentModelCopyWith<ChitPaymentModel> get copyWith =>
@@ -40,7 +40,7 @@ abstract class $ChitPaymentModelCopyWith<$Res> {
       int paidAmount,
       int receivedAmount,
       PaymentType paymentType,
-      DateTime? createdAt});
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$ChitPaymentModelCopyWithImpl<$Res, $Val extends ChitPaymentModel>
     Object? paidAmount = null,
     Object? receivedAmount = null,
     Object? paymentType = null,
-    Object? createdAt = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,10 +84,10 @@ class _$ChitPaymentModelCopyWithImpl<$Res, $Val extends ChitPaymentModel>
           ? _value.paymentType
           : paymentType // ignore: cast_nullable_to_non_nullable
               as PaymentType,
-      createdAt: freezed == createdAt
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -106,7 +106,7 @@ abstract class _$$ChitPaymentModelImplCopyWith<$Res>
       int paidAmount,
       int receivedAmount,
       PaymentType paymentType,
-      DateTime? createdAt});
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -125,7 +125,7 @@ class __$$ChitPaymentModelImplCopyWithImpl<$Res>
     Object? paidAmount = null,
     Object? receivedAmount = null,
     Object? paymentType = null,
-    Object? createdAt = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_$ChitPaymentModelImpl(
       id: null == id
@@ -148,24 +148,25 @@ class __$$ChitPaymentModelImplCopyWithImpl<$Res>
           ? _value.paymentType
           : paymentType // ignore: cast_nullable_to_non_nullable
               as PaymentType,
-      createdAt: freezed == createdAt
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ChitPaymentModelImpl implements _ChitPaymentModel {
+class _$ChitPaymentModelImpl extends _ChitPaymentModel {
   const _$ChitPaymentModelImpl(
       {this.id = -1,
       required this.paymentDate,
       required this.paidAmount,
       required this.receivedAmount,
       required this.paymentType,
-      this.createdAt = null});
+      required this.createdAt})
+      : super._();
 
   @override
   @JsonKey()
@@ -179,8 +180,7 @@ class _$ChitPaymentModelImpl implements _ChitPaymentModel {
   @override
   final PaymentType paymentType;
   @override
-  @JsonKey()
-  final DateTime? createdAt;
+  final DateTime createdAt;
 
   @override
   String toString() {
@@ -217,14 +217,15 @@ class _$ChitPaymentModelImpl implements _ChitPaymentModel {
           this, _$identity);
 }
 
-abstract class _ChitPaymentModel implements ChitPaymentModel {
+abstract class _ChitPaymentModel extends ChitPaymentModel {
   const factory _ChitPaymentModel(
       {final int id,
       required final DateTime paymentDate,
       required final int paidAmount,
       required final int receivedAmount,
       required final PaymentType paymentType,
-      final DateTime? createdAt}) = _$ChitPaymentModelImpl;
+      required final DateTime createdAt}) = _$ChitPaymentModelImpl;
+  const _ChitPaymentModel._() : super._();
 
   @override
   int get id;
@@ -237,7 +238,7 @@ abstract class _ChitPaymentModel implements ChitPaymentModel {
   @override
   PaymentType get paymentType;
   @override
-  DateTime? get createdAt;
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$ChitPaymentModelImplCopyWith<_$ChitPaymentModelImpl> get copyWith =>
@@ -376,9 +377,10 @@ class __$$ChitPaymentWithChitNameAndIdModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChitPaymentWithChitNameAndIdModelImpl
-    implements _ChitPaymentWithChitNameAndIdModel {
+    extends _ChitPaymentWithChitNameAndIdModel {
   const _$ChitPaymentWithChitNameAndIdModelImpl(
-      {required this.chitPayment, required this.chit, this.createdAt = null});
+      {required this.chitPayment, required this.chit, this.createdAt = null})
+      : super._();
 
   @override
   final ChitPaymentModel chitPayment;
@@ -418,11 +420,12 @@ class _$ChitPaymentWithChitNameAndIdModelImpl
 }
 
 abstract class _ChitPaymentWithChitNameAndIdModel
-    implements ChitPaymentWithChitNameAndIdModel {
+    extends ChitPaymentWithChitNameAndIdModel {
   const factory _ChitPaymentWithChitNameAndIdModel(
       {required final ChitPaymentModel chitPayment,
       required final ChitNameAndId chit,
       final DateTime? createdAt}) = _$ChitPaymentWithChitNameAndIdModelImpl;
+  const _ChitPaymentWithChitNameAndIdModel._() : super._();
 
   @override
   ChitPaymentModel get chitPayment;

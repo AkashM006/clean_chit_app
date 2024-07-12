@@ -17,7 +17,7 @@ class ChitPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void createHandler() {
-      context.push(PAGES.chitscreate.path);
+      context.push(PAGES.chitcreate.path);
     }
 
     final chitsStream = ref.watch(chitsProvider);
