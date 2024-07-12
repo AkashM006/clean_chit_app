@@ -1,13 +1,13 @@
 import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/repositories/base/base_db_repository.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/domain/repositories/chit_payments_repository.dart';
 import 'package:chit_app_clean/src/locator.dart';
 import 'package:chit_app_clean/src/utils/classes/data_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'chit_payments_repository.impl.g.dart';
+part 'chit_payment_repository.impl.g.dart';
 
 class ChitPaymentRepositoryImplementation extends BaseDbRepository
     implements ChitPaymentRepository {

@@ -1,5 +1,5 @@
-import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payments_repository.impl.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payment_repository.impl.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_payment/chit_payment_form.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/appbar.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';

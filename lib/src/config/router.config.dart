@@ -1,6 +1,6 @@
 import 'package:chit_app_clean/src/app.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/presentation/pages/auth/setup/pin_setup.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payment_detail.page.dart';
 import 'package:chit_app_clean/src/presentation/pages/chit_payments/chit_payments.page.dart';

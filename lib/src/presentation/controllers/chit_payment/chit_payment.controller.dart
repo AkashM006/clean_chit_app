@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/domain/repositories/chit_payments_repository.dart';
 import 'package:chit_app_clean/src/locator.dart';
 import 'package:chit_app_clean/src/utils/classes/controller_state.dart';

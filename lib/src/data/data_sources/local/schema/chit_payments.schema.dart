@@ -3,7 +3,7 @@
 import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit.schema.dart';
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:drift/drift.dart';
 
 class ChitPayments extends Table {

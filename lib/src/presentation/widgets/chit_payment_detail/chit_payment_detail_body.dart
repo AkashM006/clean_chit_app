@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_payment_detail/chit_payment_detail_description.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/functions/formatters.dart';

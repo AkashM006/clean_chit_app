@@ -1,4 +1,4 @@
-import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payments_repository.impl.dart';
+import 'package:chit_app_clean/src/data/repositories/chit_payments/chit_payment_repository.impl.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_payment/chit_payment_detail_appbar.dart';
 import 'package:chit_app_clean/src/presentation/widgets/chit_payment_detail/chit_payment_detail_body.dart';
 import 'package:chit_app_clean/src/utils/widgets/custom_error.widget.dart';

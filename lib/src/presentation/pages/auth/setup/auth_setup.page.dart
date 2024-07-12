@@ -1,10 +1,10 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
 import 'package:chit_app_clean/src/domain/models/user_settings.model.dart';
-import 'package:chit_app_clean/src/presentation/actionHandlers/user_settings_action_handler.dart';
 import 'package:chit_app_clean/src/presentation/controllers/user_settings/user_settings.controller.dart';
 import 'package:chit_app_clean/src/presentation/state/auth.state.dart';
 import 'package:chit_app_clean/src/presentation/widgets/auth/radio_list_tile_button.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
+import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
 import 'package:chit_app_clean/src/utils/widgets/responsive.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,6 +27,8 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
   }
 
   void nextHandler() async {
+    final controllerState =
+        ref.read(userSettingsControllerProvider).updateUserSettings;
     if (selectedLoginType == LoginType.deviceLock) {
       await ref
           .read(userSettingsControllerProvider.notifier)
@@ -35,11 +37,17 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
               loginType: LoginType.deviceLock,
             ),
           );
-      if (mounted) handleUpdateAction(context, ref, selectedLoginType);
-      return;
+      if (!mounted) return;
+
+      if (selectedLoginType == LoginType.deviceLock) {
+        actionHandler(controllerState, context);
+        return;
+      }
     }
+    if (!mounted) return;
 
     final pin = await context.push<String?>(PAGES.pinsetup.path);
+
     if (pin == null) return;
 
     ref.read(userSettingsControllerProvider.notifier).updateUserSettings(
@@ -48,7 +56,8 @@ class _AuthSetupPageState extends ConsumerState<AuthSetupPage> {
             userPin: pin,
           ),
         );
-    if (mounted) handleUpdateAction(context, ref, selectedLoginType);
+    if (!mounted) return;
+    actionHandler(controllerState, context);
     ref.read(authStateProvider.notifier).login();
   }
 

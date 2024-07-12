@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chit_payments_repository.impl.dart';
+part of 'chit_payment_repository.impl.dart';
 
 // **************************************************************************
 // RiverpodGenerator

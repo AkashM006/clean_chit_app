@@ -2,7 +2,7 @@ import 'package:chit_app_clean/src/data/data_sources/local/database.dart';
 import 'package:chit_app_clean/src/data/data_sources/local/schema/chit_dates.schema.dart';
 import 'package:drift/drift.dart';
 
-part 'chit_dates.dao.g.dart';
+part 'chit_date.dao.g.dart';
 
 @DriftAccessor(tables: [ChitDates])
 class ChitDatesDao extends DatabaseAccessor<AppDatabase>

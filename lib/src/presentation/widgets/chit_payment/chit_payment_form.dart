@@ -1,5 +1,5 @@
 import 'package:chit_app_clean/src/domain/models/chit.model.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/utils/classes/size_config.dart';
 import 'package:chit_app_clean/src/utils/classes/validators.dart';

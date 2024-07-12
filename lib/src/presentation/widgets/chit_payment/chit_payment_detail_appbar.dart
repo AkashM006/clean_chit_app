@@ -1,5 +1,5 @@
 import 'package:chit_app_clean/src/config/router.config.dart';
-import 'package:chit_app_clean/src/domain/models/chit_payments.model.dart';
+import 'package:chit_app_clean/src/domain/models/chit_payment.model.dart';
 import 'package:chit_app_clean/src/presentation/controllers/chit_payment/chit_payment.controller.dart';
 import 'package:chit_app_clean/src/presentation/widgets/common/app_bar_icons.dart';
 import 'package:chit_app_clean/src/utils/functions/action_handler.dart';
