@@ -11,7 +11,7 @@ Todos:
 8. Implement CRUD for chit  ( DONE )
 9. In Details pages implement this animation: when name of the chit disappears it should be visible in the appbar ( OVER THINKING )
 10. Implement chit payment detail page ( DONE )
-11. Implement CRUD for chit payment
+11. Implement CRUD for chit payment ( DONE )
 
 Bugs:
 1. End date is not filled correctly ( DONE )
@@ -20,6 +20,5 @@ Bugs:
 4. Error when deleting chits and visiting chit payments ( DONE )
 
 Current task:
-Todo No. 11
 
 Current Task Break-down:
